@@ -1,28 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div
+    id="app"
+    class="bg-primary fixed flex h-screen min-h-screen w-screen gap-4"
+  >
+    <Sidebar />
+    <div class="flex flex-col ml-20 mt-14">
+      <MainView />
+      <div class="flex">
+        <Counter title="Number of Students"/>
+        <Counter title="Number of Books Available"/>
+        <Counter title="Number of Unreturned Books"/>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Sidebar from "./components/Sidebar.vue";
+import MainView from "./components/MainView.vue";
+import Counter from "./components/Counter.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Sidebar,
+    MainView,
+    Counter,
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+
