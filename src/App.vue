@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    class="bg-primary fixed flex h-screen min-h-screen w-screen gap-4"
+    class="bg-primary fixed flex h-screen min-h-screen w-screen gap-1"
   >
     <Sidebar />
     <div class="flex flex-col ml-20 mt-14">

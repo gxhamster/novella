@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col pl-20 text-center mb-2">
     <span class="text-white text-5xl">{{ count_pad }}</span>
-    <span class="text-white  text-2xl">{{ title }}</span>
+    <span class="text-white  text-2xl font-light">{{ title }}</span>
   </div>
 </template>
 

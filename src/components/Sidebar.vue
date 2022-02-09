@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full ml-10 mt-14 mb-10 p-1 ">
-    <ul class="flex flex-col justify-items-center min-h-full">
+  <div class="w-full ml-8 mt-10 mb-10 p-1 flex-grow h-fit">
+    <ul class="flex flex-col justify-items-center">
       <div class="flex justify-center  flex-shrink-0 mb-7">
         <img src="../assets/icon.png" alt="" />
       </div>
@@ -15,12 +15,12 @@
         <SidebarButton title="Issued List" />
         <SidebarButton title="History" />
       </div>
-      <div class="mt-6flex-shrink">
+      <div class="mt-6 flex-shrink">
         <IconButtons/>
       </div>
-      <div class="bg-white-100 text-white text-center">
-        <h1 class="text-8xl">Novella</h1>
-        <h1 class="text-2xl">Library Management System</h1>
+      <div class="bg-white-100 text-white text-center mt-4">
+        <h1 class="text-6xl font-semibold">NOVELLA</h1>
+        <h1 class="text-1xl font-light overflow-visible">LIBRARY MANAGEMENT SYSTEM</h1>
       </div>
     </ul>
   </div>
