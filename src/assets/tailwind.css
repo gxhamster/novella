@@ -3,3 +3,12 @@
 @tailwind components;
 
 @tailwind utilities;
+
+@layer components {
+  .mainview-container {
+    @apply container h-full w-full laptop:pr-10 desktop:pr-20
+   }
+  .mainview-grid {
+      @apply grid grid-cols-2 laptop:gap-x-2 laptop:gap-y-8 laptop:w-10/12 desktop:gap-12 pr-20 justify-center
+  }
+}

@@ -5,11 +5,10 @@
     rounded-full 
     border-primary
     h-10
-    w-60 
+    laptop:w-50 
+    desktop:w-60
     text-2xl 
-    hover:bg-blue-100
-    hover:opacity-95
-    hover:text-black
+    hover:bg-blue-200
     font-light
     transition-all">{{ title }}</button>
 </template>

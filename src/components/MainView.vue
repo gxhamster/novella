@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen bg-white border-1 rounded-tl-lgg rounded-bl-lgg p-10 flex-grow">
+    <div class="w-screen bg-white border-1 rounded-tl-lgg rounded-bl-lgg laptop:p-5 desktop:p-10 flex-grow">
         <!-- <AddStudentPage/> -->
         <AddBookPage/>
     </div>

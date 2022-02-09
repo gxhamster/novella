@@ -4,7 +4,7 @@
     class="bg-primary fixed flex h-screen min-h-screen w-screen gap-1"
   >
     <Sidebar />
-    <div class="flex flex-col ml-20 mt-14">
+    <div class="flex flex-col laptop:ml-10 laptop:mt-8 desktop:ml-20 desktop:mt-14">
       <MainView />
       <div class="flex">
         <Counter title="Number of Students"/>
