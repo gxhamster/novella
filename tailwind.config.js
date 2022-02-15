@@ -6,9 +6,9 @@ module.exports = {
 
     extend: {
       colors: {
-        primary: "#447D9D",
+        primary: "#2B7FA0",
         background: "#F4F4F4",
-        secondary: "#E2E4E5",
+        secondary: "#E1E4E5",
         border: "#C1CFD6",
         steel: "#BDD0D7"
       },
@@ -20,10 +20,7 @@ module.exports = {
       },
       screens: {
       'laptop': '1024px',
-      // => @media (min-width: 1024px) { ... }
-
       'desktop': '1920px',
-      // => @media (min-width: 1280px) { ... }
     },
     },
 
