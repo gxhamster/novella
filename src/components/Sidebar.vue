@@ -1,40 +1,52 @@
 <template>
-  <div class="w-full ml-8 mt-10 mb-10 flex-shrink">
-    <ul class="flex flex-col justify-items-center">
-      <div class="flex justify-center  flex-shrink-0 laptop:mb-5 desktop:mb-7">
-        <img src="../assets/icon.png" class="laptop:w-32" alt="" />
+  <div class="bg-primary w-128 h-screen flex flex-col justify-around items-center py-7">
+    <Logo/>
+    <div class="flex flex-col my-2 items-center w-full justify-center gap-8" >
+      <div class="w-48" v-for="(name, index) in button_names" :key="name.id">
+        <SidebarButtons :title="name">
+          <component :is="icon_names[index]" :key="name.id" class="text-white rounded-full p-1 hover:bg-white hover:text-primary transition duration-150"/>
+        </SidebarButtons>
       </div>
-      <div class="text-center basis-1/4">
-        <h6 class="text-4xl text-white">Novella Library</h6>
-      </div>
-      <div class="flex flex-col pl-8 pr-8 laptop:gap-4 desktop:gap-6 mt-6 desktop:mb-6">
-        <SidebarButton title="Issue Books" />
-        <SidebarButton title="Recieve Books" />
-        <SidebarButton title="Add New Books" />
-        <SidebarButton title="Add New Student" />
-        <SidebarButton title="Issued List" />
-        <SidebarButton title="History" />
-      </div>
-      <div class="mt-6 flex-shrink">
-        <IconButtons/>
-      </div>
-      <div class="bg-white-100 text-white text-center mt-4">
-        <h1 class="text-6xl font-semibold">NOVELLA</h1>
-        <h1 class="text-1xl font-light">LIBRARY MANAGEMENT SYSTEM</h1>
-      </div>
-    </ul>
+    </div>
+    <NovellaLogo/>
   </div>
 </template>
 
 <script>
-import SidebarButton from "./SidebarButton.vue"
-import IconButtons from "./IconButtons.vue"
+import Logo from './Logo'
+import SidebarButtons from './SidebarButtons'
+import NovellaLogo from './NovellaLogo'
+import BookArrowRightOutlineIcon from 'vue-material-design-icons/BookArrowRightOutline.vue'
+import BookArrowLeftOutlineIcon from 'vue-material-design-icons/BookArrowLeftOutline.vue'
+import BookPlusOutlineIcon from 'vue-material-design-icons/BookPlusOutline.vue'
+import AccountMultiplePlusOutlineIcon from 'vue-material-design-icons/AccountMultiplePlusOutline.vue'
+import HistoryIcon from 'vue-material-design-icons/History.vue'
+import ViewDashboardOutlineIcon from 'vue-material-design-icons/ViewDashboardOutline.vue'
 
 export default {
   name: "Sidebar",
-  components: {
-    SidebarButton,
-    IconButtons
+  data() {
+    return {
+      icon_names: ["book-arrow-right-outline-icon", "book-arrow-left-outline-icon", "book-plus-outline-icon", "account-multiple-plus-outline-icon", "history-icon", "view-dashboard-outline-icon"],
+      button_names: ["Issue Book", "Recieve Book", "Add New Book", "Add New Student", "History", "Dashboard"]
+    }
   },
-};
+  components: {
+    Logo,
+    SidebarButtons,
+    NovellaLogo,
+    BookArrowRightOutlineIcon,
+    BookArrowLeftOutlineIcon,
+    BookPlusOutlineIcon,
+    AccountMultiplePlusOutlineIcon,
+    HistoryIcon,
+    ViewDashboardOutlineIcon
+  }
+}
 </script>
+
+<style>
+.sidebar {
+  width: 1000px
+}
+</style>
