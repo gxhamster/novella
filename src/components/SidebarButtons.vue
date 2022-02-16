@@ -1,7 +1,7 @@
 <template>
   <div v-on:mouseover="isActive = true" v-on:mouseleave="isActive = false" class="flex space-x-2 flex-grow">
     <slot :isActive="isActive"></slot>
-    <button class="text-white text-1xl">{{ title }}</button>
+    <button class="text-white desktop:text-lg laptop:text-md">{{ title }}</button>
   </div>
 </template>
 
@@ -19,3 +19,4 @@ export default {
   }
 }
 </script>
+

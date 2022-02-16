@@ -2,12 +2,16 @@
   "name": "novella",
   "version": "0.1.0",
   "private": true,
+  "description": "A Library Management App",
+  "author": "gxhamster",
+  "homepage": "https://github.com/gxhamster/novella",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
+    "electron:multbuild": "vue-cli-service electron:build --win nsis",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },

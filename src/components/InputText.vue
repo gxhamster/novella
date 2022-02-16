@@ -9,7 +9,7 @@
 export default {
   props: {
     title: String,
-    width: Number
+    width: String
   },
   computed: {
     widthFormat() {

@@ -1,3 +1,4 @@
+
 <template>
   <div class="desktop:p-20 laptop:p-12 bg-secondary rounded-lgg flex-grow overflow-hidden">
     <span class="block text-3xl font-medium">Issue Books to Students</span>
@@ -36,8 +37,8 @@ export default {
   data() {
     return {
       search_fields: ["Student Index", "Book ID"],
-      student_fields: ["Student Index", "Student Name", "Student Grade"],
-      book_fields: ["Book ID", "Book Name", "Author"]
+      student_fields: ["Student Index", "Student Name", "Student Grade", "Student Name", "Student Name"],
+      book_fields: ["Book ID", "Book Name", "Author", "Book Name", "Book Name"]
     }
   }
 }

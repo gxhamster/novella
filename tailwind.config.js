@@ -13,14 +13,18 @@ module.exports = {
         steel: "#BDD0D7"
       },
       width: {
-        '128': '26rem'
+        '128': '26rem',
+        '100': '20rem'
+      },
+      fontSize: {
+        '1.5xl': '1.28rem'
       },
       borderRadius: {
-        'lgg': '2.9rem',
+        'lgg': '2.1rem',
       },
       screens: {
       'laptop': '1024px',
-      'desktop': '1920px',
+      'desktop': '1600px',
     },
     },
 
