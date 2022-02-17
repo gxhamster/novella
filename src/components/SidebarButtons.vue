@@ -1,5 +1,5 @@
 <template>
-  <div v-on:mouseover="isActive = true" v-on:mouseleave="isActive = false" class="flex space-x-2 flex-grow">
+  <div v-on:mouseover="isActive = true" v-on:mouseleave="isActive = false" class="flex space-x-2 flex-grow cursor-pointer">
     <slot :isActive="isActive"></slot>
     <button class="text-white desktop:text-lg laptop:text-md">{{ title }}</button>
   </div>

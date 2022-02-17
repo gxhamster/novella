@@ -1,7 +1,7 @@
 <template>
   <div class="desktop:p-20 laptop:p-12 bg-secondary rounded-lgg flex-grow overflow-hidden">
     <span class="block text-3xl font-medium">Issue Books to Students</span>
-    <div class="flex justify-between desktop:mt-6 laptop:mt-5 gap-4">
+    <div class="flex justify-between desktop:mt-6 laptop:mt-5 gap-6">
       <div class="flex flex-col gap-10 ">
         <span class="text-2xl">Student Details</span>
         <div v-for="field in student_fields" :key="field.id" class="flex space-x-4">

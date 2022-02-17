@@ -25,6 +25,7 @@ module.exports = {
       screens: {
       'laptop': '1024px',
       'desktop': '1600px',
+      'max': '1920px'
     },
     },
 

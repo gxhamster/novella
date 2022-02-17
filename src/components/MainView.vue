@@ -2,7 +2,7 @@
     <main class="w-full h-full bg-background flex laptop:gap-10 laptop:p-10 desktop:gap-12 desktop:p-12 desktop:pt-4 laptop:pt-2">
         <div class="flex flex-col flex-grow pt-4 gap-4">
           <SearchBar class="self-end"/>
-          <IssueBooksPage/>
+          <AddNewStudentPage/>
           <div v-if="!hide_counter" class="desktop:h-32 laptop:h-24 mt-6 flex desktop:gap-x-10 laptop:gap-x-8">
             <BookCounter class="flex-grow"/>
             <div class="bg-secondary desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import IssueBooksPage from './IssueBooksPage'
 import MainViewButton from './MainViewButton'
 import SearchBar from './SearchBar'
+import AddNewStudentPage from './AddNewStudentPage.vue'
 
 import BookCounter from './BookCounter'
 import CogIcon from 'vue-material-design-icons/Cog.vue'
@@ -51,9 +51,9 @@ export default {
     }
   },
   components: {
-    IssueBooksPage,
     MainViewButton,
     SearchBar,
+    AddNewStudentPage,
     BookCounter,
     CogIcon,
     CommentQuoteOutlineIcon,
