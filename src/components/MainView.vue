@@ -4,8 +4,8 @@
           <SearchBar class="self-end"/>
           <AddNewStudentPage/>
           <div v-if="!hide_counter" class="desktop:h-32 laptop:h-24 mt-6 flex desktop:gap-x-10 laptop:gap-x-8">
-            <BookCounter class="flex-grow"/>
-            <div class="bg-secondary desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
+            <BookCounter title="Number of Unreturned Books" count="187" class="flex-grow"/>
+            <div class="bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
           </div>
         </div>
       <div class="flex flex-col gap-10 pt-20">
@@ -33,7 +33,7 @@
     </main>
 </template>
 
-<script>
+<script setup>
 import MainViewButton from './MainViewButton'
 import SearchBar from './SearchBar'
 import AddNewStudentPage from './AddNewStudentPage.vue'
@@ -42,6 +42,7 @@ import BookCounter from './BookCounter'
 import CogIcon from 'vue-material-design-icons/Cog.vue'
 import CommentQuoteOutlineIcon from 'vue-material-design-icons/CommentQuoteOutline.vue'
 import InformationIcon from 'vue-material-design-icons/Information.vue'
+
 
 export default {
   data() {
