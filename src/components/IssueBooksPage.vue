@@ -24,21 +24,12 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 import InputText from './InputText'
 import SearchButton from './SearchButton'
 
-export default {
-  components: {
-    InputText,
-    SearchButton
-  },
-  data() {
-    return {
-      search_fields: ["Student Index", "Book ID"],
-      student_fields: ["Student Index", "Student Name", "Student Grade"],
-      book_fields: ["Book ID", "Book Name", "Author"]
-    }
-  }
-}
+const search_fields = ref(["Student Index", "Book ID"])
+const student_fields =  ref(["Student Index", "Student Name", "Student Grade"])
+const book_fields =  ref(["Book ID", "Book Name", "Author"])
 </script>

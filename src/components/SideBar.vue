@@ -1,6 +1,6 @@
 <template>
   <div class="bg-primary desktop:w-128 laptop:w-100 h-screen flex flex-col justify-around items-center py-7">
-    <Logo class="laptop:px-6"/>
+    <SchoolLogo class="laptop:px-6"/>
     <div class="flex flex-col my-2 items-center w-full justify-center gap-8" >
       <div class="w-48" v-for="(name, index) in button_names" :key="name.id">
         <SidebarButtons :title="name">
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Logo from './Logo'
+import SchoolLogo from './SchoolLogo.vue'
 import SidebarButtons from './SidebarButtons'
 import NovellaLogo from './NovellaLogo'
 
@@ -27,7 +27,7 @@ import HistoryIcon from 'vue-material-design-icons/History.vue'
 import ViewDashboardOutlineIcon from 'vue-material-design-icons/ViewDashboardOutline.vue'
 
 export default {
-  name: "Sidebar",
+  name: "SideBar",
   data() {
     return {
       icon_names: ["book-arrow-right-outline-icon", "book-arrow-left-outline-icon", "book-plus-outline-icon", "account-multiple-plus-outline-icon", "history-icon", "view-dashboard-outline-icon"],
@@ -35,7 +35,7 @@ export default {
     }
   },
   components: {
-    Logo,
+    SchoolLogo,
     SidebarButtons,
     NovellaLogo,
     BookArrowRightOutlineIcon,

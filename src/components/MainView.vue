@@ -4,7 +4,7 @@
           <SearchBar class="self-end"/>
           <AddNewStudentPage/>
           <div v-if="!hide_counter" class="desktop:h-32 laptop:h-24 mt-6 flex desktop:gap-x-10 laptop:gap-x-8">
-            <BookCounter title="Number of Unreturned Books" count="187" class="flex-grow"/>
+            <BookCounter title="Number of Unreturned Books" :count="187" class="flex-grow"/>
             <div class="bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
           </div>
         </div>
@@ -26,17 +26,20 @@
             </template>
           </MainViewButton>
         </div>
-        <div class="text-center text-2xl bg-secondary desktop:w-72 laptop:w-60 rounded-lgg p-10 flex-grow">
-          Due Books
+        <div class="bg-secondary desktop:w-72 laptop:w-60 rounded-lgg p-8 flex-grow">
+          <DueBooks/>
         </div>
       </div>
     </main>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
 import MainViewButton from './MainViewButton'
 import SearchBar from './SearchBar'
 import AddNewStudentPage from './AddNewStudentPage.vue'
+import DueBooks from './DueBooks.vue'
 
 import BookCounter from './BookCounter'
 import CogIcon from 'vue-material-design-icons/Cog.vue'
@@ -44,21 +47,6 @@ import CommentQuoteOutlineIcon from 'vue-material-design-icons/CommentQuoteOutli
 import InformationIcon from 'vue-material-design-icons/Information.vue'
 
 
-export default {
-  data() {
-    return {
-      hide_counter: false,
-      styled_button: "text-primary animate-pulse",
-    }
-  },
-  components: {
-    MainViewButton,
-    SearchBar,
-    AddNewStudentPage,
-    BookCounter,
-    CogIcon,
-    CommentQuoteOutlineIcon,
-    InformationIcon
-  }
-}
+const hide_counter = ref(false)
+const styled_button = ref("text-primary animate-pulse")
 </script>

@@ -1,19 +1,11 @@
 <template>
   <div id="app" class="bg-background fixed flex h-screen min-h-screen w-screen" >
-    <Sidebar />
+    <SideBar />
     <MainView/>
   </div>
 </template>
 
-<script>
-import Sidebar from './components/Sidebar.vue'
+<script setup>
+import SideBar from './components/SideBar.vue'
 import MainView from './components/MainView'
-
-export default {
-  name: "App",
-  components: {
-    Sidebar,
-    MainView,
-  },
-};
 </script>

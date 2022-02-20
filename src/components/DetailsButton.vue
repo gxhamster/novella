@@ -5,12 +5,6 @@
   </button>
 </template>
 
-<script>
+<script setup>
 import ArrowRightIcon from 'vue-material-design-icons/ArrowRight.vue'
-
-export default {
-  components: {
-    ArrowRightIcon
-  }
-}
 </script>

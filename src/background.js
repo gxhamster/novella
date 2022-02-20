@@ -3,7 +3,9 @@
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const path = require('path')
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -18,7 +20,7 @@ async function createWindow() {
     minWidth: 1366,
     minHeight: 768,
     autoHideMenuBar: true,
-    icon: __dirname + '/src/assets/Icon.ico',
+    icon: path.join(__dirname, '../build/icons/icon.png'),
     webPreferences: {
 
       // Use pluginOptions.nodeIntegration, leave this alone

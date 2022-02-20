@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .subtext {
   font-size: 1.35rem;
 }
