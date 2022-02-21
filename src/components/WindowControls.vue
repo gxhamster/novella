@@ -1,7 +1,8 @@
 <template>
-  <div class="flex justify-end" :style="draggable ? drag_style : {'-webkit-user-select': 'none'}">
-    <MinusIcon @click="minimizeWindow" :style="undrag_style" @mouseenter="draggable = false" @mouseleave="draggable = true" class="transition duration-150 focus:bg-gray-500 hover:bg-gray-300 text-primary px-2"/>    
-    <WindowCloseIcon @click="closeWindow" :style="undrag_style" @mouseenter="draggable = false" @mouseleave="draggable = true" class="transition duration-150 focus:bg-gray-400 hover:bg-gray-300 text-primary px-2"/>
+  <div class="flex justify-end">
+    <div class="flex-grow" :style="drag_style"></div>
+    <MinusIcon @click="minimizeWindow"  class="transition duration-150 focus:bg-gray-500 hover:bg-gray-300 text-primary px-2 rounded-md"/>    
+    <WindowCloseIcon @click="closeWindow"  class="transition duration-150 focus:bg-gray-400 hover:bg-gray-300 text-primary px-2 rounded-md"/>
   </div>
 </template>
 
@@ -14,11 +15,6 @@ const drag_style = ref({
     '-webkit-app-region': 'drag',
     '-webkit-user-select': 'none'
   })
-
-const undrag_style = ref({
-  '-webkit-app-region': 'no-drag'
-})
-const draggable = ref(false)
 
 // function maximizeWindow() {
 //   window.api.maximizeWindow()
