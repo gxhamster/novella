@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-background fixed flex h-screen min-h-screen w-screen" >
+  <div id="app" class="bg-background fixed flex h-screen min-h-screen w-screen">
     <SideBar />
     <MainView/>
   </div>

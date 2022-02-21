@@ -14,6 +14,7 @@
     @apply desktop:w-160 laptop:w-100px overflow-hidden whitespace-nowrap truncate
   }
 
+
   /* .duebooks-title {
     width: 160px;
     overflow: hidden;
@@ -26,5 +27,11 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+}
+
+@layer utilities {
+  .w-title-bar {
+    width: 1366px;
   }
 }
