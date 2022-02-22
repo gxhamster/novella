@@ -4,9 +4,6 @@
     <div class="grid grid-cols-2 desktop:mt-16 laptop:mt-4 desktop:gap-y-12 laptop:gap-y-8 gap-x-6">
       <div v-for="field in student_fields" :key="field.id" class="flex space-x-4">
         <InputText :title="field" :width="field == 'Student Grade' ? '48' : 'full'"/>
-        <template v-if="search_fields.includes(field)">
-          <SearchButton class="self-end"/>
-        </template>
       </div>
       <div class="flex justify-center col-span-2">
         <PageButton title="Save"/>
@@ -17,13 +14,11 @@
 
 <script>
 import InputText from './InputText'
-import SearchButton from './SearchButton'
 import PageButton from './PageButton'
 
 export default {
   components: {
     InputText,
-    SearchButton,
     PageButton
   },
   data() {

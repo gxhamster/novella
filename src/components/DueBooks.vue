@@ -199,6 +199,6 @@ const due_groups = computed(() => {
 
 <style scoped>
 .custom-scroll-container {
-  height: calc(476px - 32px - 2.7rem);
+  height: calc(476px - 32px - 3.9rem);
 }
 </style>
