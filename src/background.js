@@ -18,11 +18,11 @@ async function createWindow() {
   const win = new BrowserWindow({
     width: 1366,
     height: 768,
-    minWidth: 1366,
-    minHeight: 768,
+    minWidth: 1280,
+    minHeight: 720,
     frame: false,
     transparent: true,
-    // resizable: false,
+    resizable: false,
     maximizable: true,
     autoHideMenuBar: true,
     icon: path.join(__dirname, '../build/icons/icon.png'),
@@ -44,6 +44,14 @@ async function createWindow() {
   }
 
 }
+
+if(process.platform === "linux") {
+  app.commandLine.appendSwitch('enable-transparent-visuals');
+  app.disableHardwareAcceleration();
+
+  app.on('ready', () => setTimeout(createWindow, 400));
+}
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -72,8 +80,9 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString())
     }
   }
-  createWindow()
+  // createWindow()
 })
+
 
 ipcMain.on('window-closed', () => {
   app.quit()
@@ -82,7 +91,7 @@ ipcMain.on('window-closed', () => {
 
 ipcMain.on('maximized', () => {
   console.log('max')
-  BrowserWindow
+  BrowserWindow.setResizable(true)
   BrowserWindow.getFocusedWindow().maximize()
 })
 

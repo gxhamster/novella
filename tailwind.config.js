@@ -25,10 +25,10 @@ module.exports = {
         '1.5xl': '1.28rem'
       },
       borderRadius: {
-        'lgg': '2.1rem',
+        'lgg': '1.9rem',
       },
       screens: {
-      'laptop': '1024px',
+      'laptop': '1280px',
       'desktop': '1600px',
       'max': '1920px'
     },

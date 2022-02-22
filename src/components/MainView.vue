@@ -1,6 +1,6 @@
 <template>
     <main class="w-full h-full bg-background flex laptop:gap-6 laptop:p-6 desktop:gap-6 desktop:p-6 desktop:pt-4 laptop:pt-2">
-        <WindowControls class="absolute right-3 top-3 w-title-bar"/> 
+        <WindowControls class="absolute right-3 top-0 w-title-bar "/> 
         <div class="flex flex-col flex-grow pt-4 gap-6">
           <SearchBar class="self-end"/>
           <AddNewStudentPage/>
@@ -27,7 +27,8 @@
             </template>
           </MainViewButton>
         </div>
-        <div class="bg-secondary desktop:w-72 laptop:w-60 p-8 rounded-lgg flex-grow scrollbar-thin scrollbar-thumb-blue-transparent scrollbar-track-transparent overflow-y-scroll">
+        <div class="bg-secondary desktop:w-72 laptop:w-60 p-4 rounded-lgg flex-grow overflow-hidden">
+          <h1 class="text-2xl text-center font-bold">Due Books</h1>
           <DueBooks />
         </div>
       </div>

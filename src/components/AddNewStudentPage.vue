@@ -1,7 +1,7 @@
 <template>
   <div class="desktop:p-20 max:p-28 laptop:p-12 bg-secondary rounded-lgg flex-grow scrollbar-thin scrollbar-thumb-transparent scrollbar-track-gray-transparent overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
     <span class="block text-3xl font-medium">Add New Student</span>
-    <div class="grid grid-cols-2 desktop:mt-16 laptop:mt-5 gap-y-12 gap-x-6">
+    <div class="grid grid-cols-2 desktop:mt-16 laptop:mt-4 desktop:gap-y-12 laptop:gap-y-8 gap-x-6">
       <div v-for="field in student_fields" :key="field.id" class="flex space-x-4">
         <InputText :title="field" :width="field == 'Student Grade' ? '48' : 'full'"/>
         <template v-if="search_fields.includes(field)">
