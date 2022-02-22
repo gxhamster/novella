@@ -14,7 +14,7 @@
     </div>
     <div :class="days < 6 && days >= 0 ? days_colors[days] : 'red'" class="flex tracking-tighter flex-col text-center w-14 h-14 aspect-square rounded-lg flex-shrink-0">
       <span class="font-bold text-1.5xl">{{ days }}</span>
-      <span class="text-sm flex-shrink">Days</span>
+      <span class="text-sm flex-shrink">{{ days != 1 ? 'Days' : 'Day'}}</span>
     </div>
   </div>
 </template>

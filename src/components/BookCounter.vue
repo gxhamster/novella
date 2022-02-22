@@ -2,7 +2,7 @@
   <div class="bg-secondary rounded-lgg p-4 desktop:pr-10 laptop:pr-4 flex">
     <div class="flex flex-grow desktop:gap-4 laptop:gap-2 items-center">
       <div class="bg-steel aspect-square border box-border p-5 flex justify-center items-center">
-        <BookOutlineIcon class="text-lg"/>
+        <BookOutlineIcon class="text-lg text-primary"/>
       </div>
       <div class="flex-grow h-full flex-shrink-0">
         <span class="font-medium text-1xl">{{ props.title }}</span>
