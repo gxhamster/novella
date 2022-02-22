@@ -15,7 +15,7 @@
 
 <style>
 .border {
-  border-radius: 24px;
+  border-radius: 20px;
 }
 </style>
 

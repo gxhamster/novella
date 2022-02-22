@@ -1,6 +1,6 @@
 <template>
   <div class="bg-primary desktop:w-128 laptop:w-100 h-screen flex flex-col justify-around items-center py-7">
-    <SchoolLogo class="laptop:px-6"/>
+    <SchoolLogo class="laptop:px-4"/>
     <div class="flex flex-col my-2 items-center w-full justify-center gap-8" >
       <div class="w-48" v-for="(name, index) in button_names" :key="name.id">
         <SidebarButtons :title="name">
@@ -10,7 +10,7 @@
         </SidebarButtons>
       </div>
     </div>
-    <NovellaLogo/>
+    <NovellaLogo />
   </div>
 </template>
 

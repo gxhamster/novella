@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex space-x-1 mb-1" :class="!show ? 'mb-5' : ''">
+    <div class="flex space-x-1 mb-1" :class="!show ? 'mb-3' : ''">
       <span class="text-1xl font-bold"> {{ props.title }} </span>
       <div @click="show = !show" class="cursor-pointer">
         <ChevronDownIcon v-show="show"/>

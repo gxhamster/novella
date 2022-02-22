@@ -25,7 +25,7 @@ module.exports = {
         '1.5xl': '1.28rem'
       },
       borderRadius: {
-        'lgg': '1.9rem',
+        'lgg': '1.5rem',
       },
       screens: {
       'laptop': '1280px',
