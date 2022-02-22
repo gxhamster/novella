@@ -80,7 +80,9 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString())
     }
   }
-  // createWindow()
+  if (process.platform == "win32") {
+    createWindow()
+  }
 })
 
 
@@ -96,7 +98,9 @@ ipcMain.on('maximized', () => {
 })
 
 ipcMain.on('minimized', () => {
-  BrowserWindow.getFocusedWindow().minimize()
+  const win = BrowserWindow.getFocusedWindow()
+  if (win != null || win != undefined)
+    win.minimize()
 })
 
 // Exit cleanly on request from parent process in development mode.
