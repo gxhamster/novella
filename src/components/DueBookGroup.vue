@@ -2,7 +2,7 @@
   <div>
     <div class="flex space-x-1 mb-1">
       <span class="text-1xl font-bold"> {{ props.title }} </span>
-      <div @click="show = !show">
+      <div @click="show = !show" class="cursor-pointer">
         <ChevronDownIcon v-show="show"/>
         <ChevronUpIcon v-show="!show"/>
       </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref} from 'vue'
+import { defineProps, ref, onBeforeMount} from 'vue'
 import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue'
 import ChevronUpIcon from 'vue-material-design-icons/ChevronUp.vue'
 
@@ -24,8 +24,13 @@ import DueBookItem from './DueBookItem.vue'
 
 const show = ref(false)
 
+onBeforeMount(() => {
+  show.value = props.initialShow
+})
+
 const props = defineProps({
   title: String,
+  initialShow: Boolean,
   children: Array
 })
 </script>

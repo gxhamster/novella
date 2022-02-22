@@ -1,8 +1,8 @@
 <template>
-  <div class="rounded-lg custom-scroll-container scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+  <div class="rounded-lg mt-3 custom-scroll-container scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
     <div class="pr-5"> 
       <div v-for="day in dates" :key="day">
-        <DueBookGroup :title="calculateDate(day)" :children="due_groups[day]"/>
+        <DueBookGroup :title="calculateDate(day)" :initialShow="day == 0 ? true : false" :children="due_groups[day]"/>
       </div>
     </div>
   </div>
@@ -199,6 +199,6 @@ const due_groups = computed(() => {
 
 <style scoped>
 .custom-scroll-container {
-  height: calc(476px - 32px - 3.9rem);
+  height: calc(476px - 32px - 4.5rem);
 }
 </style>
