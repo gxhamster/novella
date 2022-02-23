@@ -20,11 +20,11 @@ function calculateDate(day) {
   } else if (day == 1) {
     return 'Yesterday'
   } else {
-    const currentDate = Date.now()
+    const currentDate = new Date().getTime()
     const newDate = currentDate - (day * 24 * 60 * 60 * 1000)
     const dateObj = new Date(newDate)
     const d = dateObj.getUTCDate()
-    const m = dateObj.getUTCMonth()
+    const m = dateObj.getUTCMonth() + 1 // getUTCMonth() is zero based
     const y = dateObj.getUTCFullYear()
     console.log(`${d}/${m}/${y}`)
     return `${d}/${m}/${y}`

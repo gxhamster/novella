@@ -45,7 +45,19 @@ const dues = [
     title: "How to be a 10x developer",
     grade: "9 A",
     name: "Iyaan Azeez",
+    days: 10
+  },
+  {
+    title: "How to be a 10x developer",
+    grade: "9 A",
+    name: "Iyaan Azeez",
     days: 0
+  },
+  {
+    title: "How to be a 10x developer",
+    grade: "9 A",
+    name: "Iyaan Azeez",
+    days: 12
   },
   {
     title: "How to be a 10x developer",
@@ -75,7 +87,25 @@ const dues = [
     title: "How to be a 10x developer",
     grade: "9 A",
     name: "Iyaan Azeez",
-    days: 0
+    days: 7
+  },
+  {
+    title: "How to be a 10x developer",
+    grade: "9 A",
+    name: "Iyaan Azeez",
+    days: 45
+  },
+  {
+    title: "How to be a 10x developer",
+    grade: "9 A",
+    name: "Iyaan Azeez",
+    days: 23
+  },
+  {
+    title: "How to be a 10x developer",
+    grade: "9 A",
+    name: "Iyaan Azeez",
+    days: 4
   },
   {
     title: "How to be a 10x developer",
@@ -93,43 +123,13 @@ const dues = [
     title: "How to be a 10x developer",
     grade: "9 A",
     name: "Iyaan Azeez",
-    days: 0
+    days: 6
   },
   {
     title: "How to be a 10x developer",
     grade: "9 A",
     name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
+    days: 3
   },
   {
     title: "How to talk in discord",
