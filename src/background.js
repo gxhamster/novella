@@ -97,7 +97,7 @@ ipcMain.on('maximized', () => {
   const win = BrowserWindow.getFocusedWindow()
   if (win.isMaximized()) {
     win.unmaximize()
-  } else  {
+  } else if (win.isMaximizable()) {
     win.maximize()
   } 
 })

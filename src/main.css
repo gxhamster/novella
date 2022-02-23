@@ -101,7 +101,7 @@
 @layer utilities {
   @screen laptop {
     .custom-scroll-container {
-      height: calc(476px - 32px - 4.9rem);
+      height: calc(100% - 32px - 1.9rem);
     }
     .w-title-bar {
       width: 1366px;
@@ -110,7 +110,7 @@
   
   @screen desktop {
     .custom-scroll-container-desktop {
-      height: calc(702px - 32px - 2.9rem);
+      height: calc(100% - 32px - 1.9rem);
     }
     .w-title-bar {
       width: 1920px;
