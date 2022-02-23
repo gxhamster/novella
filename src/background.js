@@ -24,7 +24,8 @@ async function createWindow() {
     minHeight: minSize.height,
     frame: false,
     transparent: true,
-    resizable: false,
+    resizable: true,
+    maximizable: true,
     autoHideMenuBar: true,
     icon: path.join(__dirname, '../build/icons/icon.png'),
     webPreferences: {
@@ -43,14 +44,8 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
-
-  win.on("resized", testFunc)
-
 }
 
-const testFunc = () => {
-    console.log('resized')
-}
 
 
 if(process.platform === "linux") {
@@ -100,13 +95,11 @@ ipcMain.on('window-closed', () => {
 
 ipcMain.on('maximized', () => {
   const win = BrowserWindow.getFocusedWindow()
-  if (win.isMaximizable()) {
-    win.setResizable(true)
-    win.maximize()
-  } 
   if (win.isMaximized()) {
     win.unmaximize()
-  }
+  } else  {
+    win.maximize()
+  } 
 })
 
 
