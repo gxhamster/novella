@@ -26,7 +26,6 @@ function calculateDate(day) {
     const d = dateObj.getUTCDate()
     const m = dateObj.getUTCMonth() + 1 // getUTCMonth() is zero based
     const y = dateObj.getUTCFullYear()
-    console.log(`${d}/${m}/${y}`)
     return `${d}/${m}/${y}`
 
   }
@@ -59,9 +58,3 @@ const due_groups = computed(() => {
   return result
 })
 </script>
-
-<style scoped>
-/* .custom-scroll-container {
-  height: calc(476px - 32px - 4.9rem);
-} */
-</style>
