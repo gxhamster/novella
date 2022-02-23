@@ -14,14 +14,6 @@
     @apply desktop:w-160 laptop:w-100px overflow-hidden whitespace-nowrap truncate
   }
 
-
-  /* .duebooks-title {
-    width: 160px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  } */
-
   .duebooks-title-sm {
     width: 100px;
     overflow: hidden;
@@ -31,18 +23,21 @@
 }
 
 @layer utilities {
-  .w-title-bar {
-    width: 1366px;
-  }
   @screen laptop {
     .custom-scroll-container {
       height: calc(476px - 32px - 4.9rem);
+    }
+    .w-title-bar {
+      width: 1366px;
     }
   }
   
   @screen desktop {
     .custom-scroll-container-desktop {
       height: calc(702px - 32px - 2.9rem);
+    }
+    .w-title-bar {
+      width: 1920px;
     }
   }
 
