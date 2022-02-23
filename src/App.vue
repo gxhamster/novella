@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="bg-transparent fixed flex h-screen min-h-screen w-screen rounded-lg">
     <SideBar class="rounded-tl-xl rounded-bl-xl"/>
-    <MainView class="rounded-tr-xl rounded-br-xl"/>
+    <MainView class="rounded-tr-xl rounded-br-xl" />
   </div>
 </template>
 

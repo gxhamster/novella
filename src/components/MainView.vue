@@ -10,7 +10,7 @@
           </div>
         </div>
       <div class="flex flex-col gap-10 pt-20">
-        <div class="rounded-lgg px-10 flex items-center gap-5 flex-col h-1/4">
+        <div class="rounded-lgg px-10 flex items-center gap-5 flex-col h-1/5">
           <MainViewButton class="text-1xl" title="Settings">
             <template v-slot="{isActive}">
               <cog-icon :key="1" class="cursor-pointer rounded-full p-1 transition duration-150" :class="isActive ? styled_button : 'text-primary'"/>

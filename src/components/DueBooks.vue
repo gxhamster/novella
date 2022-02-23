@@ -11,148 +11,8 @@
 <script setup>
 import { computed } from 'vue'
 import DueBookGroup from './DueBookGroup.vue'
+import dues from './test_due_data'
 
-
-const dues = [
-  {
-    title: "Harry Potter and the Half Blood Prince",
-    grade: "9 A",
-    name: "Sharafudeen Jamaal",
-    days: 3
-  },
-  {
-    title: "Islamic Studies 9A",
-    grade: "9 A",
-    name: "Yamaan Ahmed Naseem",
-    days: 5
-  },
-  {
-    title: "How to think like a criminal",
-    grade: "9 A",
-    name: "Abdul Masyh",
-    days: 2
-  },
-  {
-    title: "How to talk in discord",
-    grade: "9 A",
-    name: "Sadhin Shareef",
-    days: 1
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to be a 10x developer",
-    grade: "9 A",
-    name: "Iyaan Azeez",
-    days: 0
-  },
-  {
-    title: "How to talk in discord",
-    grade: "9 A",
-    name: "Sadhin Shareef",
-    days: 1
-  },
-]
 
 function calculateDate(day) {
   if (day == 0) {
@@ -160,12 +20,15 @@ function calculateDate(day) {
   } else if (day == 1) {
     return 'Yesterday'
   } else {
-    const dateObj = new Date()
+    const currentDate = Date.now()
+    const newDate = currentDate - (day * 24 * 60 * 60 * 1000)
+    const dateObj = new Date(newDate)
     const d = dateObj.getUTCDate()
     const m = dateObj.getUTCMonth()
     const y = dateObj.getUTCFullYear()
-    console.log(`${d-day}/${m}/${y}`)
-    return `${d-day}/${m}/${y}`
+    console.log(`${d}/${m}/${y}`)
+    return `${d}/${m}/${y}`
+
   }
 } 
 
@@ -178,7 +41,7 @@ const dates = computed(() => {
       d.push(due.days)
     }
   }
-  d.sort()
+  d.sort((a, b) =>  a - b)
   
   return d
 })
@@ -199,6 +62,6 @@ const due_groups = computed(() => {
 
 <style scoped>
 .custom-scroll-container {
-  height: calc(476px - 32px - 4.5rem);
+  height: calc(476px - 32px - 3.0rem);
 }
 </style>
