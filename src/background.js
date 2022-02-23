@@ -13,17 +13,18 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
 
+const minSize = {width: 1280, height: 720}
+
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1366,
-    height: 768,
-    minWidth: 1280,
-    minHeight: 720,
+    width: minSize.width,
+    height: minSize.height,
+    minWidth: minSize.width,
+    minHeight: minSize.height,
     frame: false,
     transparent: true,
     resizable: false,
-    maximizable: true,
     autoHideMenuBar: true,
     icon: path.join(__dirname, '../build/icons/icon.png'),
     webPreferences: {
@@ -43,7 +44,14 @@ async function createWindow() {
     win.loadURL('app://./index.html')
   }
 
+  win.on("resized", testFunc)
+
 }
+
+const testFunc = () => {
+    console.log('resized')
+}
+
 
 if(process.platform === "linux") {
   app.commandLine.appendSwitch('enable-transparent-visuals');
@@ -90,12 +98,17 @@ ipcMain.on('window-closed', () => {
   app.quit()
 })
 
-
 ipcMain.on('maximized', () => {
-  console.log('max')
-  BrowserWindow.setResizable(true)
-  BrowserWindow.getFocusedWindow().maximize()
+  const win = BrowserWindow.getFocusedWindow()
+  if (win.isMaximizable()) {
+    win.setResizable(true)
+    win.maximize()
+  } 
+  if (win.isMaximized()) {
+    win.unmaximize()
+  }
 })
+
 
 ipcMain.on('minimized', () => {
   const win = BrowserWindow.getFocusedWindow()

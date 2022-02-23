@@ -34,4 +34,16 @@
   .w-title-bar {
     width: 1366px;
   }
+  @screen laptop {
+    .custom-scroll-container {
+      height: calc(476px - 32px - 4.9rem);
+    }
+  }
+  
+  @screen desktop {
+    .custom-scroll-container-desktop {
+      height: calc(702px - 32px - 2.9rem);
+    }
+  }
+
 }
