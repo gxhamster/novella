@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router"
+import { createRouter, createWebHashHistory } from "vue-router"
 import AddNewStudentPage from "./pages/AddNewStudentPage.vue"
 import IssueBooksPage from "./pages/IssueBooksPage.vue"
 import AddNewBook from "./pages/AddNewBook.vue"
@@ -44,7 +44,7 @@ const routes = [
   },
 ]
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes,
 })
 export { router, routes }

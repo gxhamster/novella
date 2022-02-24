@@ -26,6 +26,7 @@ async function createWindow() {
     transparent: true,
     resizable: true,
     maximizable: true,
+    show: false,
     autoHideMenuBar: true,
     icon: path.join(__dirname, '../build/icons/icon.png'),
     webPreferences: {
@@ -33,7 +34,11 @@ async function createWindow() {
       preload: path.join(__dirname, 'preload.js')
     },
   })
-  win.focus()
+
+  win.once('ready-to-show', () => {
+    win.show()
+    win.focus()
+  })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -46,20 +51,7 @@ async function createWindow() {
   }
 }
 
-
-
-if(process.platform === "linux") {
-  app.commandLine.appendSwitch('enable-transparent-visuals');
-  app.disableHardwareAcceleration();
-
-  app.on('ready', () => setTimeout(createWindow, 400));
-}
-
-
-// Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit()
   }
@@ -71,9 +63,11 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+if (process.platform === "linux") {
+    app.commandLine.appendSwitch('enable-transparent-visuals')
+    app.disableHardwareAcceleration()
+}
+
 app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
@@ -85,9 +79,10 @@ app.on('ready', async () => {
   }
   if (process.platform == "win32") {
     createWindow()
+  } else if (process.platform == "linux") {
+    setTimeout(createWindow, 400)
   }
 })
-
 
 ipcMain.on('window-closed', () => {
   app.quit()
