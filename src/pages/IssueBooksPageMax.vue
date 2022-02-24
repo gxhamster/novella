@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import InputText from './InputText'
-import SearchButton from './SearchButton'
+import InputText from '@/components/InputText'
+import SearchButton from '@/components/SearchButton'
 
 export default {
   components: {

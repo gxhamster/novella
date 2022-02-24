@@ -3,11 +3,13 @@
     <SchoolLogo class="laptop:px-4"/>
     <div class="flex flex-col my-2 items-center w-full justify-center gap-8" >
       <div class="w-48" v-for="(name, index) in button_names" :key="name.id">
+        <router-link :to="route_names[index]">
         <SidebarButtons :title="name">
           <template v-slot="{ isActive }">
             <component :is="icon_names[index]" :key="name.id" class="text-white cursor-pointer rounded-full p-1 transition duration-200" :class="isActive ? 'bg-white text-primary' : ''"/>
           </template>
         </SidebarButtons>
+      </router-link>
       </div>
     </div>
     <NovellaLogo />
@@ -31,7 +33,8 @@ export default {
   data() {
     return {
       icon_names: ["book-arrow-right-outline-icon", "book-arrow-left-outline-icon", "book-plus-outline-icon", "account-multiple-plus-outline-icon", "history-icon", "view-dashboard-outline-icon"],
-      button_names: ["Issue Book", "Recieve Book", "Add New Book", "Add New Student", "History", "Dashboard"]
+      button_names: ["Issue Book", "Recieve Book", "Add New Book", "Add New Student", "History", "Dashboard"],
+      route_names: ["issue_book", "recieve_book", "add_book", "add_student", "history", "dashboard"]
     }
   },
   components: {

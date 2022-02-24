@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <label class="block mb-2 laptop:text-sm desktop:text-md" for="text input">{{ props.title }}</label>
-    <input class="outline-none apperance-none border-2 rounded-full bg-secondary border-border py-2 px-4" :class="widthFormat" alt="Text Input">
+    <input class="outline-none apperance-none border-2 rounded-full bg-secondary border-border desktop:py-2 desktop:px-4 laptop:py-1 laptop:px-3" :class="widthFormat" alt="Text Input">
   </div>
 </template>
 
@@ -15,5 +15,3 @@
   const widthFormat = computed(() => `w-${props.width}`)
 
 </script>
-
-

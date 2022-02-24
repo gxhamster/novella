@@ -1,9 +1,10 @@
 <template>
     <main class="w-full h-full bg-background flex laptop:gap-6 laptop:p-6 desktop:gap-6 desktop:p-6 desktop:pt-4 laptop:pt-2">
-        <WindowControls class="absolute right-3 top-0 w-title-bar "/> 
+        <WindowControls class="absolute right-3 top-0 w-title-bar "/>
         <div class="flex flex-col flex-grow pt-4 gap-6">
           <SearchBar class="self-end"/>
-          <AddNewStudentPage/>
+          <!-- <AddNewStudentPage/> -->
+          <router-view />
           <div v-if="!hide_counter" class="desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
             <BookCounter title="Number of Unreturned Books" :count="187" class="flex-grow"/>
             <div class="bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
@@ -40,7 +41,7 @@ import { ref } from 'vue'
 
 import MainViewButton from './MainViewButton'
 import SearchBar from './SearchBar'
-import AddNewStudentPage from './AddNewStudentPage.vue'
+// import AddNewStudentPage from './AddNewStudentPage.vue'
 import DueBooks from './DueBooks.vue'
 import WindowControls from './WindowControls.vue'
 

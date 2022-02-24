@@ -95,11 +95,13 @@ ipcMain.on('window-closed', () => {
 
 ipcMain.on('maximized', () => {
   const win = BrowserWindow.getFocusedWindow()
-  if (win.isMaximized()) {
-    win.unmaximize()
-  } else if (win.isMaximizable()) {
-    win.maximize()
-  } 
+  if (win != null || win != undefined) {
+    if (win.isMaximized()) { 
+      win.unmaximize()
+    } else if (win.isMaximizable()) {
+      win.maximize()
+    } 
+  }
 })
 
 
