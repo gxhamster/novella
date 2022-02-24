@@ -27,7 +27,7 @@
             </template>
           </MainViewButton>
         </div>
-        <div class="bg-secondary desktop:w-72 laptop:w-60 p-4 rounded-lgg flex-grow overflow-hidden">
+        <div class="bg-secondary desktop:w-80 laptop:w-60 p-4 rounded-lgg flex-grow overflow-hidden">
           <h1 class="text-2xl text-center font-bold">Due Books</h1>
           <DueBooks />
         </div>

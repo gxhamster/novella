@@ -10,7 +10,7 @@ const routes = [
   {
     path: "/",
     name: "Home Page",
-    component: AddNewStudentPage,
+    component: IssueBooksPage,
   },
   {
     path: "/issue_book",
