@@ -28,13 +28,17 @@ import AccountMultiplePlusOutlineIcon from 'vue-material-design-icons/AccountMul
 import HistoryIcon from 'vue-material-design-icons/History.vue'
 import ViewDashboardOutlineIcon from 'vue-material-design-icons/ViewDashboardOutline.vue'
 
+import { routes } from '../router'
+
 export default {
   name: "SideBar",
   data() {
     return {
       icon_names: ["book-arrow-right-outline-icon", "book-arrow-left-outline-icon", "book-plus-outline-icon", "account-multiple-plus-outline-icon", "history-icon", "view-dashboard-outline-icon"],
       button_names: ["Issue Book", "Recieve Book", "Add New Book", "Add New Student", "History", "Dashboard"],
-      route_names: ["issue_book", "recieve_book", "add_book", "add_student", "history", "dashboard"]
+      // route_names: ["issue_book", "recieve_book", "add_book", "add_student", "history", "dashboard"]
+      route_names: routes.filter((item) => item.path !== '/').map((item) => item.path)
+
     }
   },
   components: {

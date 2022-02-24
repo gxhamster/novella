@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="flex justify-center space-x-12 laptop:mt-8 desktop:mt-14">
-      <PageButton title="Cancel" background="bg-red-300"/>
+      <PageButton title="Cancel" background="cancel-button-red"/>
       <PageButton title="Add"/>
     </div>
   </div>

@@ -5,11 +5,12 @@ import AddNewBook from "./pages/AddNewBook.vue"
 import RecieveBook from "./pages/RecieveBook.vue"
 import HistoryPage from "./pages/HistoryPage.vue"
 import DashBoard from "./pages/DashBoard.vue"
+
 const routes = [
   {
     path: "/",
-    name: "Issue Books",
-    component: IssueBooksPage,
+    name: "Home Page",
+    component: AddNewStudentPage,
   },
   {
     path: "/issue_book",
@@ -17,9 +18,9 @@ const routes = [
     component: IssueBooksPage,
   },
   {
-    path: "/add_student",
-    name: "Add Student",
-    component: AddNewStudentPage,
+    path: "/recieve_book",
+    name: "Recieve Book",
+    component: RecieveBook
   },
   {
     path: "/add_book",
@@ -27,9 +28,9 @@ const routes = [
     component: AddNewBook
   },
   {
-    path: "/recieve_book",
-    name: "Recieve Book",
-    component: RecieveBook
+    path: "/add_student",
+    name: "Add Student",
+    component: AddNewStudentPage,
   },
   {
     path: "/history",
@@ -46,4 +47,4 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 })
-export default router
+export { router, routes }
