@@ -32,7 +32,7 @@ import ViewDashboardOutlineIcon from 'vue-material-design-icons/ViewDashboardOut
 
 import { routes } from '../router'
 
-const current_active_btn_index = ref(null)
+const current_active_btn_index = ref(0)
 const btnClicked = (index) => {
     current_active_btn_index.value = index
 }

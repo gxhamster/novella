@@ -1,8 +1,9 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
+const { plugin } = require('electron-frameless-window-plugin')
 
 const path =  require('path')
 
@@ -17,13 +18,15 @@ const minSize = {width: 1280, height: 720}
 
 async function createWindow() {
   // Create the browser window.
+  nativeTheme.themeSource = 'dark'
   const win = new BrowserWindow({
     width: minSize.width,
     height: minSize.height,
     minWidth: minSize.width,
     minHeight: minSize.height,
+    // titleBarStyle: 'hidden',
     frame: false,
-    transparent: true,
+    // transparent: true,
     resizable: true,
     maximizable: true,
     show: false,
@@ -34,6 +37,7 @@ async function createWindow() {
       preload: path.join(__dirname, 'preload.js')
     },
   })
+
 
   win.once('ready-to-show', () => {
     win.show()
@@ -123,3 +127,7 @@ if (isDevelopment) {
   }
 
 }
+
+plugin({
+  setGlobal: true
+}) // apply to each window
