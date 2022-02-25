@@ -93,7 +93,7 @@ ipcMain.on('maximized', async () => {
   if (win != null || win != undefined) {
     console.log(`---- Is-Maximized: ${win.isMaximized()} ----`)
     console.log(`---- Is-Maximizable: ${win.isMaximizable()} ----`)
-    if (win.isMaximized()) {
+    if (await win.isMaximized()) {
       await win.unmaximize()
     } else {
       await win.maximize()
