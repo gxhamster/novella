@@ -91,8 +91,6 @@ ipcMain.on('window-closed', () => {
 ipcMain.on('maximized', async () => {
   const win = BrowserWindow.getFocusedWindow()
   if (win != null || win != undefined) {
-    console.log(`---- Is-Maximized: ${win.isMaximized()} ----`)
-    console.log(`---- Is-Maximizable: ${win.isMaximizable()} ----`)
     if (win.isMaximized()) {
       setTimeout(() => win.unmaximize(), 20)
     } else {

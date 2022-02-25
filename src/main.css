@@ -5,8 +5,8 @@
 /* Regualar */
 @font-face {
   font-family: 'Ubuntu';
-  src: url('assets/Ubuntu-Regular.ttf');
-  src: url('assets/Ubuntu-Regular.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-Regular.ttf');
+  src: url('~@/assets/fonts/Ubuntu-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,8 +14,8 @@
 /* Bold */
 @font-face {
   font-family: 'Ubuntu';
-  src: url('assets/Ubuntu-Bold.ttf');
-  src: url('assets/Ubuntu-Bold.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-Bold.ttf');
+  src: url('~@/assets/fonts/Ubuntu-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
@@ -23,8 +23,8 @@
 /* Italic */
 @font-face {
   font-family: 'Ubuntu';
-  src: url('assets/Ubuntu-Italic.ttf');
-  src: url('assets/Ubuntu-Italic.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-Italic.ttf');
+  src: url('~@/assets/fonts/Ubuntu-Italic.ttf') format('truetype');
   font-weight: normal;
   font-style: italic;
 }
@@ -32,8 +32,8 @@
 /* Bold Italic */
 @font-face {
   font-family: 'Ubuntu';
-  src: url('assets/Ubuntu-BoldItalic.ttf');
-  src: url('assets/Ubuntu-BoldItalic.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-BoldItalic.ttf');
+  src: url('~@/assets/fonts/Ubuntu-BoldItalic.ttf') format('truetype');
   font-weight: bold;
   font-style: italic;
 }
@@ -41,8 +41,8 @@
 /* Medium */
 @font-face {
   font-family: 'Ubuntu';
-  src: url('assets/Ubuntu-Medium.ttf');
-  src: url('assets/Ubuntu-Medium.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-Medium.ttf');
+  src: url('~@/assets/fonts/Ubuntu-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
@@ -50,8 +50,8 @@
 /* Medium Italic */
 @font-face {
   font-family: 'Ubuntu';
-  src: url('assets/Ubuntu-MediumItalic.ttf');
-  src: url('assets/Ubuntu-MediumItalic.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-MediumItalic.ttf');
+  src: url('~@/assets/fonts/Ubuntu-MediumItalic.ttf') format('truetype');
   font-weight: 500;
   font-style: italic;
 }
@@ -59,8 +59,8 @@
 /* Light */
 @font-face {
   font-family: 'Ubuntu';
-  src: url('assets/Ubuntu-Light.ttf');
-  src: url('assets/Ubuntu-Light.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-Light.ttf');
+  src: url('~@/assets/fonts/Ubuntu-Light.ttf') format('truetype');
   font-weight: 200;
   font-style: normal;
 }
@@ -68,14 +68,14 @@
 /* Light Italic */
 @font-face {
   font-family: 'Ubuntu';
-  src: url('assets/Ubuntu-LightItalic.ttf');
-  src: url('assets/Ubuntu-LightItalic.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-LightItalic.ttf');
+  src: url('~@/assets/fonts/Ubuntu-LightItalic.ttf') format('truetype');
   font-weight: 200;
   font-style: italic;
 }
 
 * {
-  font-family: 'Ubuntu';
+  font-family: 'Ubuntu', 'Arial';
 }
 
 /* Disable outline */
