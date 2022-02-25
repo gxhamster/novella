@@ -4,9 +4,9 @@
     <div class="flex flex-col my-2 items-center w-full justify-center gap-8" >
       <div class="w-48" v-for="(name, index) in button_names" :key="name.id">
         <router-link :to="route_names[index]">
-        <SidebarButtons :title="name">
-          <template v-slot="{ isActive }">
-            <component :is="icon_names[index]" :key="name.id" class="text-white cursor-pointer rounded-full p-1 transition duration-200" :class="isActive ? 'bg-white text-primary' : ''"/>
+        <SidebarButtons :title="name" @clicked="btnClicked(index)" :isActive="current_active_btn_index == index ? true : false">
+          <template v-slot="{ isHovered, isActive }">
+            <component :is="icon_names[index]" :key="name.id" class="text-white cursor-pointer rounded-full p-1 transition duration-200" :class="isHovered || isActive ? 'bg-white text-primary' : ''"/>
           </template>
         </SidebarButtons>
       </router-link>
@@ -16,7 +16,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
+
 import SchoolLogo from './SchoolLogo.vue'
 import SidebarButtons from './SidebarButtons'
 import NovellaLogo from './NovellaLogo'
@@ -30,29 +32,13 @@ import ViewDashboardOutlineIcon from 'vue-material-design-icons/ViewDashboardOut
 
 import { routes } from '../router'
 
-export default {
-  name: "SideBar",
-  data() {
-    return {
-      icon_names: ["book-arrow-right-outline-icon", "book-arrow-left-outline-icon", "book-plus-outline-icon", "account-multiple-plus-outline-icon", "history-icon", "view-dashboard-outline-icon"],
-      button_names: ["Issue Book", "Recieve Book", "Add New Book", "Add New Student", "History", "Dashboard"],
-      // route_names: ["issue_book", "recieve_book", "add_book", "add_student", "history", "dashboard"]
-      route_names: routes.filter((item) => item.path !== '/').map((item) => item.path)
-
-    }
-  },
-  components: {
-    SchoolLogo,
-    SidebarButtons,
-    NovellaLogo,
-    BookArrowRightOutlineIcon,
-    BookArrowLeftOutlineIcon,
-    BookPlusOutlineIcon,
-    AccountMultiplePlusOutlineIcon,
-    HistoryIcon,
-    ViewDashboardOutlineIcon
-  }
+const current_active_btn_index = ref(null)
+const btnClicked = (index) => {
+    current_active_btn_index.value = index
 }
+const icon_names = [BookArrowRightOutlineIcon, BookArrowLeftOutlineIcon, BookPlusOutlineIcon, AccountMultiplePlusOutlineIcon, HistoryIcon, ViewDashboardOutlineIcon]
+const button_names = ref(["Issue Book", "Recieve Book", "Add New Book", "Add New Student", "History", "Dashboard"])
+const route_names =  ref(routes.filter((item) => item.path !== '/').map((item) => item.path))
 </script>
 
 <style>

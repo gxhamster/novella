@@ -1,7 +1,7 @@
 <template>
-  <div v-on:mouseover="isActive = true" v-on:mouseleave="isActive = false" class="flex space-x-2 flex-grow cursor-pointer">
-    <slot :isActive="isActive"></slot>
-    <button @click="$emit('clicked')" class="text-white desktop:text-lg laptop:text-md">{{ props.title }}</button>
+  <div @mouseover="isHovered = true" @mouseleave="isHovered = false" @click="$emit('clicked')" class="flex space-x-2 flex-grow cursor-pointer">
+    <slot :isHovered="isHovered" :isActive="props.isActive"></slot>
+    <button class="text-white desktop:text-lg laptop:text-md">{{ props.title }}</button>
   </div>
 </template>
 
@@ -9,10 +9,10 @@
   import { defineEmits, ref, defineProps } from 'vue'
 
   defineEmits(['clicked'])
-  const isActive = ref(false)
+  const isHovered = ref(false)
   const props = defineProps({
     title: String,
-    image: String
+    image: String,
+    isActive: Boolean
   })
 </script>
-

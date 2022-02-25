@@ -16,7 +16,7 @@ const filteredWords = ref({
   'arse': 'a**e',
   'ass': 'a**',
   'bitch': 'b**ch',
-  'pussy': 'p**sy',
+  'pussy': 'p***y',
   'tit': 't*t',
   'boobs': 'b**bs',
   'idiot': '',

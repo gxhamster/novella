@@ -78,6 +78,11 @@
   font-family: 'Ubuntu';
 }
 
+/* Disable outline */
+:focus {
+  outline: unset;
+}
+
 @layer components {
   .mainview-container {
     @apply h-full w-full
