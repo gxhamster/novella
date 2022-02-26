@@ -41,7 +41,7 @@ app.get('/due_books', (req, res) => {
   return res.send(due_books)
 })
 
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server listening on port http://localhost:${process.env.PORT} !`)
+const PORT = 3000
+app.listen(PORT, () => {
+  console.log(`Server listening on port http://localhost:${PORT} !`)
 })
