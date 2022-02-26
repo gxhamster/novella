@@ -23,7 +23,7 @@
 import { defineProps, ref } from 'vue'
 
 const days_colors = ref({
-  0: "white",
+  0: "bg-secondary border-2 border-gray-400",
   1: "green",
   2: "yellow",
   3: "yellow",
