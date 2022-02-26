@@ -1,7 +1,7 @@
 <template>
-  <div class="flex gap-2 border-b-2 border-gray-300 py-2 ">
+  <div class="flex gap-2 border-b-2 border-gray-300 py-2 justify-between">
     <div class="flex flex-col flex-grow-0">
-      <span class="duebooks-title text-1xl">{{ name }}</span>
+      <span class="duebooks-title text-1xl"> {{ name }}</span>
       <div class="flex gap-4 text-xs">
         <div class="flex flex-col" id="grade">
           <span class="block font-bold">Grade</span>
