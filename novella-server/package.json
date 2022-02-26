@@ -7,8 +7,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "run": "PORT=3000 node index.js",
-    "dev": "PORT=3000 nodemon index.js"
+    "run": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
