@@ -21,7 +21,12 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-center space-x-12 laptop:mt-8 desktop:mt-14">
+    <div class="flex justify-center space-x-12 laptop:mt-8 desktop:mt-12">
+      <div v-for="field in date_fields" :key="field.name">
+        <DateInput :title="field.name"/>
+      </div>
+    </div>
+    <div class="flex justify-center space-x-12 laptop:mt-8 desktop:mt-12">
       <PageButton @click="cleanTextInputs" title="Cancel" background="cancel-button-red"/>
       <PageButton @click="sendToServer" title="Add"/>
     </div>
@@ -33,6 +38,7 @@ import { ref } from 'vue'
 import InputText from '@/components/InputText'
 import PageButton from '@/components/PageButton'
 import SearchButton from '@/components/SearchButton'
+import DateInput from '@/components/DateInput'
 
 // Student input
 const textStartArray1 = ref([])
@@ -57,6 +63,10 @@ const sendToServer = async () => {
   response.json().then(d => console.log(d))
 }
 
+const date_fields = [
+  { name: "Due Date", searchable: false},
+  { name: "Issue Date", searchable: false}
+]
 
 const student_fields =  [
   { name: "Student Index", searchable: true}, 
