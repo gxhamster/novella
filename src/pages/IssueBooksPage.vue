@@ -22,8 +22,8 @@
       </div>
     </div>
     <div class="flex justify-center space-x-12 laptop:mt-8 desktop:mt-12">
-      <div v-for="field in date_fields" :key="field.name">
-        <DateInput :title="field.name"/>
+      <div v-for="(field, index) in date_fields" :key="field.name">
+        <DateInput v-model="dateArray[index]" :title="field.name"/>
       </div>
     </div>
     <div class="flex justify-center space-x-12 laptop:mt-8 desktop:mt-12">
@@ -44,10 +44,13 @@ import DateInput from '@/components/DateInput'
 const textStartArray1 = ref([])
 // Book input
 const textStartArray2 = ref([])
+// Date input
+const dateArray = ref([new Date(), new Date()])
 
 const cleanTextInputs = () => {
     textStartArray1.value = textStartArray1.value.map(() => '')
     textStartArray2.value = textStartArray2.value.map(() => '')
+    dateArray.value = dateArray.value.map(() => '')
 }
 
 const sendToServer = async () => {
