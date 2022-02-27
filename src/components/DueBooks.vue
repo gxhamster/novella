@@ -19,14 +19,32 @@ const dues = ref([])
 
 const fetchDueBooks = async () => {
   const URL = 'http://localhost:3000/due_books'
-  const response = await fetch(URL)
-  const data = await response.json()
+  let response = {}
+  let data = {}
+  try {
+    response = await fetch(URL)
+    data = await response.json()
+  } catch {
+    console.log("[X] Cannot fetch data")
+    data = localStorage.getItem("dues")
+    if (data === null) {
+      console.log('[X] Cannot get local data')
+    } else {
+      data = JSON.parse(data)
+    }
+  }   
   return data
 }
 
 onMounted(async () => {
-  dues.value = await fetchDueBooks()
-  loading.value = false
+    dues.value = await fetchDueBooks()
+    if (dues.value !== 'null') {
+      localStorage.setItem("dues", JSON.stringify(dues.value))
+      loading.value = false
+    } else {
+      loading.value = true
+    }
+
 })
 
 function calculateDate(day) {
