@@ -13,9 +13,11 @@
 import { ref, onMounted, computed } from 'vue'
 import DueBookGroup from './DueBookGroup.vue'
 import LoadingIcon from './LoadingIcon.vue'
+import { useStore } from '@/stores/store.js'
 
+
+const store = useStore()
 const loading = ref(true)
-const dues = ref([])
 const failed = ref(false)
 
 const fetchDueBooks = async () => {
@@ -40,13 +42,15 @@ const fetchDueBooks = async () => {
 
 
 const setFetchData = async () => {
-    dues.value = await fetchDueBooks()
-    if (dues.value !== 'null') {
-      localStorage.setItem("dues", JSON.stringify(dues.value))
+    store.setDues(await fetchDueBooks())
+    if (store.dues !== 'null') {
+      localStorage.setItem("dues", JSON.stringify(store.dues))
       loading.value = false
       clearInterval(fetchInterval)
+      store.setDataFetched(true)
     } else {
       failed.value = true
+      store.setDataFetched(false)
     }
 }
 
@@ -77,7 +81,7 @@ function calculateDate(day) {
 const dates = computed(() => {
   const result = []
   const d = []
-  for (const due of dues.value) {
+  for (const due of store.dues) {
     if (!result[due.days]) {
       result[due.days] = []
       d.push(due.days)
@@ -91,7 +95,7 @@ const dates = computed(() => {
 const due_groups = computed(() => {
   const result = []
 
-  for (const due of dues.value) {
+  for (const due of store.dues) {
     if (!result[due.days]) {
       result[due.days] = []
     }

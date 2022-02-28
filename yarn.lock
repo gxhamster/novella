@@ -1828,7 +1828,7 @@
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
 
-"@vue/devtools-api@^6.0.0-beta.18":
+"@vue/devtools-api@^6.0.0-beta.18", "@vue/devtools-api@^6.0.0-beta.21":
   version "6.0.12"
   resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.0.12.tgz#7b57cce215ae9f37a86984633b3aa3d595aa5b46"
   integrity sha512-iO/4FIezHKXhiDBdKySCvJVh8/mZPxHpiQrTy+PXVqJZgpTPTdHy4q8GXulaY+UKEagdkBb0onxNQZ0LNiqVhw==
@@ -4321,11 +4321,6 @@ electron-devtools-installer@^3.2.0:
     semver "^7.2.1"
     tslib "^2.1.0"
     unzip-crx-3 "^0.2.0"
-
-electron-frameless-window-plugin@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/electron-frameless-window-plugin/-/electron-frameless-window-plugin-1.0.4.tgz#872b52098a3ff12b965642f20374e7ad7d819b32"
-  integrity sha512-RqoUS9Wi6mVzSv0aV+/XZ+SrPY8MTW21I0hlBFbyjhHpK2QPvD+iroA1vsm7G+sgPoXfrap94UaA7SketTABmw==
 
 electron-osx-sign@^0.5.0:
   version "0.5.0"
@@ -7507,6 +7502,14 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+pinia@^2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.0.11.tgz#ff03c714f5e5f16207280a4fc2eab01f3701ee2b"
+  integrity sha512-JzcmnMqu28PNWOjDgEDK6fTrIzX8eQZKPPKvu/fpHdpXARUj1xeVdFi3YFIMOWswqaBd589cpmAMdSSTryI9iw==
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.21"
+    vue-demi "*"
+
 pkg-dir@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-3.0.0.tgz#2749020f239ed990881b1f71210d51eb6523bea3"
@@ -9823,6 +9826,11 @@ vue-cli-plugin-tailwind@~2.2.18:
   version "2.2.18"
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-tailwind/-/vue-cli-plugin-tailwind-2.2.18.tgz#24608cad73c2bf87a561242814e17ab70a7b7e95"
   integrity sha512-aPGUDbBYDcZ2VzeKz/Orqk2qy3Gr90fkIVx796NWz+j8mpldtK3pqj2XbanbWVtrRLBg5cxRA6wHwPj3WuscQQ==
+
+vue-demi@*:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.1.tgz#f7e18efbecffd11ab069d1472d7a06e319b4174c"
+  integrity sha512-QL3ny+wX8c6Xm1/EZylbgzdoDolye+VpCXRhI2hug9dJTP3OUJ3lmiKN3CsVV3mOJKwFi0nsstbgob0vG7aoIw==
 
 vue-eslint-parser@^8.0.1:
   version "8.2.0"
