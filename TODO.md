@@ -2,6 +2,7 @@
 - [x] Create custom date picker
 - [x] DueBooks handle if cannot retrieve the data (timeout)
 - [ ] Global search component
+- [ ] Filter results in dropdown
 - [ ] Create dashboard page
 - [ ] Create history page
 - [ ] Create recieve book page

@@ -91,6 +91,10 @@
       @apply grid grid-cols-2 laptop:gap-x-2 laptop:gap-y-4 desktop:gap-8 desktop:pr-20 desktop:pl-20 laptop:pr-6 laptop:pl-4
   }
 
+  .thin-scrollbar {
+    @apply scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-scroll overflow-x-hidden scrollbar-thumb-rounded-full scrollbar-track-rounded-full
+  }
+
   .duebooks-title {
     @apply desktop:w-160 laptop:w-100px overflow-hidden whitespace-nowrap truncate
   }
