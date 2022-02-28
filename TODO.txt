@@ -1,2 +1,0 @@
-- Create custom date picker
-- DueBooks handle if cannot retrieve the data (timeout)
