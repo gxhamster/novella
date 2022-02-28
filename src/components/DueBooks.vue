@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-lg mt-3 custom-scroll-container custom-scroll-container-desktop scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-scroll overflow-x-hidden scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-    <LoadingIcon v-if="loading" />
+    <LoadingIcon :failed="failed" v-if="loading" />
     <div class="pr-5" v-if="!loading"> 
       <div v-for="day in dates" :key="day">
         <DueBookGroup :title="calculateDate(day)" :initialShow="day == 0 ? true : false" :children="due_groups[day]"/>
@@ -16,6 +16,7 @@ import LoadingIcon from './LoadingIcon.vue'
 
 const loading = ref(true)
 const dues = ref([])
+const failed = ref(false)
 
 const fetchDueBooks = async () => {
   const URL = 'http://localhost:3000/due_books'
@@ -27,8 +28,9 @@ const fetchDueBooks = async () => {
   } catch {
     console.log("[X] Cannot fetch data")
     data = localStorage.getItem("dues")
-    if (data === null) {
+    if (data === 'null') {
       console.log('[X] Cannot get local data')
+      failed.value = true
     } else {
       data = JSON.parse(data)
     }
@@ -36,15 +38,23 @@ const fetchDueBooks = async () => {
   return data
 }
 
-onMounted(async () => {
+
+const setFetchData = async () => {
     dues.value = await fetchDueBooks()
     if (dues.value !== 'null') {
       localStorage.setItem("dues", JSON.stringify(dues.value))
       loading.value = false
+      clearInterval(fetchInterval)
     } else {
-      loading.value = true
+      failed.value = true
     }
+}
 
+// If cannot retrieve data
+const fetchInterval = setInterval(setFetchData, 10000)
+
+onMounted(async () => {
+  setFetchData()
 })
 
 function calculateDate(day) {
