@@ -2,7 +2,7 @@
   <div class="relative">
     <magnify-icon :class="isActive ? 'animate-pulse' : ''" class="text-primary absolute desktop:top-4 desktop:right-6 laptop:top-2 laptop:right-6" icon="fa-regular fa-magnifying-glass" />
     <input v-model="searchText" @focus="setActive" @blur="isFocused = false" class="bg-secondary text-gray-500 rounded-full appearance-none text-right outline-none desktop:px-4 desktop:pr-20 laptop:pr-16 desktop:py-4 laptop:py-2" placeholder="Search..." >
-    <div id="search-dropdown" v-show="isActive || isFocused" @mouseenter="isActive = true" @mouseleave="isActive = false" class="border-2 border-black laptop:h-60 desktop:h-96 w-full p-3 laptop:mt-2 desktop:mt-3 bg-white rounded-lgg absolute">
+    <div id="search-dropdown" v-show="isActive || isFocused" @mouseenter="isActive = true" @mouseleave="isActive = false" class="border-2 z-50 border-black laptop:h-60 desktop:h-96 w-full p-3 laptop:mt-2 desktop:mt-3 bg-white rounded-lgg absolute">
       <div class="p-2 thin-scrollbar flex flex-col gap-2 custom-scroll-container pr-4">
         <span v-if="!store.data_fetched" class="text-1.5xl text-gray-500">No search results</span>
         <div v-for="result in filteredResults" :key="result.name">

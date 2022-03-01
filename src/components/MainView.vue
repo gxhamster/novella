@@ -1,12 +1,12 @@
 <template>
-    <main class="w-full h-full bg-background flex laptop:gap-6 laptop:p-6 desktop:gap-6 desktop:p-6 desktop:pt-4 laptop:pt-2">
+    <main class="w-full h-full backimg flex laptop:gap-6 laptop:p-6 desktop:gap-6 desktop:p-6 desktop:pt-4 laptop:pt-2">
         <WindowControls class="absolute right-3 top-0 w-title-bar "/>
         <div class="flex flex-col flex-grow pt-4 gap-6">
           <SearchBar class="self-end"/>
-          <router-view />
-          <div v-show="!hide_counter" class="desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
-            <BookCounter title="Number of Unreturned Books" :count="187" class="flex-grow"/>
-            <div class="bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
+          <router-view class="backdrop-blur-lg shadow-lg"/>
+          <div v-show="!hide_counter" class=" desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
+            <BookCounter title="Number of Unreturned Books" :count="187" class="shadow-md backdrop-blur-3xl flex-grow"/>
+            <div class="shadow-lg bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
           </div>
         </div>
       <div class="flex flex-col gap-10 pt-20">
@@ -27,7 +27,7 @@
             </template>
           </MainViewButton>
         </div>
-        <div class="bg-secondary desktop:w-80 laptop:w-60 p-4 rounded-lgg flex-grow overflow-hidden">
+        <div class="bg-secondary desktop:w-80 laptop:w-60 p-4 rounded-lgg flex-grow shadow-lg overflow-hidden">
           <h1 class="text-2xl text-center font-bold">Due Books</h1>
           <DueBooks />
         </div>
@@ -70,3 +70,11 @@ router.afterEach((to, from) => {
 
 const styled_button = ref("text-primary animate-pulse")
 </script>
+
+
+<style scoped>
+.backimg {
+  background-image: url("@/assets/background.png");
+  object-fit: cover;
+}
+</style>

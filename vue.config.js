@@ -1,3 +1,5 @@
+const webpack = require('webpack')
+
 module.exports = {
   pluginOptions: {
     electronBuilder: {
@@ -15,6 +17,12 @@ module.exports = {
     },
   },
   configureWebpack: {
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    },
+    runtimeChunk: 'single'
+  },
   module: {
     rules: [
       {

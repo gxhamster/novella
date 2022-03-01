@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="bg-transparent fixed flex h-screen min-h-screen w-screen">
-    <SideBar class="shadow-inner"/>
-    <MainView class="shadow-inner" />
+    <SideBar class=""/>
+    <MainView class="" />
   </div>
 </template>
 
