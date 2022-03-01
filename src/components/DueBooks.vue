@@ -13,10 +13,10 @@
 import { ref, onMounted, computed } from 'vue'
 import DueBookGroup from './DueBookGroup.vue'
 import LoadingIcon from './LoadingIcon.vue'
-import { useStore } from '@/stores/store.js'
+import { dueStore } from '@/stores/store.js'
 
 
-const store = useStore()
+const store = dueStore()
 const loading = ref(true)
 const failed = ref(false)
 

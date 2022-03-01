@@ -2,13 +2,14 @@ import express from 'express'
 import cors from 'cors'
 import 'dotenv/config'
 import dues from './src/test_due_data.js'
+import { student_data  } from './src/test_student_data.js'
 
 // App
 const app = express()
 
 const issued_books = []
 const books = []
-const students = []
+const students = student_data
 const due_books = dues
 
 // Middleware
@@ -17,6 +18,21 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Routes
+
+// Get routes
+
+app.get('/get_books', (req, res) => {
+  return res.send(books)
+})
+
+app.get('/get_users', (req, res) => {
+  return res.send(students)
+})
+
+app.get('/due_books', (req, res) => {
+  return res.send(due_books)
+})
+
 app.post('/issue_book', (req, res) => {
   const issue = {
     index: req.body.index,
@@ -37,9 +53,6 @@ app.post('/add_book', (req, res) => {
   return res.send('Add Book')
 })
 
-app.get('/due_books', (req, res) => {
-  return res.send(due_books)
-})
 
 const PORT = 3000
 app.listen(PORT, () => {
