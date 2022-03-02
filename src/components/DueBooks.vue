@@ -1,7 +1,7 @@
 <template>
   <div class="rounded-lg mt-3 custom-scroll-container custom-scroll-container-desktop scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-scroll overflow-x-hidden scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
     <LoadingIcon :failed="failed" v-if="loading" />
-    <div class="pr-5" v-if="!loading"> 
+    <div class="pr-5" v-if="!loading">
       <div v-for="day in dates" :key="day">
         <DueBookGroup :title="calculateDate(day)" :initialShow="day == 0 ? true : false" :children="due_groups[day]"/>
       </div>
@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, onUnmounted } from 'vue'
 import DueBookGroup from './DueBookGroup.vue'
 import LoadingIcon from './LoadingIcon.vue'
 import { dueStore } from '@/stores/store.js'
@@ -36,7 +36,7 @@ const fetchDueBooks = async () => {
     } else {
       data = JSON.parse(data)
     }
-  }   
+  }
   return data
 }
 
@@ -46,7 +46,6 @@ const setFetchData = async () => {
     if (store.dues !== 'null') {
       localStorage.setItem("dues", JSON.stringify(store.dues))
       loading.value = false
-      clearInterval(fetchInterval)
       store.setDataFetched(true)
     } else {
       failed.value = true
@@ -59,6 +58,10 @@ const fetchInterval = setInterval(setFetchData, 10000)
 
 onMounted(async () => {
   setFetchData()
+})
+
+onUnmounted(() => {
+  clearInterval(fetchInterval)
 })
 
 function calculateDate(day) {
@@ -76,7 +79,7 @@ function calculateDate(day) {
     return `${d}/${m}/${y}`
 
   }
-} 
+}
 
 const dates = computed(() => {
   const result = []
@@ -88,7 +91,7 @@ const dates = computed(() => {
     }
   }
   d.sort((a, b) =>  a - b)
-  
+
   return d
 })
 

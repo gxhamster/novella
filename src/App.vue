@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import SideBar from './components/SideBar.vue'
 import MainView from './components/MainView'
 import { userStore, bookStore } from '@/stores/store'
@@ -15,6 +15,7 @@ const store = userStore()
 const bookstore = bookStore()
 const loading = ref(true)
 const failed = ref(false)
+const refresh_interval = 100000
 
 // url: which endpoint to fetch from
 // local_store_key: localStorage key
@@ -45,7 +46,6 @@ const setFetchBookData = async () => {
     if (bookstore.books !== 'null') {
       localStorage.setItem(local_store_key, JSON.stringify(bookstore.books))
       loading.value = false
-      clearInterval(fetchInterval)
       bookstore.setDataFetched(true)
     } else {
       failed.value = true
@@ -60,7 +60,6 @@ const setFetchUserData = async () => {
     if (store.users !== 'null') {
       localStorage.setItem(local_store_key, JSON.stringify(store.users))
       loading.value = false
-      clearInterval(fetchInterval)
       store.setDataFetched(true)
     } else {
       failed.value = true
@@ -70,11 +69,15 @@ const setFetchUserData = async () => {
 const fetchInterval = setInterval(() => {
   setFetchBookData()
   setFetchUserData()
-}, 10000)
+}, refresh_interval)
 
 onMounted(() => {
   setFetchUserData()
   setFetchBookData()
+})
+
+onUnmounted(() => {
+  clearInterval(fetchInterval)
 })
 
 </script>

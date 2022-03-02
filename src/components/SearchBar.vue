@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, onUnmounted } from 'vue'
+import { ref, onUnmounted, watch, reactive } from 'vue'
 import MagnifyIcon from 'vue-material-design-icons/Magnify.vue'
 import { userStore, bookStore } from '@/stores/store'
 import SearchItem from './SearchItem.vue'
@@ -37,16 +37,30 @@ const inputDelay = 700
 const maxSearchItems = 30
 let results = []
 let timeout = null
+const result_obj = reactive({
+  user_data: null,
+  book_data: null
+})
+
+function setResult() {
+  results = [...result_obj.book_data, ...result_obj.user_data]
+  filteredResults.value = results
+}
+
+watch(result_obj, (new_result_obj) => {
+  if (Object.values(new_result_obj).filter(v => v === null).length === 0) {
+    setResult()
+  }
+})
 
 store.$onAction(({name, after}) => {
   // When data has been fetched add those to searcable results
   if (name === "setDataFetched") {
     after(() => {
-      results = [...results, ...store.users.map((v) => new SearchItemClass(prettyCapitalize(v.name), 'user', {
+      result_obj.user_data = [...store.users.map((v) => new SearchItemClass(prettyCapitalize(v.name), 'user', {
         grade: v.age,
         island: v.island
       }))]
-      filteredResults.value = results
     })
   }
 }, true)
@@ -77,9 +91,7 @@ bookstore.$onAction(({name, after}) => {
           arr[0].optional.stock = arr.length
         final_result.push(arr[0])
       }
-      results = [...results, ...final_result]
-
-      filteredResults.value = results
+      result_obj.book_data = [...final_result]
     })
   }
 }, true)

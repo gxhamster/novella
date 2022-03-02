@@ -5,7 +5,7 @@
           <SearchBar class="self-end"/>
           <router-view class="backdrop-blur-lg shadow-lg"/>
           <div v-show="!hide_counter" class=" desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
-            <BookCounter title="Number of Unreturned Books" :count="187" class="shadow-md backdrop-blur-3xl flex-grow"/>
+            <BookCounter title="Number of Due Books" :count="counter_value" class="shadow-md backdrop-blur-3xl flex-grow"/>
             <div class="shadow-lg bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
           </div>
         </div>
@@ -48,8 +48,11 @@ import BookCounter from './BookCounter'
 import CogIcon from 'vue-material-design-icons/Cog.vue'
 import CommentQuoteOutlineIcon from 'vue-material-design-icons/CommentQuoteOutline.vue'
 import InformationIcon from 'vue-material-design-icons/Information.vue'
+import { dueStore } from '@/stores/store'
 
 const router = useRouter()
+const duestore = dueStore()
+const counter_value = ref(0)
 const hide_counter = ref(false)
 const max_content_routes = [
   '/issue_book',
@@ -67,6 +70,17 @@ router.afterEach((to, from) => {
   }
 
 })
+
+// Get counter value
+duestore.$onAction(({name, after}) => {
+  // When data has been fetched add those to searcable results
+    after(() => {
+      if (name === "setDataFetched") {
+        if (duestore.data_fetched)
+          counter_value.value = duestore.dues.length
+      }
+    })
+}, true)
 
 const styled_button = ref("text-primary animate-pulse")
 </script>
