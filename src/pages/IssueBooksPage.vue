@@ -1,5 +1,5 @@
 <template>
-  <div class="desktop:p-20 laptop:py-10 laptop:px-14 bg-secondary rounded-lgg flex-grow overflow-hidden">
+  <div class="desktop:p-20 laptop:py-10 laptop:px-14 bg-secondary rounded-lgg flex-grow">
     <span class="block desktop:text-3xl laptop:text-2xl font-medium">Issue Books to Students</span>
     <div class="flex justify-between desktop:mt-6 laptop:mt-3 gap-10">
       <div class="flex flex-col laptop:gap-6 desktop:gap-12">
@@ -67,17 +67,17 @@ const sendToServer = async () => {
 }
 
 const date_fields = [
-  { name: "Due Date", searchable: false},
-  { name: "Issue Date", searchable: false}
+  { name: "Issue Date", searchable: false},
+  { name: "Due Date", searchable: false}
 ]
 
 const student_fields =  [
-  { name: "Student Index", searchable: true}, 
-  { name: "Student Name", searchable: false}, 
+  { name: "Student Index", searchable: true},
+  { name: "Student Name", searchable: false},
   { name: "Student Grade", searchable: false}
 ]
 const book_fields =  [
-  { name: "Book ID", searchable: true}, 
+  { name: "Book ID", searchable: true},
   { name: "Book Name", searchable: false},
   { name: "Author", searchable: false}
 ]

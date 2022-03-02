@@ -13,8 +13,6 @@
   </div>
 </template>
 
-
-
 <script setup>
 import { defineProps } from 'vue'
 import BookIcon from 'vue-material-design-icons/Book.vue'

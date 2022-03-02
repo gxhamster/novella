@@ -56,12 +56,12 @@ const counter_value = ref(0)
 const hide_counter = ref(false)
 const max_content_routes = [
   '/issue_book',
-  '/'
+  '/',
+  '/add_book'
 ]
 
 router.afterEach((to, from) => {
   const to_path = to.path
-  console.log(from)
   const r = max_content_routes.filter((v) => to_path === v)
   if (r.length !== 0 && from.path !== 'undefined') {
     hide_counter.value = true
