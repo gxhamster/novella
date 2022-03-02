@@ -479,5 +479,5 @@ export const book_data = [
 {isbn: '124.969', title: 'Saaridhoalhaai fufpaahan', ddc: '823.912', publisher: 'Bookline printers and publishers', subject: 'Dhivehi fiction', author: 'Ahmed shafeeu', year: '2012', pages: '12', bnumber: '9991599223'},
 {isbn: '44444', title: 'story of ashraf and hetti', ddc: 'fhwuehfw', publisher: 'hetti', subject: 'english', author: 'ashraf', year: '2000', pages: '200', bnumber: '1234'},
 {isbn: '44448', title: 'story of ashraf and hetti', ddc: 'fhwuehfw', publisher: 'hetti', subject: 'english', author: 'ashraf', year: '2000', pages: '200', bnumber: '1234'},
-{isbn: 'Nulibunu eid ge ufaa', title: '124.1408', ddc: '', publisher: 'School health and safety section skid ministry of education', subject: 'Fiction', author: 'Aiminath abeer ibrahim', year: '2013', pages: '8', bnumber: ''}
+{isbn: '124.1408', title: 'Nulibunu eid ge ufaa', ddc: '', publisher: 'School health and safety section skid ministry of education', subject: 'Fiction', author: 'Aiminath abeer ibrahim', year: '2013', pages: '8', bnumber: ''}
 ]
