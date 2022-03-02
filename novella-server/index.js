@@ -3,12 +3,13 @@ import cors from 'cors'
 import 'dotenv/config'
 import dues from './src/test_due_data.js'
 import { student_data  } from './src/test_student_data.js'
+import { book_data } from './src/test_book_data.js'
 
 // App
 const app = express()
 
 const issued_books = []
-const books = []
+const books = book_data
 const students = student_data
 const due_books = dues
 

@@ -59,7 +59,7 @@ const max_content_routes = [
 router.afterEach((to, from) => {
   const to_path = to.path
   console.log(from)
-  const r = max_content_routes.filter((v) => to_path === v) 
+  const r = max_content_routes.filter((v) => to_path === v)
   if (r.length !== 0 && from.path !== 'undefined') {
     hide_counter.value = true
   } else {
