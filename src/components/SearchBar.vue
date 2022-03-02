@@ -53,9 +53,9 @@ bookstore.$onAction(({name, after}) => {
   if (name === "setDataFetched") {
     after(() => {
       results = [...results, ...bookstore.books.map((v) => new SearchItemClass(v.title, 'book', {
-        publisher: v.publisher,
+        author: v.author === '' ? 'N/A' : prettyCapitalize(v.author),
         subject: prettyCapitalize(v.subject),
-        author: prettyCapitalize(v.author)
+        publisher: prettyCapitalize(v.publisher)
       }))]
       filteredResults.value = results
     })

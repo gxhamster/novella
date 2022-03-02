@@ -3,10 +3,10 @@
     <component class="pr-4 text-gray-700 rounded-full" :is="icons[props.dataType]" :size="40"></component>
     <section class="flex justify-around flex-col flex-grow">
       <span class="text-1.5xl font-medium">{{ props.title }}</span>
-      <div class="flex flex-col font-light">
+      <div class="flex text-sm flex-col font-light">
         <div v-for="data of Object.keys(props.optionalData)" :key="data">
           <span class="font-regular">{{ `${prettyCapitalize(data)}: ` }}</span>
-          <span>{{ props.optionalData[data] }}</span>
+          <span class="font-medium">{{ props.optionalData[data] }}</span>
         </div>
       </div>
     </section>
