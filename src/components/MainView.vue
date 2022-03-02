@@ -3,10 +3,10 @@
         <WindowControls class="absolute right-3 top-0 w-title-bar "/>
         <div class="flex flex-col flex-grow pt-4 gap-6">
           <SearchBar class="self-end"/>
-          <router-view class="backdrop-blur-lg shadow-lg"/>
+          <router-view class="custom-shadow"/>
           <div v-show="!hide_counter" class=" desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
-            <BookCounter title="Number of Due Books" :count="counter_value" class="shadow-md backdrop-blur-3xl flex-grow"/>
-            <div class="shadow-lg bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
+            <BookCounter title="Number of Due Books" :count="counter_value" class="custom-shadow flex-grow"/>
+            <div class="custom-shadow bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
           </div>
         </div>
       <div class="flex flex-col gap-10 pt-20">
@@ -27,7 +27,7 @@
             </template>
           </MainViewButton>
         </div>
-        <div class="bg-secondary desktop:w-80 laptop:w-60 p-4 rounded-lgg flex-grow shadow-lg overflow-hidden">
+        <div class="bg-secondary desktop:w-80 laptop:w-60 p-4 rounded-lgg flex-grow custom-shadow overflow-hidden">
           <h1 class="text-2xl text-center font-bold">Due Books</h1>
           <DueBooks />
         </div>

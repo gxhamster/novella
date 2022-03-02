@@ -112,6 +112,10 @@
     background: #C58585;
   }
 
+  .custom-shadow {
+    @apply shadow-sm hover:shadow-md transition duration-150
+  }
+
   @screen laptop {
     .custom-scroll-container {
       height: calc(100% - 32px - 1.9rem);

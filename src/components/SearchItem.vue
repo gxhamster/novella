@@ -2,11 +2,11 @@
   <div class="flex bg-secondary rounded-md cursor-pointer hover:shadow-md transition-all p-2 flex">
     <component class="pr-4 text-gray-700 rounded-full" :is="icons[props.dataType]" :size="40"></component>
     <section class="flex justify-around flex-col flex-grow">
-      <span class="text-1.5xl font-medium">{{ props.title }}</span>
+      <span class="text-1xl">{{ props.title }}</span>
       <div class="flex text-sm flex-col font-light">
         <div v-for="data of Object.keys(props.optionalData)" :key="data">
-          <span class="font-regular">{{ `${prettyCapitalize(data)}: ` }}</span>
-          <span class="font-medium">{{ props.optionalData[data] }}</span>
+          <span class="font-light">{{ `${prettyCapitalize(data)}: ` }}</span>
+          <span class="font-normal">{{ props.optionalData[data] }}</span>
         </div>
       </div>
     </section>
