@@ -1,5 +1,5 @@
 <template>
-    <main class="w-full h-full backimg flex laptop:gap-6 laptop:p-6 desktop:gap-6 desktop:p-6 desktop:pt-4 laptop:pt-2">
+    <main class="w-full h-full bg-background flex laptop:gap-6 laptop:p-6 desktop:gap-6 desktop:p-6 desktop:pt-4 laptop:pt-2">
         <WindowControls class="absolute right-3 top-0 w-title-bar "/>
         <div class="flex flex-col flex-grow pt-4 gap-6">
           <SearchBar class="self-end"/>
@@ -115,11 +115,3 @@ duestore.$onAction(({name, after}) => {
 
 const styled_button = ref("text-primary animate-pulse")
 </script>
-
-
-<style scoped>
-.backimg {
-  background-image: url("@/assets/background.png");
-  object-fit: cover;
-}
-</style>
