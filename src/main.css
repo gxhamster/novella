@@ -6,7 +6,7 @@
 @font-face {
   font-family: 'Ubuntu';
   src: url('~@/assets/fonts/Ubuntu-Regular.ttf');
-  src: url('~@/assets/fonts/Ubuntu-Regular.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-Regular.ttf') format('ttf');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @font-face {
   font-family: 'Ubuntu';
   src: url('~@/assets/fonts/Ubuntu-Bold.ttf');
-  src: url('~@/assets/fonts/Ubuntu-Bold.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-Bold.ttf') format('ttf');
   font-weight: bold;
   font-style: normal;
 }
@@ -24,7 +24,7 @@
 @font-face {
   font-family: 'Ubuntu';
   src: url('~@/assets/fonts/Ubuntu-Italic.ttf');
-  src: url('~@/assets/fonts/Ubuntu-Italic.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-Italic.ttf') format('ttf');
   font-weight: normal;
   font-style: italic;
 }
@@ -33,7 +33,7 @@
 @font-face {
   font-family: 'Ubuntu';
   src: url('~@/assets/fonts/Ubuntu-BoldItalic.ttf');
-  src: url('~@/assets/fonts/Ubuntu-BoldItalic.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-BoldItalic.ttf') format('ttf');
   font-weight: bold;
   font-style: italic;
 }
@@ -42,7 +42,7 @@
 @font-face {
   font-family: 'Ubuntu';
   src: url('~@/assets/fonts/Ubuntu-Medium.ttf');
-  src: url('~@/assets/fonts/Ubuntu-Medium.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-Medium.ttf') format('ttf');
   font-weight: 500;
   font-style: normal;
 }
@@ -51,7 +51,7 @@
 @font-face {
   font-family: 'Ubuntu';
   src: url('~@/assets/fonts/Ubuntu-MediumItalic.ttf');
-  src: url('~@/assets/fonts/Ubuntu-MediumItalic.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-MediumItalic.ttf') format('ttf');
   font-weight: 500;
   font-style: italic;
 }
@@ -60,7 +60,7 @@
 @font-face {
   font-family: 'Ubuntu';
   src: url('~@/assets/fonts/Ubuntu-Light.ttf');
-  src: url('~@/assets/fonts/Ubuntu-Light.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-Light.ttf') format('ttf');
   font-weight: 200;
   font-style: normal;
 }
@@ -69,7 +69,7 @@
 @font-face {
   font-family: 'Ubuntu';
   src: url('~@/assets/fonts/Ubuntu-LightItalic.ttf');
-  src: url('~@/assets/fonts/Ubuntu-LightItalic.ttf') format('truetype');
+  src: url('~@/assets/fonts/Ubuntu-LightItalic.ttf') format('ttf');
   font-weight: 200;
   font-style: italic;
 }
