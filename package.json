@@ -14,12 +14,11 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
-  "main": "background.js",
+  "main": "src/background.js",
   "dependencies": {
     "@tailwindcss/postcss7-compat": "^2.2.17",
     "autoprefixer": "^9",
     "core-js": "^3.21.1",
-    "electron": "^17.1.0",
     "pinia": "^2.0.11",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
@@ -35,6 +34,7 @@
     "@vue/cli-plugin-eslint": "~5.0.1",
     "@vue/cli-service": "~5.0.1",
     "@vue/compiler-sfc": "^3.1.0-0",
+    "electron": "17.0.0",
     "electron-devtools-installer": "^3.2.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
