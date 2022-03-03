@@ -1,5 +1,5 @@
 <template>
-  <button @click="emit('clicked')" class="hover:opacity-90 transition duration-150 px-4 desktop:py-3 laptop:py-2 w-28 text-white rounded-full" :class="`${props.background} ${props.text_color}`">
+  <button @click="emit('clicked')" class="hover:opacity-90 transition duration-150 px-4 desktop:py-3 laptop:py-2 h-12 w-28 text-white rounded-full" :class="`${props.background} ${props.text_color}`">
     {{ props.title }}
   </button>
 </template>

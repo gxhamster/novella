@@ -48,6 +48,7 @@ function setResult() {
 }
 
 watch(result_obj, (new_result_obj) => {
+  // Wait for both stores to get fetch data
   if (Object.values(new_result_obj).filter(v => v === null).length === 0) {
     setResult()
   }

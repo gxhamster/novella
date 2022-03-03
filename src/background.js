@@ -34,7 +34,6 @@ async function createWindow() {
     },
   })
 
-
   win.once('ready-to-show', () => {
     win.show()
     win.focus()
@@ -87,6 +86,7 @@ app.on('ready', async () => {
 ipcMain.on('window-closed', () => {
   app.quit()
 })
+
 
 ipcMain.on('maximized', async () => {
   const win = BrowserWindow.getFocusedWindow()

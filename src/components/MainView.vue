@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import MainViewButton from './MainViewButton'
@@ -52,6 +52,7 @@ import { dueStore } from '@/stores/store'
 
 const router = useRouter()
 const duestore = dueStore()
+const maximized = ref(false)
 const counter_value = ref(0)
 const hide_counter = ref(false)
 const max_content_routes = [
@@ -69,6 +70,12 @@ router.afterEach((to, from) => {
     hide_counter.value = false
   }
 
+})
+
+watch(maximized, (nValue) => {
+  if (nValue) {
+    hide_counter.value = false
+  }
 })
 
 // Get counter value

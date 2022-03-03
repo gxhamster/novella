@@ -1,11 +1,15 @@
-import { contextBridge, ipcRenderer } from 'electron'
-const { cpus, totalmem } = require('os')
+import { contextBridge, ipcRenderer, BrowserWindow } from 'electron'
 
 const API = {
-  cpus: cpus(),
+  max: false,
   closeWindow: () => ipcRenderer.send('window-closed'),
   minimizeWindow: () => ipcRenderer.send('minimized'),
   maximizeWindow: () => ipcRenderer.send('maximized')
 }
+
+// Reply events
+ipcRenderer.on('is-window-max:reply', (event, arg) => {
+  API.max = arg
+})
 
 contextBridge.exposeInMainWorld("api", API)

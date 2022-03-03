@@ -26,9 +26,9 @@ module.exports = {
         'lgg': '1.5rem',
       },
       screens: {
-      'laptop': '1280px',
-      'desktop': '1600px',
-      'max': '1920px'
+      'laptop': { raw: '(min-width: 1280px) and (min-height: 500px)'},
+      'desktop': { raw: '(min-width: 1600px) and (min-height: 800px)'},
+      'max': { raw: '(min-width: 1920px) and (min-height: 1080px)'}
     },
     },
 
