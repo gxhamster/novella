@@ -77,17 +77,19 @@ bookstore.$onAction(({name, after}) => {
       }))]
 
       // Group objects by title
-      const grouped_result = {}
+      const grouped_result = new Map()
       for (const obj of book_results) {
-        const title = obj.title.toLowerCase()
-        if (!grouped_result[title]) {
-          grouped_result[title] = []
+        const title = obj.title.toLowerCase().trim()
+        if (!grouped_result.get(title)) {
+          grouped_result.set(title, [])
         }
-        grouped_result[title].push(obj)
+        grouped_result.set(title, [...grouped_result.get(title), obj])
       }
 
+      console.log(grouped_result)
+
       const final_result = []
-      for (const arr of Object.values(grouped_result)) {
+      for (const arr of grouped_result.values()) {
         if (arr.length > 1)
           arr[0].optional.stock = arr.length
         final_result.push(arr[0])
