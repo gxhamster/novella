@@ -34,6 +34,15 @@ async function createWindow() {
     },
   })
 
+  win.on("maximize", () => {
+    win.webContents.send('is-window-max:reply', true)
+  })
+
+
+  win.on("unmaximize", () => {
+    win.webContents.send('is-window-max:reply', false)
+  })
+
   win.once('ready-to-show', () => {
     win.show()
     win.focus()
@@ -99,6 +108,15 @@ ipcMain.on('maximized', async () => {
   }
 })
 
+ipcMain.on('is-window-max', (event, arg) => {
+  const win = BrowserWindow.getFocusedWindow()
+  let max = null
+  if (win != null || win != undefined) {
+    if ((max = win.isMaximized())) {
+      event.reply('is-window-max:reply', max)
+    }
+  }
+})
 
 ipcMain.on('minimized', () => {
   const win = BrowserWindow.getFocusedWindow()

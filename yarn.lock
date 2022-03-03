@@ -998,7 +998,7 @@
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
 
-"@electron/get@^1.0.1":
+"@electron/get@^1.13.0":
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/@electron/get/-/get-1.13.1.tgz#42a0aa62fd1189638bd966e23effaebb16108368"
   integrity sha512-U5vkXDZ9DwXtkPqlB45tfYnnYBN8PePp1z/XDCupnSpdrxT8/ThCv9WCwPLf9oqiSGZTkH6dx2jDUPuoXpjkcA==
@@ -1428,9 +1428,9 @@
   integrity sha512-zWt4SDDv1S9WRBNxLFxFRHxdD9tvH8f5/kg5/IaLFdnSNXsDY4eL3Q3XXN+VxUnWIhyVFDwcsmAprvwXoM/ClA==
 
 "@types/node@^14.6.2":
-  version "14.18.10"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.10.tgz#774f43868964f3cfe4ced1f5417fe15818a4eaea"
-  integrity sha512-6iihJ/Pp5fsFJ/aEDGyvT4pHGmCpq7ToQ/yf4bl5SbVAvwpspYJ+v3jO7n8UyjhQVHTy+KNszOozDdv+O6sovQ==
+  version "14.18.12"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.12.tgz#0d4557fd3b94497d793efd4e7d92df2f83b4ef24"
+  integrity sha512-q4jlIR71hUpWTnGhXWcakgkZeHa3CCjcQcnuzU8M891BAWA2jHiziiWEPEkdS5pFsz7H9HJiy8BrK7tBRNrY7A==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -2761,9 +2761,9 @@ boolbase@^1.0.0:
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
 boolean@^3.0.1:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/boolean/-/boolean-3.1.4.tgz#f51a2fb5838a99e06f9b6ec1edb674de67026435"
-  integrity sha512-3hx0kwU3uzG6ReQ3pnaFQPSktpBw6RHN3/ivDKEuU8g1XSfafowyvDnadjv1xp8IZqhtSukxlwv9bF6FhX8m0w==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/boolean/-/boolean-3.2.0.tgz#9e5294af4e98314494cbb17979fa54ca159f116b"
+  integrity sha512-d0II/GO9uf9lfUHH2BQsjxzRJZBdsjgsBiW4BvhWk/3qoKwQFjIDVN19PfX8F2D/r9PCMTtLWjYVCFrpeYUzsw==
 
 boxen@^5.0.0:
   version "5.1.2"
@@ -4352,12 +4352,12 @@ electron-to-chromium@^1.4.17:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.65.tgz#c0820db06e268e0a2fd4dbce38fb5376d38ca449"
   integrity sha512-0/d8Skk8sW3FxXP0Dd6MnBlrwx7Qo9cqQec3BlIAlvKnrmS3pHsIbaroEi+nd0kZkGpQ6apMEre7xndzjlEnLw==
 
-electron@^13.0.0:
-  version "13.6.9"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-13.6.9.tgz#7bd83cc1662ceaaa09dcd132a7b507cec888b028"
-  integrity sha512-Es/sBy85NIuqsO9MW41PUCpwIkeinlTQ7g0ainfnmRAM2rmog3GBxVCaoV5dzEjwTF7TKG1Yr/E7Z3qHmlfWAg==
+electron@^17.1.0:
+  version "17.1.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-17.1.0.tgz#7539937d294413af8efba69dc370cf7d2b0cdc72"
+  integrity sha512-X/qdldmQ8lA15NmeraubWCTtMeTO8K9Ser0wtSCgOXVh53Sr1Ea0VQQ7Q9LuGgWRVz4qtr40cntuEdM8icdmTw==
   dependencies:
-    "@electron/get" "^1.0.1"
+    "@electron/get" "^1.13.0"
     "@types/node" "^14.6.2"
     extract-zip "^1.0.3"
 

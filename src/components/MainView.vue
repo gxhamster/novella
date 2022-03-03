@@ -54,28 +54,52 @@ const router = useRouter()
 const duestore = dueStore()
 const maximized = ref(false)
 const counter_value = ref(0)
+const current_route = ref('')
 const hide_counter = ref(false)
-const max_content_routes = [
-  '/issue_book',
-  '/',
-  '/add_book'
+const hide_counter_routes = [
+  {route: '/issue_book', on_max: false},
+  {route: '/', on_max: false},
+  {route: '/add_book', on_max: true}
 ]
 
-router.afterEach((to, from) => {
+window.api.handleMax((event, arg) => {
+    maximized.value = arg
+})
+
+
+const should_route_max = (path) => {
+  return hide_counter_routes.filter((v) => path === v.route).length !== 0
+}
+const should_hide_when_maximized = () => hide_counter_routes.filter((v) => v.route === current_route.value ).filter(v => v.on_max).length
+
+// When route changed
+router.afterEach((to) => {
   const to_path = to.path
-  const r = max_content_routes.filter((v) => to_path === v)
-  if (r.length !== 0 && from.path !== 'undefined') {
-    hide_counter.value = true
+  current_route.value = to_path
+})
+
+watch(current_route, (new_route) => {
+  const r = should_route_max(new_route)
+  if (r) {
+      if (maximized.value && should_hide_when_maximized()) {
+        hide_counter.value = true
+      } else if (maximized.value && !should_hide_when_maximized()) {
+        hide_counter.value = false
+      } else {
+        hide_counter.value = true
+      }
   } else {
     hide_counter.value = false
   }
-
 })
 
-watch(maximized, (nValue) => {
-  if (nValue) {
+watch(maximized, (n) => {
+  // Check if the route should have counter on maximize
+  const hide = should_hide_when_maximized()
+  if (n && !hide)
     hide_counter.value = false
-  }
+  else
+    hide_counter.value = true
 })
 
 // Get counter value
