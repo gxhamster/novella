@@ -61,8 +61,10 @@ store.$onAction(({name, after}) => {
   if (name === "setDataFetched") {
     after(() => {
       result_obj.user_data = [...store.users.map((v) => new SearchItemClass(prettyCapitalize(v.name), 'user', {
-        grade: v.age,
-        index: v.index
+        index: v.index,
+        grade: v.grade,
+        address: v.address,
+        island: v.island
       }))]
     })
   }

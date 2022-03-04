@@ -20,4 +20,5 @@ const props = defineProps({ title: String })
   margin: 0 auto;
   height: 100%;
 }
+
 </style>

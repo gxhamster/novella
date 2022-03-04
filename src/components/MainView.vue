@@ -3,11 +3,7 @@
         <WindowControls class="absolute right-3 top-0 w-title-bar "/>
         <div class="flex flex-col flex-grow pt-4 gap-6">
           <SearchBar class="self-end"/>
-          <router-view v-slot="{ Component }">
-            <Transition name="fade" mode="out-in">
-              <component :is="Component" class="custom-shadow"/>
-            </Transition>
-          </router-view>
+          <router-view class="custom-shadow"/>
           <Transition name="slide">
             <div v-show="!hide_counter" class=" desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
               <BookCounter title="Number of Due Books" :count="counter_value" class="custom-shadow flex-grow"/>
@@ -123,15 +119,6 @@ const styled_button = ref("text-primary animate-pulse")
 </script>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 
 .slide-enter-active,
 .slide-leave-active {
