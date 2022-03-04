@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain, nativeTheme } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 
@@ -108,15 +108,6 @@ ipcMain.on('maximized', async () => {
   }
 })
 
-ipcMain.on('is-window-max', (event, arg) => {
-  const win = BrowserWindow.getFocusedWindow()
-  let max = null
-  if (win != null || win != undefined) {
-    if ((max = win.isMaximized())) {
-      event.reply('is-window-max:reply', max)
-    }
-  }
-})
 
 ipcMain.on('minimized', () => {
   const win = BrowserWindow.getFocusedWindow()

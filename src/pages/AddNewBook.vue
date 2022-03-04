@@ -1,7 +1,6 @@
 <template>
-  <div class="desktop:p-20 max:p-28 laptop:py-12 laptop:px-14 bg-secondary rounded-lgg flex-grow overflow-hidden">
-    <span class="block desktop:text-3xl laptop:text-2xl font-medium">Add New Book</span>
-    <div class="grid grid-cols-2 main-container desktop:mt-16 laptop:mt-4 laptop:gap-x-14 desktop:gap-x-20 max:gap-x-24">
+  <PageContainer title="Add New Book">
+    <div class="grid grid-cols-2 content-between h-full laptop:gap-x-14 desktop:gap-x-20 max:gap-x-24">
       <div v-for="(field, index) in book_fields" :key="field.title" class="flex space-x-4" :class="field.full ? 'col-span-2' : 'col-span-1'">
         <InputText v-model="input_text[index]" :title="field.title" :width="field.title == 'Year' || field.title == 'Pages' ? '48' : 'full'"/>
       </div>
@@ -9,13 +8,14 @@
         <PageButton title="Save"/>
       </div>
     </div>
-  </div>
+  </PageContainer>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import PageButton from '@/components/PageButton'
 import InputText from '@/components/InputText'
+import PageContainer from '@/components/PageContainer'
 
 const input_text = ref([])
 const book_fields = [

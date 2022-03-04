@@ -13,8 +13,17 @@
 }
 
 @layer components {
-  .main-container {
-    height: calc(100% - 20px);
+  
+  @screen laptop {
+    .main-container {
+      height: calc(100% - 40px);
+    }
+  }
+
+  @screen desktop {
+    .main-container {
+      height: calc(100% - 80px);
+    }
   }
   .thin-scrollbar {
     @apply scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-scroll overflow-x-hidden scrollbar-thumb-rounded-full scrollbar-track-rounded-full

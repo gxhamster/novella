@@ -2,12 +2,14 @@
   <div class="relative desktop:w-96 laptop:w-80">
     <magnify-icon :class="isActive ? 'animate-pulse' : ''" class="text-primary absolute desktop:top-3 desktop:right-6 laptop:top-1 laptop:right-6" icon="fa-regular fa-magnifying-glass" />
     <input @input="filterResults" @focus="setActive" @blur="isFocused = false" class="bg-secondary custom-shadow text-gray-500 rounded-full appearance-none text-right outline-none w-full pr-16 desktop:py-3 laptop:py-2" placeholder="Search..." >
-    <div id="search-dropdown" v-show="isActive || isFocused" @mouseenter="isActive = true" @mouseleave="isActive = false" class="z-50 shadow-lg laptop:h-96 desktop:h-96 w-full p-3 pt-4 laptop:mt-2 desktop:mt-3 bg-white rounded-lgg absolute">
-      <div class="p-2 thin-scrollbar flex flex-col gap-2 dropdown-scroll-container pr-4">
+    <div id="search-dropdown" v-show="isActive || isFocused" @mouseenter="isActive = true" @mouseleave="isActive = false" class="z-50 shadow-lg laptop:h-96 desktop:h-96 w-full p-3 pt-4 laptop:mt-2 desktop:mt-3 bg-white rounded-lgg absolute overflow-x-hidden">
+      <div class="p-2 overflow-x-hidden thin-scrollbar flex flex-col gap-2 dropdown-scroll-container pr-4">
         <span v-if="!filteredResults.length" class="text-1.5xl text-gray-500">No search results</span>
-        <div v-for="result in filteredResults.filter((v, i) => i < maxSearchItems)" :key="result">
-          <SearchItem :dataType="result.type" :title="result.title" :optionalData="result.optional"/>
-        </div>
+        <TransitionGroup name="list">
+          <div v-for="result in filteredResults.filter((v, i) => i < maxSearchItems)" :key="result">
+            <SearchItem :dataType="result.type" :title="result.title" :optionalData="result.optional"/>
+          </div>
+        </TransitionGroup>
       </div>
     </div>
   </div>
@@ -148,4 +150,15 @@ onUnmounted(() => {
 .dropdown-scroll-container {
   height: calc(100% - 10px);
 }
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.4s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(100px);
+}
+
 </style>

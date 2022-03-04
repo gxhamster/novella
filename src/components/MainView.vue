@@ -3,11 +3,17 @@
         <WindowControls class="absolute right-3 top-0 w-title-bar "/>
         <div class="flex flex-col flex-grow pt-4 gap-6">
           <SearchBar class="self-end"/>
-          <router-view class="custom-shadow"/>
-          <div v-show="!hide_counter" class=" desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
-            <BookCounter title="Number of Due Books" :count="counter_value" class="custom-shadow flex-grow"/>
-            <div class="custom-shadow bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
-          </div>
+          <router-view v-slot="{ Component }">
+            <Transition name="fade" mode="out-in">
+              <component :is="Component" class="custom-shadow"/>
+            </Transition>
+          </router-view>
+          <Transition name="slide">
+            <div v-show="!hide_counter" class=" desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
+              <BookCounter title="Number of Due Books" :count="counter_value" class="custom-shadow flex-grow"/>
+              <div class="custom-shadow bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
+            </div>
+          </Transition>
         </div>
       <div class="flex flex-col gap-10 pt-20">
         <div class="rounded-lgg px-10 flex items-center gap-5 flex-col h-1/5">
@@ -115,3 +121,29 @@ duestore.$onAction(({name, after}) => {
 
 const styled_button = ref("text-primary animate-pulse")
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.slide-enter-from {
+  opacity: 0;
+  transform: translateY(-50px);
+}
+.slide-leave-to {
+  opacity: 0;
+  transform: translateY(50px);
+}
+</style>
