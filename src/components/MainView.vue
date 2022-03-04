@@ -6,8 +6,8 @@
           <router-view class="custom-shadow"/>
           <Transition name="slide">
             <div v-show="!hide_counter" class=" desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
-              <BookCounter title="Number of Due Books" :count="counter_value" class="custom-shadow flex-grow"/>
-              <div class="custom-shadow bg-secondary cursor-pointer desktop:w-32 laptop:w-24 h-full rounded-lgg"></div>
+              <BookCounter :icon="BookIcon" :active="bookCounter[0]" title="Number of Due Books" @clicked="bookHandler" :count="duestore.dues.length"/>
+              <BookCounter :icon="AccountGroupIcon" :active="bookCounter[1]" title="Number of Students" @clicked="bookHandler" :count="userstore.users.length"/>
             </div>
           </Transition>
         </div>
@@ -29,7 +29,7 @@
             </template>
           </MainViewButton>
         </div>
-        <div class="bg-secondary desktop:w-80 laptop:w-60 p-4 rounded-lgg flex-grow custom-shadow overflow-hidden">
+        <div class="bg-secondary desktop:w-80 laptop:w-60 p-4 rounded-lgg h-full custom-shadow overflow-hidden">
           <h1 class="text-2xl text-center font-bold">Due Books</h1>
           <DueBooks />
         </div>
@@ -43,19 +43,21 @@ import { useRouter } from 'vue-router'
 
 import MainViewButton from './MainViewButton'
 import SearchBar from './SearchBar'
-import DueBooks from './DueBooks.vue'
-import WindowControls from './WindowControls.vue'
-
+import DueBooks from './DueBooks'
+import WindowControls from './WindowControls'
 import BookCounter from './BookCounter'
 import CogIcon from 'vue-material-design-icons/Cog.vue'
 import CommentQuoteOutlineIcon from 'vue-material-design-icons/CommentQuoteOutline.vue'
 import InformationIcon from 'vue-material-design-icons/Information.vue'
+import BookIcon from 'vue-material-design-icons/Book.vue'
+import AccountGroupIcon from 'vue-material-design-icons/AccountGroup.vue'
 import { dueStore } from '@/stores/store'
+import { userStore } from '@/stores/store'
 
 const router = useRouter()
 const duestore = dueStore()
+const userstore = userStore()
 const maximized = ref(false)
-const counter_value = ref(0)
 const current_route = ref('')
 const hide_counter = ref(false)
 const hide_counter_routes = [
@@ -63,6 +65,12 @@ const hide_counter_routes = [
   {route: '/', on_max: false},
   {route: '/add_book', on_max: true}
 ]
+const bookCounter = ref([true, false])
+
+const bookHandler = () => {
+  bookCounter.value[0] = !bookCounter.value[0]
+  bookCounter.value[1] = !bookCounter.value[1]
+}
 
 window.api.handleMax((event, arg) => {
     maximized.value = arg
@@ -103,17 +111,6 @@ watch(maximized, (n) => {
   else
     hide_counter.value = true
 })
-
-// Get counter value
-duestore.$onAction(({name, after}) => {
-  // When data has been fetched add those to searcable results
-    after(() => {
-      if (name === "setDataFetched") {
-        if (duestore.data_fetched)
-          counter_value.value = duestore.dues.length
-      }
-    })
-}, true)
 
 const styled_button = ref("text-primary animate-pulse")
 </script>

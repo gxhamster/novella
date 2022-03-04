@@ -62,7 +62,7 @@
   }
 
   @screen desktop {
-    .custom-scroll-container-desktop {
+    .custom-scroll-container {
       height: calc(100% - 32px - 1.9rem);
     }
     .w-title-bar {
