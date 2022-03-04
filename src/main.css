@@ -16,12 +16,14 @@
   
   @screen laptop {
     .main-container {
+      max-width: 1000px;
       height: calc(100% - 40px);
     }
   }
 
   @screen desktop {
     .main-container {
+      max-width: 1000px;
       height: calc(100% - 80px);
     }
   }
