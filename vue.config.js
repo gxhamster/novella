@@ -1,5 +1,3 @@
-const webpack = require('webpack')
-
 module.exports = {
   pluginOptions: {
     electronBuilder: {
@@ -17,24 +15,19 @@ module.exports = {
     },
   },
   configureWebpack: {
-  optimization: {
-    splitChunks: {
-      chunks: 'all'
+    optimization: {
+      splitChunks: {
+        chunks: 'all'
+      },
+      runtimeChunk: 'single'
     },
-    runtimeChunk: 'single'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(ttf|otf|eot|woff|woff2)$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "fonts/[name].[ext]",
-          },
-        },
-      }
-    ]
-  }
+    module: {
+      rules: [
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/i,
+          type: 'asset/resource'
+        }
+      ]
+    }
   }
 };
