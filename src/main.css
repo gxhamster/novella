@@ -13,7 +13,7 @@
 }
 
 @layer components {
-  
+
   @screen laptop {
     .main-container {
       max-width: 1000px;

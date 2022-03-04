@@ -119,10 +119,9 @@ const styled_button = ref("text-primary animate-pulse")
 </script>
 
 <style scoped>
-
 .slide-enter-active,
 .slide-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.1s ease-out;
 }
 
 .slide-enter-from {
@@ -131,6 +130,6 @@ const styled_button = ref("text-primary animate-pulse")
 }
 .slide-leave-to {
   opacity: 0;
-  transform: translateY(50px);
+  transform: translateY(20px);
 }
 </style>
