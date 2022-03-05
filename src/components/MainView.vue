@@ -1,11 +1,11 @@
 <template>
     <main class="w-full h-full bg-background flex laptop:gap-6 laptop:p-6 desktop:gap-6 desktop:p-6 desktop:pt-4 laptop:pt-2">
         <WindowControls class="absolute right-3 top-0 w-title-bar "/>
-        <div class="flex flex-col flex-grow pt-4 gap-6">
+        <div class="flex flex-col flex-grow pt-4 gap-6 relative">
           <SearchBar class="self-end"/>
           <router-view class="custom-shadow"/>
           <Transition name="slide">
-            <div v-show="!hide_counter" class=" desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
+            <div v-show="!hide_counter" class="desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
               <BookCounter :icon="BookIcon" :active="bookCounter[0]" title="Number of Due Books" @clicked="bookHandler" :count="duestore.dues.length"/>
               <BookCounter :icon="AccountGroupIcon" :active="bookCounter[1]" title="Number of Students" @clicked="bookHandler" :count="userstore.users.length"/>
             </div>
@@ -77,9 +77,8 @@ window.api.handleMax((event, arg) => {
 })
 
 
-const should_route_max = (path) => {
-  return hide_counter_routes.filter((v) => path === v.route).length !== 0
-}
+const should_route_max = (path) => hide_counter_routes.filter((v) => path === v.route).length !== 0
+
 const should_hide_when_maximized = () => hide_counter_routes.filter((v) => v.route === current_route.value ).filter(v => v.on_max).length
 
 // When route changed
@@ -105,28 +104,46 @@ watch(current_route, (new_route) => {
 
 watch(maximized, (n) => {
   // Check if the route should have counter on maximize
-  const hide = should_hide_when_maximized()
-  if (n && !hide)
-    hide_counter.value = false
-  else
-    hide_counter.value = true
+  const hide_max = should_hide_when_maximized()
+  const hide_normal = should_route_max(current_route.value)
+  if (n) {
+    if (!hide_max) {
+      hide_counter.value = false
+    } else {
+      hide_counter.value = true
+    }
+  } else {
+    if (!hide_normal) {
+      hide_counter.value = false
+    } else {
+      hide_counter.value = true
+    }
+  }
+
 })
 
 const styled_button = ref("text-primary animate-pulse")
 </script>
 
 <style scoped>
-.slide-enter-active,
+.slide-enter-active {
+  transition: opacity 0.3s ease;
+}
 .slide-leave-active {
-  transition: opacity 0.1s ease-out;
+  transition: opacity 0.3s ease;
 }
 
 .slide-enter-from {
   opacity: 0;
-  transform: translateY(-50px);
+  bottom: 0;
+  width: 100%;
+  transform: translateY(-10px);
 }
 .slide-leave-to {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(80px);
 }
 </style>
