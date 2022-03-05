@@ -13,21 +13,13 @@
         </div>
       <div class="flex flex-col gap-10 pt-20">
         <div class="rounded-lgg px-10 flex items-center gap-5 flex-col h-1/5">
-          <MainViewButton class="text-1xl" title="Settings">
-            <template v-slot="{isActive}">
-              <cog-icon :key="1" class="cursor-pointer rounded-full p-1 transition duration-150" :class="isActive ? styled_button : 'text-primary'"/>
-            </template>
-          </MainViewButton>
-          <MainViewButton class="text-1xl" title="Feedback">
-            <template v-slot="{isActive}">
-              <comment-quote-outline-icon class="cursor-pointer rounded-full p-1 transition duration-150" :class="isActive ? styled_button : 'text-primary'"/>
-            </template>
-          </MainViewButton>
-          <MainViewButton class="text-1xl" title="About us">
-            <template v-slot="{isActive}">
-              <information-icon class="cursor-pointer rounded-full p-1 transition duration-150" :class="isActive ?  styled_button : 'text-primary'"/>
-            </template>
-          </MainViewButton>
+          <div v-for="btn in main_view_buttons" :key="btn.name">
+            <MainViewButton class="text-1xl" :title="btn.name">
+              <template v-slot="{isActive}">
+                <component :is="btn.icon" class="cursor-pointer rounded-full p-1 transition duration-150" :class="isActive ? styled_button : 'text-primary'"/>
+              </template>
+            </MainViewButton>
+          </div>
         </div>
         <div class="bg-secondary desktop:w-80 laptop:w-60 p-4 rounded-lgg h-full custom-shadow overflow-hidden">
           <h1 class="text-2xl text-center font-bold">Due Books</h1>
@@ -57,15 +49,20 @@ import { userStore } from '@/stores/store'
 const router = useRouter()
 const duestore = dueStore()
 const userstore = userStore()
-const maximized = ref(false)
-const current_route = ref('')
-const hide_counter = ref(false)
+const main_view_buttons = [
+  {name: 'Settings', icon: CogIcon},
+  {name: 'Feedback', icon: InformationIcon},
+  {name: 'About us', icon: CommentQuoteOutlineIcon}
+]
 const hide_counter_routes = [
   {route: '/issue_book', on_max: false},
   {route: '/', on_max: false},
   {route: '/add_book', on_max: true}
 ]
 const bookCounter = ref([true, false])
+const maximized = ref(false)
+const current_route = ref('')
+const hide_counter = ref(false)
 
 const bookHandler = () => {
   bookCounter.value[0] = !bookCounter.value[0]
