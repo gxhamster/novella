@@ -6,8 +6,9 @@
           <router-view class="custom-shadow"/>
           <Transition name="slide">
             <div v-show="!hide_counter" class="desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
-              <BookCounter :icon="BookIcon" :active="bookCounter[0]" title="Number of Due Books" @clicked="bookHandler" :count="duestore.dues.length"/>
-              <BookCounter :icon="AccountGroupIcon" :active="bookCounter[1]" title="Number of Students" @clicked="bookHandler" :count="userstore.users.length"/>
+              <BookCounter :icon="BookIcon" :active="bookCounter[0]" title="Number of Due Books" @clicked="bookHandler([true, false, false])" :count="duestore.dues.length"/>
+              <BookCounter :icon="AccountGroupIcon" :active="bookCounter[1]" title="Number of Students" @clicked="bookHandler([false, true, false])" :count="userstore.users.length"/>
+              <BookCounter :icon="BookIcon" :active="bookCounter[2]" title="Number of Issued Books" @clicked="bookHandler([false, false, true])" :count="duestore.dues.length"/>
             </div>
           </Transition>
         </div>
@@ -59,14 +60,13 @@ const hide_counter_routes = [
   {route: '/', on_max: false},
   {route: '/add_book', on_max: true}
 ]
-const bookCounter = ref([true, false])
+const bookCounter = ref([false, false, true])
 const maximized = ref(false)
 const current_route = ref('')
 const hide_counter = ref(false)
 
-const bookHandler = () => {
-  bookCounter.value[0] = !bookCounter.value[0]
-  bookCounter.value[1] = !bookCounter.value[1]
+const bookHandler = (arr) => {
+  bookCounter.value = arr.map((v) => v)
 }
 
 window.api.handleMax((event, arg) => {
