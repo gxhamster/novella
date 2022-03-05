@@ -39,7 +39,7 @@ const btnClicked = (index) => {
     current_active_btn_index.value = index
 }
 const icon_names = [BookArrowRightOutlineIcon, BookArrowLeftOutlineIcon, BookPlusOutlineIcon, AccountMultiplePlusOutlineIcon, HistoryIcon, ViewDashboardOutlineIcon]
-const button_names = ref(["Issue Book", "Recieve Book", "Add New Book", "Add New Student", "History", "Dashboard"])
+const button_names = ref(["Issue Book", "Receive Book", "Add New Book", "Add New Student", "History", "Dashboard"])
 const route_names =  ref(routes.filter((item) => item.path !== '/').map((item) => item.path))
 </script>
 

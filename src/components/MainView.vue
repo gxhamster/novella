@@ -73,9 +73,7 @@ window.api.handleMax((event, arg) => {
     maximized.value = arg
 })
 
-
 const should_route_max = (path) => hide_counter_routes.filter((v) => path === v.route).length !== 0
-
 const should_hide_when_maximized = () => hide_counter_routes.filter((v) => v.route === current_route.value ).filter(v => v.on_max).length
 
 // When route changed
