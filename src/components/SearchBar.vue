@@ -20,7 +20,7 @@ import { ref, onUnmounted, watch, reactive } from 'vue'
 import MagnifyIcon from 'vue-material-design-icons/Magnify.vue'
 import { userStore, bookStore } from '@/stores/store'
 import SearchItem from './SearchItem.vue'
-import { prettyCapitalize } from '@/helper'
+import { prettyCapitalize } from '@/utils/helper'
 
 
 class SearchItemClass {
@@ -45,8 +45,10 @@ const result_obj = reactive({
 })
 
 function setResult() {
-  results = [...result_obj.book_data, ...result_obj.user_data]
-  filteredResults.value = results
+  if (!isActive.value || !isFocused.value) {
+    results = [...result_obj.book_data, ...result_obj.user_data]
+    filteredResults.value = results
+  }
 }
 
 watch(result_obj, (new_result_obj) => {
@@ -90,7 +92,6 @@ bookstore.$onAction(({name, after}) => {
         grouped_result.set(title, [...grouped_result.get(title), obj])
       }
 
-      console.log(grouped_result)
 
       const final_result = []
       for (const arr of grouped_result.values()) {

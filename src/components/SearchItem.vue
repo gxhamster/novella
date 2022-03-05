@@ -17,7 +17,7 @@
 import { defineProps } from 'vue'
 import BookIcon from 'vue-material-design-icons/Book.vue'
 import AccountIcon from 'vue-material-design-icons/Account.vue'
-import { prettyCapitalize } from '@/helper'
+import { prettyCapitalize } from '@/utils/helper'
 
 const icons = {
   book: BookIcon,

@@ -71,7 +71,7 @@ const fetchInterval = setInterval(() => {
   setFetchUserData()
 }, refresh_interval)
 
-onMounted(() => {
+onMounted(async () => {
   setFetchUserData()
   setFetchBookData()
 })
