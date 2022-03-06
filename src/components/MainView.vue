@@ -144,6 +144,10 @@ const styled_button = ref("text-primary animate-pulse")
   0% {
     height: 10%;
   }
+  50% {
+    height: 5%;
+    transform: translateY(10px);
+  }
   100% {
     transform: translateY(30px);
     height: 0%;
