@@ -25,9 +25,8 @@
         </div>
       </div>
       <div class="flex justify-center space-x-12">
-        <div v-for="(field, index) in date_fields" :key="field.name">
-          <DateInput v-model="dateArray[index]" :title="field.name"/>
-        </div>
+        <DateInput v-model="issueDate" :title="date_fields[0].name"/>
+        <DateInput v-model="dueDate" :title="date_fields[1].name"/>
       </div>
       <div class="flex justify-center space-x-12">
         <PageButton @click="cleanTextInputs" title="Cancel" background="cancel-button-red"/>
@@ -37,24 +36,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import InputText from '@/components/InputText'
 import PageButton from '@/components/PageButton'
 import SearchButton from '@/components/SearchButton'
 import DateInput from '@/components/DateInput'
 import PageContainer from '@/components/PageContainer'
+import { fiveDaysAfterDate } from '@/utils/helper'
 
 // Student input
 const textStartArray1 = ref([])
 // Book input
 const textStartArray2 = ref([])
 // Date input
-const dateArray = ref([new Date(), new Date()])
+const issueDate = ref(new Date())
+const dueDate = ref(fiveDaysAfterDate(issueDate.value))
+
+// Due Date automatically becomes 5 days after
+watch(issueDate, () => {
+  dueDate.value = fiveDaysAfterDate(issueDate.value)
+})
 
 const cleanTextInputs = () => {
     textStartArray1.value = textStartArray1.value.map(() => '')
     textStartArray2.value = textStartArray2.value.map(() => '')
-    dateArray.value = dateArray.value.map(() => '')
+    dueDate.value = new Date()
+    issueDate.value = new Date()
 }
 
 const sendToServer = async () => {

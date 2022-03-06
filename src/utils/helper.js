@@ -1,6 +1,10 @@
 export const prettyCapitalize = (str) => str.split(" ").map(v => `${v.charAt(0).toUpperCase()}${v.split('').splice(1) .join('')}` ).join(" ")
 
-export const filteredWords = {
+export function fiveDaysAfterDate(date) {
+   return new Date(new Date(date).getTime() + (5 * 24 * 60 * 60 * 1000))
+}
+
+const filteredWords = {
   'shit': 's**t',
   'fuck': 'f**k',
   'motherfuck': 'motherf**k',
