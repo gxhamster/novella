@@ -10,6 +10,7 @@ const filteredWords = {
   'motherfuck': 'motherf**k',
   'retard': 'challenged',
   'arse': 'a**e',
+  'dick': 'd**k',
   'ass': 'a**',
   'bitch': 'b**ch',
   'pussy': 'p***y',

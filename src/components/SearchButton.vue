@@ -1,5 +1,5 @@
 <template>
-  <button @mouseover="isHovered = true" @mouseleave="isHovered = false" class="rounded-full p-2 bg-steel flex justify-center items-center" alt="search button">
+  <button @mouseover="isHovered = true" @mouseleave="isHovered = false" class="rounded-full laptop:p-2 desktop:p-3 bg-steel flex justify-center items-center" alt="search button">
     <magnify-icon class="text-primary" :class="isHovered ? 'animate-pulse' : ''"/>
   </button>
 </template>

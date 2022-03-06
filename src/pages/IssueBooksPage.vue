@@ -5,10 +5,7 @@
           <span class="desktop:text-2xl laptop:text-1.5xl">Student Details</span>
           <div class="flex flex-col justify-between flex-grow mt-6">
             <div v-for="(field, index) in student_fields" :key="field.id" class="flex space-x-4">
-              <InputText v-model="textStartArray1[index]" :title="field.name" :width="field.name == 'Student Grade' ? '48' : 'full'"/>
-              <template v-if="field.searchable == true" >
-                <SearchButton class="self-end"/>
-              </template>
+              <InputText v-model="textStartArray1[index]" :searchable="field.searchable" :title="field.name" :width="field.name == 'Student Grade' ? '48' : 'full'"/>
             </div>
           </div>
         </div>
@@ -16,10 +13,7 @@
           <span class="desktop:text-2xl laptop:text-1.5xl">Book Details</span>
           <div class="flex flex-col flex-grow justify-between mt-6">
             <div v-for="(field, index) in book_fields" :key="field.id" class="flex space-x-4">
-              <InputText v-model="textStartArray2[index]" :title="field.name" width="full"/>
-              <template v-if="field.searchable == true" >
-                <SearchButton class="self-end"/>
-              </template>
+              <InputText v-model="textStartArray2[index]" :searchable="field.searchable" :title="field.name" width="full"/>
             </div>
           </div>
         </div>
@@ -39,7 +33,6 @@
 import { ref, watch } from 'vue'
 import InputText from '@/components/InputText'
 import PageButton from '@/components/PageButton'
-import SearchButton from '@/components/SearchButton'
 import DateInput from '@/components/DateInput'
 import PageContainer from '@/components/PageContainer'
 import { fiveDaysAfterDate } from '@/utils/helper'
