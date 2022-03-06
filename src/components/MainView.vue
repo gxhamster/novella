@@ -4,11 +4,12 @@
         <div class="flex flex-col flex-grow pt-4 gap-6 relative">
           <SearchBar class="self-end"/>
           <router-view class="custom-shadow"/>
-          <Transition name="slide">
+          <Transition name="slidein">
             <div v-show="!hide_counter" class="desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
-              <BookCounter :icon="BookIcon" :active="bookCounter[0]" title="Number of Due Books" @clicked="bookHandler([true, false, false])" :count="duestore.dues.length"/>
-              <BookCounter :icon="AccountGroupIcon" :active="bookCounter[1]" title="Number of Students" @clicked="bookHandler([false, true, false])" :count="userstore.users.length"/>
-              <BookCounter :icon="BookIcon" :active="bookCounter[2]" title="Number of Issued Books" @clicked="bookHandler([false, false, true])" :count="duestore.dues.length"/>
+              <BookCounter :icon="BookArrowLeftIcon" :active="bookCounter[0]" title="Number of Due Books" @clicked="bookHandler([true, false, false, false])" :count="duestore.dues.length"/>
+              <BookCounter :icon="AccountGroupIcon" :active="bookCounter[1]" title="Number of Students" @clicked="bookHandler([false, true, false, false])" :count="userstore.users.length"/>
+              <BookCounter :icon="BookArrowRightIcon" :active="bookCounter[2]" title="Number of Issued Books" @clicked="bookHandler([false, false, true, false])" :count="duestore.dues.length"/>
+              <BookCounter :icon="BookIcon" :active="bookCounter[3]" title="Number of Books" @clicked="bookHandler([false, false, false, true])" :count="bookstore.books.length"/>
             </div>
           </Transition>
         </div>
@@ -43,12 +44,16 @@ import CogIcon from 'vue-material-design-icons/Cog.vue'
 import CommentQuoteOutlineIcon from 'vue-material-design-icons/CommentQuoteOutline.vue'
 import InformationIcon from 'vue-material-design-icons/Information.vue'
 import BookIcon from 'vue-material-design-icons/Book.vue'
+import BookArrowRightIcon from 'vue-material-design-icons/BookArrowRight.vue'
+import BookArrowLeftIcon from 'vue-material-design-icons/BookArrowLeft.vue'
 import AccountGroupIcon from 'vue-material-design-icons/AccountGroup.vue'
 import { dueStore } from '@/stores/store'
 import { userStore } from '@/stores/store'
+import { bookStore } from '@/stores/store'
 
 const router = useRouter()
 const duestore = dueStore()
+const bookstore = bookStore()
 const userstore = userStore()
 const main_view_buttons = [
   {name: 'Settings', icon: CogIcon},
@@ -60,7 +65,7 @@ const hide_counter_routes = [
   {route: '/', on_max: false},
   {route: '/add_book', on_max: true}
 ]
-const bookCounter = ref([false, false, true])
+const bookCounter = ref([true, false, false, false])
 const maximized = ref(false)
 const current_route = ref('')
 const hide_counter = ref(false)
@@ -121,24 +126,42 @@ const styled_button = ref("text-primary animate-pulse")
 </script>
 
 <style scoped>
-.slide-enter-active {
-  transition: opacity 0.3s ease;
-}
-.slide-leave-active {
-  transition: opacity 0.3s ease;
+.slidein-enter-from, .slidein-leave-to {
+  width: 100%;
+  opacity: 0;
 }
 
-.slide-enter-from {
-  opacity: 0;
-  bottom: 0;
-  width: 100%;
-  transform: translateY(-10px);
+.slidein-enter-active {
+  transition: all 0.4s ease-in-out;
+  animation: slidein-anim 0.3s;
 }
-.slide-leave-to {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  opacity: 0;
-  transform: translateY(80px);
+.slidein-leave-active {
+  transition: all 0.3s ease-in-out;
+  animation: slideout-anim 0.3s;
+}
+
+@keyframes slideout-anim {
+  0% {
+    height: 10%;
+  }
+  100% {
+    transform: translateY(30px);
+    height: 0%;
+  }
+}
+
+@keyframes slidein-anim {
+  0% {
+    transform: translateY(100px);
+    height: 0%
+  }
+  50% {
+    transform: translateY(0px);
+    height: 5%;
+  }
+  100% {
+    transform: translateY(-10px);
+    height: 10%;
+  }
 }
 </style>

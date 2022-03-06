@@ -1,13 +1,11 @@
 <template>
   <div class="bg-primary desktop:w-128 laptop:w-100 h-screen  justify-start flex flex-col items-center py-7">
-    <SchoolLogo class="w-full desktop:pl-10 laptop:pl-5"/>
-    <div class="flex flex-col my-2 items-center w-full justify-center gap-8 desktop:mt-20 laptop:mt-10 desktop:pl-16 laptop:pl-10" >
+    <SchoolLogo class="w-full desktop:px-8 laptop:px-8"/>
+    <div class="flex flex-col my-2 items-center w-full justify-center gap-5 desktop:mt-20 laptop:mt-10 px-2" >
       <div class="w-full" v-for="(name, index) in button_names" :key="name.id">
         <router-link :to="route_names[index]">
         <SidebarButtons :title="name" @clicked="btnClicked(index)" :isActive="current_active_btn_index == index ? true : false">
-          <template v-slot="{ isHovered, isActive }">
-            <component :is="icon_names[index]" :key="name.id" class="text-white cursor-pointer rounded-full p-1 transition duration-200" :class="isHovered || isActive ? 'bg-white text-primary' : ''"/>
-          </template>
+          <component :size="30" :is="icon_names[index]" :key="name.id" class="text-white cursor-pointer rounded-full p-1 transition duration-200"/>
         </SidebarButtons>
       </router-link>
       </div>
