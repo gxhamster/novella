@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <BookCounterSmall v-else/>
+      <BookCounterSmall v-else :icon="props.icon"/>
   </div>
 </template>
 
