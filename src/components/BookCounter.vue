@@ -5,11 +5,13 @@
           <div @mouseover="icon_hovered = true" @mouseleave="icon_hovered = false" class="cursor-pointer bg-steel aspect-square border box-border laptop:p-3 desktop:p-6 flex justify-center items-center">
             <component :is="props.icon" class="text-primary" :size="48"/>
           </div>
-          <div class="flex-grow h-full flex-shrink-0 flex flex-col justify-around">
-            <span class="font-medium text-1xl">{{ props.title }}</span>
-            <span class="block font-bold desktop:text-5xl laptop:text-4xl">{{ props.count }}</span>
+          <div class="flex flex-col flex-grow justify-between gap-y-2 flex-shrink-0">
+            <span class="font-medium laptop:text-1xl desktop:text-1.5xl">{{ props.title }}</span>
+            <div class="flex flex-shrink-0 justify-between">
+              <span class="inline-block font-bold desktop:text-5xl laptop:text-4xl mr-4">{{ props.count }}</span>
+              <DetailsButton/>
+            </div>
           </div>
-          <DetailsButton class="self-end"/>
         </div>
       </div>
       <BookCounterSmall v-else/>
