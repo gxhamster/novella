@@ -5,7 +5,7 @@
       <div class="w-full" v-for="(name, index) in button_names" :key="name.id">
         <router-link :to="route_names[index]">
         <SidebarButtons :title="name" @clicked="btnClicked(index)" :isActive="current_active_btn_index == index ? true : false">
-          <component :size="30" :is="icon_names[index]" :key="name.id" class="text-white cursor-pointer rounded-full p-1 transition duration-200"/>
+          <component :size="10" :is="icon_names[index]" :key="name.id" />
         </SidebarButtons>
       </router-link>
       </div>
@@ -22,13 +22,12 @@ import { ref } from 'vue'
 import SchoolLogo from './SchoolLogo.vue'
 import SidebarButtons from './SidebarButtons'
 import NovellaLogo from './NovellaLogo'
-
-import BookArrowRightOutlineIcon from 'vue-material-design-icons/BookArrowRightOutline.vue'
-import BookArrowLeftOutlineIcon from 'vue-material-design-icons/BookArrowLeftOutline.vue'
-import BookPlusOutlineIcon from 'vue-material-design-icons/BookPlusOutline.vue'
-import AccountMultiplePlusOutlineIcon from 'vue-material-design-icons/AccountMultiplePlusOutline.vue'
-import HistoryIcon from 'vue-material-design-icons/History.vue'
-import ViewDashboardOutlineIcon from 'vue-material-design-icons/ViewDashboardOutline.vue'
+import  AddNewBookIcon from './icons/AddNewBookIcon'
+import  AddNewStudentIcon from './icons/AddNewStudentIcon'
+import  DashboardIcon from './icons/DashboardIcon'
+import  HistoryIcon from './icons/HistoryIcon'
+import  IssueBookIcon from './icons/IssueBookIcon'
+import  ReturnBookIcon from './icons/ReturnBookIcon'
 
 import { routes } from '../router'
 
@@ -36,7 +35,7 @@ const current_active_btn_index = ref(0)
 const btnClicked = (index) => {
     current_active_btn_index.value = index
 }
-const icon_names = [BookArrowRightOutlineIcon, BookArrowLeftOutlineIcon, BookPlusOutlineIcon, AccountMultiplePlusOutlineIcon, HistoryIcon, ViewDashboardOutlineIcon]
+const icon_names = [IssueBookIcon, ReturnBookIcon, AddNewBookIcon, AddNewStudentIcon, HistoryIcon, DashboardIcon]
 const button_names = ref(["Issue Book", "Receive Book", "Add New Book", "Add New Student", "History", "Dashboard"])
 const route_names =  ref(routes.filter((item) => item.path !== '/').map((item) => item.path))
 </script>
