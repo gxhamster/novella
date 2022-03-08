@@ -2,9 +2,10 @@
   <PageContainer title="Add New Student">
     <div class="grid grid-cols-2 content-between h-full gap-x-14">
       <div v-for="(field, index) in student_fields" :key="field.id" class="flex space-x-4">
-        <InputText v-model="input_text[index]" :title="field" :width="field == 'Student Grade' ? '48' : 'full'"/>
+        <InputText v-model="input_text[index]" :title="field" class="w-full" :width="field == 'Student Grade' ? '48' : 'full'"/>
       </div>
-      <div class="flex justify-center col-span-2 mt-4">
+      <div class="flex justify-center space-x-12 col-span-2 mt-4">
+        <PageButton @click="clear_input_text" title="Cancel" background="cancel-button-red"/>
         <PageButton @click="clear_input_text" title="Save"/>
       </div>
     </div>

@@ -40,6 +40,7 @@ import SearchBar from './SearchBar'
 import DueBooks from './DueBooks'
 import WindowControls from './WindowControls'
 import BookCounter from './BookCounter'
+
 import CogIcon from 'vue-material-design-icons/Cog.vue'
 import CommentQuoteOutlineIcon from 'vue-material-design-icons/CommentQuoteOutline.vue'
 import InformationIcon from 'vue-material-design-icons/Information.vue'

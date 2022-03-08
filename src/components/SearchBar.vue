@@ -2,16 +2,7 @@
   <div class="relative desktop:w-96 laptop:w-80">
     <magnify-icon :class="isActive ? 'animate-pulse' : ''" class="text-primary absolute desktop:top-3 desktop:right-6 laptop:top-2 laptop:right-6" icon="fa-regular fa-magnifying-glass" />
     <input @input="filterResults" :value="searchText" @focus="setActive" @blur="isFocused = false" class="bg-secondary custom-shadow text-gray-500 rounded-full appearance-none text-right outline-none w-full pr-16 desktop:py-3 laptop:py-2" placeholder="Search..." >
-    <div id="search-dropdown" v-show="isActive || isFocused" @mouseenter="isActive = true" @mouseleave="isActive = false" class="z-50 shadow-lg laptop:h-96 desktop:h-96 w-full p-3 pt-4 laptop:mt-2 desktop:mt-3 bg-white rounded-lgg absolute overflow-x-hidden">
-      <div class="p-2 overflow-x-hidden thin-scrollbar flex flex-col gap-2 dropdown-scroll-container pr-4">
-        <span v-if="!filteredResults.length" class="text-1.5xl text-gray-500">No search results</span>
-        <TransitionGroup name="list">
-          <div v-for="result in filteredResults.filter((v, i) => i < maxSearchItems)" :key="result">
-            <SearchItem :dataType="result.type" :title="result.title" :optionalData="result.optional"/>
-          </div>
-        </TransitionGroup>
-      </div>
-    </div>
+    <SearchDropdown :data="filteredResults" v-show="isActive || isFocused" @mouseenter="isActive = true" @mouseleave="isActive = false"/>
   </div>
 </template>
 
@@ -19,24 +10,15 @@
 import { ref, onUnmounted, watch, reactive } from 'vue'
 import MagnifyIcon from 'vue-material-design-icons/Magnify.vue'
 import { userStore, bookStore } from '@/stores/store'
-import SearchItem from './SearchItem.vue'
+import SearchDropdown from './SearchDropdown'
 import { prettyCapitalize, filteredTextInput } from '@/utils/helper'
-
-
-class SearchItemClass {
-  constructor(title, type, optional = {}) {
-    this.title = title
-    this.type = type
-    this.optional = optional
-  }
-}
+import { SearchItemClass, filterPromise, groupByKey } from '@/utils/search'
 
 const store = userStore()
 const bookstore = bookStore()
 const searchText = ref('')
 const filteredResults = ref([])
 const inputDelay = 550
-const maxSearchItems = 30
 let results = []
 let timeout = null
 const result_obj = reactive({
@@ -83,15 +65,7 @@ bookstore.$onAction(({name, after}) => {
       }))]
 
       // Group objects by title
-      const grouped_result = new Map()
-      for (const obj of book_results) {
-        const title = obj.title.toLowerCase().trim()
-        if (!grouped_result.get(title)) {
-          grouped_result.set(title, [])
-        }
-        grouped_result.set(title, [...grouped_result.get(title), obj])
-      }
-
+      const grouped_result = groupByKey('title', book_results, false)
 
       const final_result = []
       for (const arr of grouped_result.values()) {
@@ -112,22 +86,6 @@ const setActive = () => {
   isActive.value = true
 }
 
-function filterPromise() {
-  return new Promise((resolve, reject) => {
-    const re = new RegExp(`${searchText.value.toLowerCase()}`, 'g')
-    const result = results.filter((v) => {
-      const infoStr = `${v.title} ${Object.values(v.optional).join(' ')}`.toLowerCase()
-      if (infoStr.search(re) > -1) {
-        return true
-      }
-      return false
-    })
-    if (result === 'null' || result === 'undefined')
-      reject(null)
-    resolve(result)
-  })
-}
-
 function setFilterResults(result) {
   filteredResults.value = result
 }
@@ -139,7 +97,7 @@ const filterResults = (event) => {
     if (searchText.value === '') {
       filteredResults.value = results
     }
-    filterPromise().then(setFilterResults).catch(setFilterResults)
+    filterPromise(searchText, results).then(setFilterResults).catch(setFilterResults)
   }, inputDelay)
 }
 
@@ -148,20 +106,3 @@ onUnmounted(() => {
 })
 
 </script>
-
-<style scoped>
-.dropdown-scroll-container {
-  height: calc(100% - 10px);
-}
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.4s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(100px);
-}
-
-</style>

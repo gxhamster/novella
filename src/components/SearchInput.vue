@@ -1,0 +1,49 @@
+<template>
+<div class="relative">
+  <InputText :title="title" :searchable="true" :modelValue="modelValue" @update:modelValue="doSearch" @inputFocus="isFocused = true" @inputBlur="isFocused = false" @searchClicked="setActive(true)" />
+  <SearchDropdown v-show="isActive || isFocused"  @itemClicked="(obj) => emit('dropdownItemSelected', obj)" :data="filteredResults" @mouseenter="isActive = true" @mouseleave="isActive = false"/>
+</div>
+</template>
+
+<script setup>
+import { ref, defineProps, defineEmits } from 'vue'
+import InputText from './InputText'
+import SearchDropdown from './SearchDropdown'
+import { filterPromise } from '@/utils/search'
+
+const emit = defineEmits(['update:modelValue', 'dropdownItemSelected'])
+const props = defineProps({
+  modelValue: String,
+  title: String,
+  searchData: {
+    type: Array,
+    required: true
+  },
+})
+const isActive = ref(false)
+const isFocused = ref(false)
+const filteredResults = ref([])
+
+function setFilteredData(result) {
+  filteredResults.value = result
+}
+
+function doSearch(searchText) {
+  emit('update:modelValue', searchText)
+  if (searchText == '') {
+    setFilteredData(props.searchData)
+  } else {
+    filterPromise(searchText, props.searchData).then(setFilteredData).catch(setFilteredData)
+  }
+}
+
+function setActive(btn = false) {
+  if (btn) {
+    isActive.value = false
+    isFocused.value = false
+  } else {
+    isActive.value = true
+    isFocused.value = true
+  }
+}
+</script>
