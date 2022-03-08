@@ -1,18 +1,18 @@
 <template>
   <PageContainer title="Add New Book">
     <div class="grid grid-cols-2 h-full gap-x-14">
-      <div v-for="(field, index) in book_fields" :key="field.title" class="relative" :class="field.full ? 'col-span-2' : 'col-span-1'">
-        <SearchInput v-if="field.searchable" @dropdownItemSelected="(obj) => book_fields[index].text = obj.title" :searchData="results" v-model="book_fields[index].text" :title="field.title"/>
-        <InputText v-else v-model="book_fields[index].text" width="full" :title="field.title"/>
+      <div v-for="(field, index) in book_fields" :key="field.title" class="relative">
+        <SearchInput v-if="field.searchable" @dropdownItemSelected="(obj) => book_fields[index].text = obj.title" :searchData="field.search_data" v-model="book_fields[index].text" :title="field.title"/>
+        <InputText v-else v-model="book_fields[index].text" :title="field.title"/>
       </div>
       <div class="flex gap-x-6">
         <div v-for="(field, index) in small_fields_left" :key="field.title">
-          <InputText v-model="input_text_small[index]" :searchable="field.searchable" :title="field.title"/>
+          <InputText v-model="small_fields_left[index].text" :searchable="field.searchable" :title="field.title"/>
         </div>
       </div>
       <div class="flex gap-x-6">
         <div v-for="(field, index) in small_fields_right" :key="field.title">
-          <InputText v-model="input_text_small[index]" :searchable="field.searchable" :title="field.title"/>
+          <InputText v-model="small_fields_right[index].text" :searchable="field.searchable" :title="field.title"/>
         </div>
       </div>
     </div>
@@ -30,36 +30,32 @@ import InputText from '@/components/InputText'
 import PageContainer from '@/components/PageContainer'
 import SearchInput from '@/components/SearchInput'
 import { bookStore } from '@/stores/store'
-import { prettyCapitalize } from '@/utils/helper'
+import { prettyCapitalize, PageLayoutData } from '@/utils/helper'
 import { groupByKey, SearchItemClass } from '@/utils/search'
 
 const bookstore = bookStore()
-const input_text = ref([])
-const input_text_small = ref([])
-const results = ref([])
 
 const book_fields = ref([
-  {title: "Title", full: false, searchable: false, dropdown: false, text: ''},
-  {title: "Author", full: false, searchable: true, dropdown: false, text: ''},
-  {title: "Book Number", full: false, searchable: false, dropdown: false, text: ''},
-  {title: "Genre", full: false, searchable: true, dropdown: false, text: ''},
-  {title: "DDC", full: false, searchable: false, dropdown: false, text: ''},
-  {title: "Language", full: false, searchable: false, dropdown: false, text: ''},
+  new PageLayoutData("Title", false),
+  new PageLayoutData("Author", false, true),
+  new PageLayoutData("Book Number", false, false),
+  new PageLayoutData("Genre", false, true),
+  new PageLayoutData("DDC", false, false),
+  new PageLayoutData("Language", false)
 ])
-const small_fields_left = [
-  {title: "Edition", full: false, searchable: false},
-  {title: "Pages", full: false, searchable: false},
-]
+const small_fields_left = ref([
+  new PageLayoutData("Edition", false, false),
+  new PageLayoutData("Pages", false)
+])
 
-const small_fields_right = [
-  {title: "Volume", full: false, searchable: false},
-  {title: "Year", full: false, searchable: false}
-]
+const small_fields_right = ref([
+  new PageLayoutData("Volume", false, false),
+  new PageLayoutData("Year", false)
+])
 
-function storeGetData() {
+function storeGetAuthorData() {
   // Remove duplicate titles
-  const book_results = [...bookstore.books.map((v) => new SearchItemClass(prettyCapitalize(v.author === '' ? 'N/A' : v.author), 'user', {
-  }))]
+  const book_results = [...bookstore.books.map((v) => new SearchItemClass(prettyCapitalize(v.author === '' ? 'N/A' : v.author), 'user', {}))]
 
   // Group objects by author
   const grouped_result = groupByKey('title', book_results, false)
@@ -73,20 +69,47 @@ function storeGetData() {
   return [...final_result]
 }
 
+function storeGetGenreData() {
+  // Remove duplicate titles
+  const book_results = [...bookstore.books.map((v) => new SearchItemClass(prettyCapitalize(v.subject === '' ? 'N/A' : v.subject), 'book', {}))]
+  // Group objects by author
+  const grouped_result = groupByKey('title', book_results, false)
+  const final_result = []
+  for (const arr of grouped_result.values()) {
+    final_result.push(arr[0])
+  }
+  return [...final_result]
+}
+
+function setStoreData() {
+  const author_result = storeGetAuthorData()
+  const genre_result = storeGetGenreData()
+  book_fields.value = book_fields.value.map((v) => {
+    if (v.title === "Author")
+      return v.setSearchData(author_result)
+    else if (v.title === "Genre")
+      return v.setSearchData(genre_result)
+    else
+      return v
+  })
+}
+
 bookstore.$onAction(({name, after}) => {
   if (name === "setDataFetched") {
     after(() => {
-      results.value = storeGetData()
+      setStoreData()
     })
   }
 }, true)
 
 function cleanTextInputs() {
-  input_text.value = input_text.value.map(() => '')
+  book_fields.value = book_fields.value.map((v) => v.clearText())
+  small_fields_left.value = small_fields_left.value.map(v => v.clearText())
+  small_fields_right.value = small_fields_right.value.map(v => v.clearText())
 }
 
 onMounted(() => {
-  results.value = storeGetData()
+  if (bookstore.data_fetched)
+    setStoreData()
 })
-
 </script>

@@ -1,7 +1,7 @@
 <template>
 <div class="relative">
   <InputText :title="title" :searchable="true" :modelValue="modelValue" @update:modelValue="doSearch" @inputFocus="isFocused = true" @inputBlur="isFocused = false" @searchClicked="setActive(true)" />
-  <SearchDropdown v-show="isActive || isFocused"  @itemClicked="(obj) => emit('dropdownItemSelected', obj)" :data="filteredResults" @mouseenter="isActive = true" @mouseleave="isActive = false"/>
+  <SearchDropdown v-show="isActive || isFocused"  @itemClicked="sendItemData" :data="filteredResults" @mouseenter="isActive = true" @mouseleave="isActive = false"/>
 </div>
 </template>
 
@@ -35,6 +35,12 @@ function doSearch(searchText) {
   } else {
     filterPromise(searchText, props.searchData).then(setFilteredData).catch(setFilteredData)
   }
+}
+
+function sendItemData(obj) {
+  // Close dropdown after selecting an item
+  isActive.value = false
+  emit('dropdownItemSelected', obj)
 }
 
 function setActive(btn = false) {

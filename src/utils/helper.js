@@ -4,6 +4,40 @@ export function fiveDaysAfterDate(date) {
    return new Date(new Date(date).getTime() + (5 * 24 * 60 * 60 * 1000))
 }
 
+// This class describes one input field in a page
+export class PageLayoutData {
+  constructor(title, full = true, searchable = false, text = '', date = null) {
+    this.title = title
+    this.full = full
+    this.searchable = searchable
+    this.text = text
+    this.search_data = []
+    // Only for date inputs
+    this.date = date
+  }
+
+  clearText() {
+    this.text = ''
+    return this
+  }
+
+  clearDate() {
+    this.date = null
+    return this
+  }
+  
+  setSearchData(n_data) {
+    if (this.searchable)
+      this.search_data = n_data
+    return this
+  }
+
+  clearSearchData() {
+    this.search_data = []
+    return this
+  }
+}
+
 const filteredWords = {
   'shit': 's**t',
   'fuck': 'f**k',

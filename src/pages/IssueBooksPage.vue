@@ -5,8 +5,8 @@
           <span class="desktop:text-2xl laptop:text-1.5xl">Student Details</span>
           <div class="flex flex-col justify-between flex-grow mt-6">
             <div v-for="(field, index) in student_fields" :key="field.id" class="flex space-x-4">
-              <SearchInput v-if="field.searchable" v-model="textStartArray1[index]" :searchData="results_students" @dropdownItemSelected="autocompleteStudentData" :title="field.name"/>
-              <InputText :canEdit="false" v-else v-model="textStartArray1[index]" class="w-full" :title="field.name" :width="field.name == 'Student Grade' ? '48' : 'full'"/>
+              <SearchInput v-if="field.searchable" v-model="student_fields[index].text" :searchData="field.search_data" @dropdownItemSelected="autocompleteStudentData" :title="field.title" class="w-full"/>
+              <InputText :canEdit="false" v-else v-model="student_fields[index].text" class="w-full" :title="field.title" :width="field.title == 'Student Grade' ? '48' : 'full'"/>
             </div>
           </div>
         </div>
@@ -14,15 +14,15 @@
           <span class="desktop:text-2xl laptop:text-1.5xl">Book Details</span>
           <div class="flex flex-col flex-grow justify-between mt-6">
             <div v-for="(field, index) in book_fields" :key="field.id" class="flex space-x-4">
-              <SearchInput v-if="field.searchable" v-model="textStartArray2[index]" :searchData="results_books" @dropdownItemSelected="autocompleteBookData" :title="field.name"/>
-              <InputText :canEdit="false" v-else v-model="textStartArray2[index]" class="w-full" :title="field.name" width="full"/>
+              <SearchInput v-if="field.searchable" v-model="book_fields[index].text" :searchData="field.search_data" @dropdownItemSelected="autocompleteBookData" :title="field.title" class="w-full"/>
+              <InputText :canEdit="false" v-else v-model="book_fields[index].text" class="w-full" :title="field.title" width="full"/>
             </div>
           </div>
         </div>
       </div>
       <div class="flex justify-center space-x-12">
-        <DateInput v-model="issueDate" :title="date_fields[0].name"/>
-        <DateInput v-model="dueDate" :title="date_fields[1].name"/>
+        <DateInput v-model="date_fields[0].date" :title="date_fields[0].title"/>
+        <DateInput v-model="date_fields[1].date" :title="date_fields[1].title"/>
       </div>
       <div class="flex justify-center space-x-12">
         <PageButton @click="cleanTextInputs" title="Cancel" background="cancel-button-red"/>
@@ -38,34 +38,42 @@ import InputText from '@/components/InputText'
 import PageButton from '@/components/PageButton'
 import DateInput from '@/components/DateInput'
 import PageContainer from '@/components/PageContainer'
-import { fiveDaysAfterDate } from '@/utils/helper'
 import SearchInput from '@/components/SearchInput'
 import { userStore, bookStore } from '@/stores/store'
 import { SearchItemClass } from '@/utils/search'
-import { prettyCapitalize } from '@/utils/helper'
+import { prettyCapitalize, PageLayoutData, fiveDaysAfterDate } from '@/utils/helper'
 
 
-// Student input
-const textStartArray1 = ref([])
-// Book input
-const textStartArray2 = ref([])
 // Date input
-const issueDate = ref(new Date())
-const dueDate = ref(fiveDaysAfterDate(issueDate.value))
-const results_students = ref([])
-const results_books = ref([])
 const userstore = userStore()
 const bookstore = bookStore()
 
+const date_fields = ref([
+  new PageLayoutData("Issue Date", true, false, null, new Date()),
+  new PageLayoutData("Due Date", true, false, null, fiveDaysAfterDate(new Date())),
+])
+
+const student_fields =  ref([
+  new PageLayoutData("Student Index", true, true),
+  new PageLayoutData("Student Name", true),
+  new PageLayoutData("Student Grade", true),
+])
+const book_fields =  ref([
+  new PageLayoutData("Book ID", true, true),
+  new PageLayoutData("Book Name", true),
+  new PageLayoutData("Author", true),
+])
+
 function autocompleteStudentData(obj) {
-  textStartArray1.value[0] = obj.optional.index
-  textStartArray1.value[1] = obj.title
-  textStartArray1.value[2] = obj.optional.grade
+  student_fields.value[0].text = obj.optional.index
+  student_fields.value[1].text = obj.title
+  student_fields.value[2].text = obj.optional.grade
 }
+
 function autocompleteBookData(obj) {
-  textStartArray2.value[0] = obj.title
-  textStartArray2.value[1] = obj.optional.title
-  textStartArray2.value[2] = obj.optional.author
+  book_fields.value[0].text = obj.title
+  book_fields.value[1].text = obj.optional.title
+  book_fields.value[2].text = obj.optional.author
 }
 
 function userStoreGetData() {
@@ -90,50 +98,39 @@ function bookStoreGetData() {
 bookstore.$onAction(({name, after}) => {
   if (name === "setDataFetched") {
     after(() => {
-      results_books.value = bookStoreGetData()
+      const result = bookStoreGetData()
+      book_fields.value = book_fields.value.map(v => v.setSearchData(result))
     })
   }
 })
+
 userstore.$onAction(({name, after}) => {
   if (name === "setDataFetched") {
     after(() => {
-      results_students.value = userStoreGetData()
+      const result = userStoreGetData()
+      student_fields.value = student_fields.value.map(v => v.setSearchData(result))
     })
   }
 })
 
 // Due Date automatically becomes 5 days after
-watch(issueDate, () => {
-  dueDate.value = fiveDaysAfterDate(issueDate.value)
+watch(date_fields.value[0], () => {
+  date_fields.value[1].date = fiveDaysAfterDate(date_fields.value[0].date)
 })
 
 // Please include any data fetching methods Here
 // Otherwise if we change routes the data will not be fetched
 onMounted(() => {
-  results_students.value = userStoreGetData()
-  results_books.value = bookStoreGetData()
+  if (bookstore.data_fetched && userstore.data_fetched) {
+    book_fields.value = book_fields.value.map(v => v.setSearchData(bookStoreGetData()))
+    student_fields.value = student_fields.value.map(v => v.setSearchData(userStoreGetData()))
+  }
 })
 
 const cleanTextInputs = () => {
-    textStartArray1.value = textStartArray1.value.map(() => '')
-    textStartArray2.value = textStartArray2.value.map(() => '')
-    dueDate.value = new Date()
-    issueDate.value = new Date()
+    book_fields.value = book_fields.value.map((v) => v.clearText())
+    student_fields.value = student_fields.value.map((v) => v.clearText())
+    date_fields.value = date_fields.value.map((v) => v.clearDate())
 }
 
-const date_fields = [
-  { name: "Issue Date", searchable: false},
-  { name: "Due Date", searchable: false}
-]
-
-const student_fields =  [
-  { name: "Student Index", searchable: true},
-  { name: "Student Name", searchable: false},
-  { name: "Student Grade", searchable: false}
-]
-const book_fields =  [
-  { name: "Book ID", searchable: true},
-  { name: "Book Name", searchable: false},
-  { name: "Author", searchable: false}
-]
 </script>
