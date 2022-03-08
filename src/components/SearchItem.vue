@@ -1,5 +1,5 @@
 <template>
-  <div @click="emit('clicked', new SearchItemClass(props.title, props.dataType, props.optionalData))" class="flex bg-secondary rounded-md cursor-pointer hover:shadow-md transition-all p-2 flex">
+  <div @click="sendItemData" class="flex bg-secondary rounded-md cursor-pointer hover:shadow-md transition-all p-2 flex">
     <component class="pr-4 text-gray-700 rounded-full" :is="icons[props.dataType]" :size="40"></component>
     <section class="flex justify-around flex-col flex-grow">
       <span class="text-1xl">{{ props.title }}</span>
@@ -39,4 +39,8 @@ const props = defineProps({
     type: Object,
   }
 })
+
+function sendItemData() {
+  emit('clicked', new SearchItemClass(props.title, props.dataType, props.optionalData))
+}
 </script>
