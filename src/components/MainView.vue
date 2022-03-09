@@ -3,7 +3,11 @@
         <WindowControls class="absolute right-3 top-0 w-title-bar "/>
         <div class="flex flex-col flex-grow pt-4 gap-6 relative">
           <SearchBar class="self-end"/>
-          <router-view class="custom-shadow"/>
+          <router-view v-slot="{ Component }">
+            <KeepAlive>
+            <component :is="Component" class="custom-shadow" />
+            </KeepAlive>
+          </router-view>
           <Transition name="slidein">
             <div v-show="!hide_counter" class="desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6">
               <BookCounter :icon="BookArrowLeftIcon" :active="bookCounter[0]" title="Number of Due Books" @clicked="bookHandler([true, false, false, false])" :count="duestore.dues.length"/>
