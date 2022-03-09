@@ -26,8 +26,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import PageButton from '@/components/PageButton'
-import InputText from '@/components/InputText'
-import PageContainer from '@/components/PageContainer'
+import InputText from '@/components/InputText' 
+import PageContainer from '@/components/PageContainer' 
 import SearchInput from '@/components/SearchInput'
 import { bookStore } from '@/stores/store'
 import { prettyCapitalize, PageLayoutData } from '@/utils/helper'
