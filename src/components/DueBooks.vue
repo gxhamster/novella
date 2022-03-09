@@ -1,9 +1,9 @@
 <template>
-  <div class="rounded-lg mt-3 custom-scroll-container custom-scroll-container-desktop scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-scroll overflow-x-hidden scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-    <LoadingIcon :failed="failed" v-if="loading" />
-    <div class="pr-5" v-if="!loading">
+  <div class="rounded-lg mt-3 custom-scroll-container thin-scrollbar">
+    <LoadingIcon :failed="failed_ui" v-if="loading_ui" />
+    <div class="pr-5" v-if="!loading_ui">
       <div v-for="day in dates" :key="day">
-        <DueBookGroup :title="calculateDate(day)" :initialShow="day == 0 ? true : false" :children="due_groups[day]"/>
+        <DueBookGroup :title="calculateDate(day)" :initialShow="day == 0 ? true : false" :children="due_groups.get(day)"/>
       </div>
     </div>
   </div>
@@ -18,14 +18,14 @@ import { setFetchData } from '@/utils/fetch'
 
 
 const duestore = dueStore()
-const loading = ref(true)
-const failed = ref(false)
+const loading_ui = ref(true)
+const failed_ui = ref(false)
 
 
 async function getData() {
-  const { l, f } = await setFetchData('http://localhost:3000/due_books', 'due_books', duestore, 'setDues')
-  loading.value = l
-  failed.value = f
+  const { loading, failed } = await setFetchData('http://localhost:3000/due_books', 'due_books', duestore, 'setDues')
+  loading_ui.value = loading
+  failed_ui.value = failed
 }
 
 // If cannot retrieve data
@@ -57,11 +57,11 @@ function calculateDate(day) {
 }
 
 const dates = computed(() => {
-  const result = []
+  const result = new Map()
   const d = []
   for (const due of duestore.dues) {
-    if (!result[due.days]) {
-      result[due.days] = []
+    if (!result.get(due.days)) {
+      result.set(due.days, [])
       d.push(due.days)
     }
   }
@@ -71,13 +71,13 @@ const dates = computed(() => {
 })
 
 const due_groups = computed(() => {
-  const result = []
+  const result = new Map()
 
   for (const due of duestore.dues) {
-    if (!result[due.days]) {
-      result[due.days] = []
+    if (!result.get(due.days)) {
+      result.set(due.days, [])
     }
-    result[due.days].push(due)
+    result.set(due.days, [...result.get(due.days), due])
   }
 
   return result
