@@ -11,7 +11,7 @@ export class SearchItemClass {
 // This function expects data to have object of SearchItemClass
 export function filterPromise(searchText, data) {
   const text = unref(searchText)
-  return new Promise((resolve, reject) => {
+  return Promise.resolve().then(() => {
     const re = new RegExp(`${text.toLowerCase()}`, 'g')
     const result = data.filter((v) => {
       const infoStr = `${v.title} ${Object.values(v.optional).join(' ')}`.toLowerCase()
@@ -21,8 +21,8 @@ export function filterPromise(searchText, data) {
       return false
     })
     if (result === 'null' || result === 'undefined')
-      reject(null)
-    resolve(result)
+      return null
+    return result
   })
 }
 

@@ -6,74 +6,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import SideBar from './components/SideBar.vue'
 import MainView from './components/MainView'
 import { userStore, bookStore } from '@/stores/store'
+import { setFetchData } from '@/utils/fetch'
 
-const store = userStore()
+const userstore = userStore()
 const bookstore = bookStore()
-const loading = ref(true)
-const failed = ref(false)
-const refresh_interval = 100000
+const refresh_interval = 10000
 
-// url: which endpoint to fetch from
-// local_store_key: localStorage key
-const fetchData = async (url, local_store_key) => {
-  const URL = url
-  let response = {}
-  let data = {}
-  try {
-    response = await fetch(URL)
-    data = await response.json()
-  } catch {
-    console.log("[X] Cannot fetch user data")
-    data = localStorage.getItem(local_store_key)
-    if (data === 'null') {
-      console.log('[X] Cannot get local user data')
-      failed.value = true
-    } else {
-      data = JSON.parse(data)
-    }
-  }
-  return data
-}
-
-const setFetchBookData = async () => {
-    const url = 'http://localhost:3000/get_books'
-    const local_store_key = "books"
-    bookstore.setBooks(await fetchData(url, local_store_key))
-    if (bookstore.books !== 'null') {
-      localStorage.setItem(local_store_key, JSON.stringify(bookstore.books))
-      loading.value = false
-      bookstore.setDataFetched(true)
-    } else {
-      failed.value = true
-      bookstore.setDataFetched(false)
-    }
-}
-
-const setFetchUserData = async () => {
-    const url = 'http://localhost:3000/get_users'
-    const local_store_key = "users"
-    store.setUsers(await fetchData(url, local_store_key))
-    if (store.users !== 'null') {
-      localStorage.setItem(local_store_key, JSON.stringify(store.users))
-      loading.value = false
-      store.setDataFetched(true)
-    } else {
-      failed.value = true
-      store.setDataFetched(false)
-    }
-}
 const fetchInterval = setInterval(() => {
-  setFetchBookData()
-  setFetchUserData()
+  setFetchData('http://localhost:3000/get_users', 'users', userstore, 'setUsers')
+  setFetchData('http://localhost:3000/get_books', 'books', bookstore, 'setBooks')
 }, refresh_interval)
 
 onMounted(async () => {
-  setFetchUserData()
-  setFetchBookData()
+  setFetchData('http://localhost:3000/get_users', 'users', userstore, 'setUsers')
+  setFetchData('http://localhost:3000/get_books', 'books', bookstore, 'setBooks')
 })
 
 onUnmounted(() => {

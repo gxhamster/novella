@@ -14,50 +14,25 @@ import { ref, onMounted, computed, onUnmounted } from 'vue'
 import DueBookGroup from './DueBookGroup.vue'
 import LoadingIcon from './LoadingIcon.vue'
 import { dueStore } from '@/stores/store.js'
+import { setFetchData } from '@/utils/fetch'
 
 
-const store = dueStore()
+const duestore = dueStore()
 const loading = ref(true)
 const failed = ref(false)
 
-const fetchDueBooks = async () => {
-  const URL = 'http://localhost:3000/due_books'
-  let response = {}
-  let data = {}
-  try {
-    response = await fetch(URL)
-    data = await response.json()
-  } catch {
-    console.log("[X] Cannot fetch data")
-    data = localStorage.getItem("dues")
-    if (data === 'null') {
-      console.log('[X] Cannot get local data')
-      failed.value = true
-    } else {
-      data = JSON.parse(data)
-    }
-  }
-  return data
-}
 
-
-const setFetchData = async () => {
-    store.setDues(await fetchDueBooks())
-    if (store.dues !== 'null') {
-      localStorage.setItem("dues", JSON.stringify(store.dues))
-      loading.value = false
-      store.setDataFetched(true)
-    } else {
-      failed.value = true
-      store.setDataFetched(false)
-    }
+async function getData() {
+  const { l, f } = await setFetchData('http://localhost:3000/due_books', 'due_books', duestore, 'setDues')
+  loading.value = l
+  failed.value = f
 }
 
 // If cannot retrieve data
-const fetchInterval = setInterval(setFetchData, 10000)
+const fetchInterval = setInterval(getData, 10000)
 
-onMounted(async () => {
-  setFetchData()
+onMounted(() => {
+  getData()
 })
 
 onUnmounted(() => {
@@ -84,7 +59,7 @@ function calculateDate(day) {
 const dates = computed(() => {
   const result = []
   const d = []
-  for (const due of store.dues) {
+  for (const due of duestore.dues) {
     if (!result[due.days]) {
       result[due.days] = []
       d.push(due.days)
@@ -98,7 +73,7 @@ const dates = computed(() => {
 const due_groups = computed(() => {
   const result = []
 
-  for (const due of store.dues) {
+  for (const due of duestore.dues) {
     if (!result[due.days]) {
       result[due.days] = []
     }
