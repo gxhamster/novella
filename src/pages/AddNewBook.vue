@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import PageButton from '@/components/PageButton'
 import InputText from '@/components/InputText' 
 import PageContainer from '@/components/PageContainer' 
@@ -108,8 +108,4 @@ function cleanTextInputs() {
   small_fields_right.value = small_fields_right.value.map(v => v.clearText())
 }
 
-onMounted(() => {
-  if (bookstore.data_fetched)
-    setStoreData()
-})
 </script>

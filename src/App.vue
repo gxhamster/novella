@@ -14,7 +14,7 @@ import { setFetchData } from '@/utils/fetch'
 
 const userstore = userStore()
 const bookstore = bookStore()
-const refresh_interval = 10000
+const refresh_interval = 60000
 
 const fetchInterval = setInterval(() => {
   setFetchData('http://localhost:3000/get_users', 'users', userstore, 'setUsers')

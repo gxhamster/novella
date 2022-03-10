@@ -29,6 +29,7 @@ async function createWindow() {
     autoHideMenuBar: true,
     icon: path.join(__dirname, '../build/icons/icon.png'),
     webPreferences: {
+      // devTools: isDevelopment,
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
       preload: path.join(__dirname, 'preload.js')
     },

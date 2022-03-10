@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 
 import InputText from '@/components/InputText'
 import PageButton from '@/components/PageButton'
@@ -116,15 +116,6 @@ userstore.$onAction(({name, after}) => {
 // Due Date automatically becomes 5 days after
 watch(date_fields.value[0], () => {
   date_fields.value[1].date = fiveDaysAfterDate(date_fields.value[0].date)
-})
-
-// Please include any data fetching methods Here
-// Otherwise if we change routes the data will not be fetched
-onMounted(() => {
-  if (bookstore.data_fetched && userstore.data_fetched) {
-    book_fields.value = book_fields.value.map(v => v.setSearchData(bookStoreGetData()))
-    student_fields.value = student_fields.value.map(v => v.setSearchData(userStoreGetData()))
-  }
 })
 
 const cleanTextInputs = () => {
