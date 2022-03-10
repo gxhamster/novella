@@ -36,13 +36,14 @@ const router = useRouter()
 const sidebar_focused = ref(false)
 const current_active_btn_index = ref(0)
 const btnClicked = (index) => {
-    current_active_btn_index.value = index
+  current_active_btn_index.value = index
 }
 const icon_names = [IssueBookIcon, ReturnBookIcon, AddNewBookIcon, AddNewStudentIcon, HistoryIcon, DashboardIcon]
 const button_names = ref(["Issue Book", "Receive Book", "Add New Book", "Add New Student", "History", "Dashboard"])
 const route_names =  ref(routes.filter((item) => item.path !== '/').map((item) => item.path))
 
 window.onkeyup = (event) => {
+  event.preventDefault()
   if (event.key === "ArrowUp") {
     navigateSidebar(false)
   } else if (event.key === "ArrowDown") {
@@ -64,7 +65,7 @@ function wrap(value, lower, upper) {
 
 
 function changeRoute() {
-  router.push(route_names.value[current_active_btn_index.value])
+  router.replace(route_names.value[current_active_btn_index.value])
 }
 
 function navigateSidebar(down = true) {
