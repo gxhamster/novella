@@ -7,10 +7,10 @@ export async function useFetch(url, local_store_key) {
     response = await fetch(unref(url))
     data = await response.json()
   } catch(error) {
-    console.error(`Cannot get data ${error}`)
+    console.error(`👀 Cannot get data ${error}`)
     data = localStorage.getItem(local_store_key)
     if (data === 'null') {
-      console.error(`Local data is empty`)
+      console.error(`👎 Local data is empty`)
     } else {
       data = JSON.parse(data)
     }
@@ -18,7 +18,6 @@ export async function useFetch(url, local_store_key) {
   return data
 }
 
-// Sets the local storage (doesnt set the pinia store)
 export async function setFetchData(url, local_store_key, pinia_store, pinia_store_set_func_name) {
   let loading = true
   let failed = false
