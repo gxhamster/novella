@@ -1,10 +1,10 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer } from "electron";
 
 const API = {
-  handleMax: (callback) => ipcRenderer.on('is-window-max:reply', callback),
-  closeWindow: () => ipcRenderer.send('window-closed'),
-  minimizeWindow: () => ipcRenderer.send('minimized'),
-  maximizeWindow: () => ipcRenderer.send('maximized')
-}
+  handleMax: (callback) => ipcRenderer.on("is-window-max:reply", callback),
+  closeWindow: () => ipcRenderer.send("window-closed"),
+  minimizeWindow: () => ipcRenderer.send("minimized"),
+  maximizeWindow: () => ipcRenderer.send("maximized"),
+};
 
-contextBridge.exposeInMainWorld("api", API)
+contextBridge.exposeInMainWorld("api", API);

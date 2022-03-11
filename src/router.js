@@ -1,10 +1,10 @@
-import { createRouter, createWebHashHistory } from "vue-router"
-import AddNewStudentPage from "./pages/AddNewStudentPage.vue"
-import IssueBooksPage from "./pages/IssueBooksPage.vue"
-import AddNewBook from "./pages/AddNewBook.vue"
-import RecieveBook from "./pages/RecieveBook.vue"
-import HistoryPage from "./pages/HistoryPage.vue"
-import DashBoard from "./pages/DashBoard.vue"
+import { createRouter, createWebHashHistory } from "vue-router";
+import AddNewStudentPage from "./pages/AddNewStudentPage.vue";
+import IssueBooksPage from "./pages/IssueBooksPage.vue";
+import AddNewBook from "./pages/AddNewBook.vue";
+import RecieveBook from "./pages/RecieveBook.vue";
+import HistoryPage from "./pages/HistoryPage.vue";
+import DashBoard from "./pages/DashBoard.vue";
 
 const routes = [
   {
@@ -20,12 +20,12 @@ const routes = [
   {
     path: "/recieve_book",
     name: "Recieve Book",
-    component: RecieveBook
+    component: RecieveBook,
   },
   {
     path: "/add_book",
     name: "Add Book",
-    component: AddNewBook
+    component: AddNewBook,
   },
   {
     path: "/add_student",
@@ -35,16 +35,16 @@ const routes = [
   {
     path: "/history",
     name: "History",
-    component: HistoryPage
+    component: HistoryPage,
   },
   {
     path: "/dashboard",
     name: "Dashboard",
-    component: DashBoard
+    component: DashBoard,
   },
-]
+];
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
   routes,
-})
-export { router, routes }
+});
+export { router, routes };

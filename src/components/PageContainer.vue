@@ -1,7 +1,13 @@
 <template>
-  <div class="desktop:p-20 laptop:py-10 laptop:px-14 bg-secondary rounded-lgg flex-grow overflow-hidden">
+  <div
+    class="desktop:p-20 laptop:py-10 laptop:px-14 bg-secondary rounded-lgg flex-grow overflow-hidden"
+  >
     <section class="container">
-      <span class="block desktop:text-3xl laptop:text-2xl font-medium desktop:mb-6 laptop:mb-3">{{ props.title }}</span> <div class="main-container mx-auto flex flex-col justify-between">
+      <span
+        class="block desktop:text-3xl laptop:text-2xl font-medium desktop:mb-6 laptop:mb-3"
+        >{{ props.title }}</span
+      >
+      <div class="main-container mx-auto flex flex-col justify-between">
         <slot></slot>
       </div>
     </section>
@@ -9,9 +15,9 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps } from "vue";
 
-const props = defineProps({ title: String })
+const props = defineProps({ title: String });
 </script>
 
 <style scoped>
@@ -20,5 +26,4 @@ const props = defineProps({ title: String })
   margin: 0 auto;
   height: 100%;
 }
-
 </style>

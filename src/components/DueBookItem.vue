@@ -12,15 +12,18 @@
         </div>
       </div>
     </div>
-    <div :class="days < 6 && days >= 0 ? days_colors[days] : 'red'" class="flex tracking-tighter flex-col text-center w-14 h-14 aspect-square rounded-lg flex-shrink-0">
+    <div
+      :class="days < 6 && days >= 0 ? days_colors[days] : 'red'"
+      class="flex tracking-tighter flex-col text-center w-14 h-14 aspect-square rounded-lg flex-shrink-0"
+    >
       <span class="font-bold text-1.5xl">{{ days }}</span>
-      <span class="text-sm flex-shrink">{{ days != 1 ? 'Days' : 'Day'}}</span>
+      <span class="text-sm flex-shrink">{{ days != 1 ? "Days" : "Day" }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue'
+import { defineProps, ref } from "vue";
 
 const days_colors = ref({
   0: "bg-secondary border-2 border-gray-400",
@@ -28,28 +31,28 @@ const days_colors = ref({
   2: "yellow",
   3: "yellow",
   4: "red",
-  5: "red"
-})
+  5: "red",
+});
 
 defineProps({
   name: String,
   grade: String,
   title: String,
-  days: Number
-})
+  days: Number,
+});
 </script>
 
 <style scoped>
 .red {
-  background: #D79894;
+  background: #d79894;
 }
 .green {
-  background: #D3E8CB;
+  background: #d3e8cb;
 }
 .yellow {
-  background: #EFEFD0;
+  background: #efefd0;
 }
 .white {
-  background: #EFF1F1;
+  background: #eff1f1;
 }
 </style>

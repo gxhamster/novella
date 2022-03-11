@@ -1,8 +1,7 @@
 <template>
-  <PageContainer title="History">
-  </PageContainer>
+  <PageContainer title="History"> </PageContainer>
 </template>
 
 <script setup>
-import PageContainer from '@/components/PageContainer'
+import PageContainer from "@/components/PageContainer";
 </script>

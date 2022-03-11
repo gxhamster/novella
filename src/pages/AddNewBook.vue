@@ -1,39 +1,65 @@
 <template>
   <PageContainer title="Add New Book">
     <div class="grid grid-cols-2 h-full gap-x-14">
-      <div v-for="(field, index) in book_fields" :key="field.title" class="relative">
-        <SearchInput v-if="field.searchable" @dropdownItemSelected="(obj) => book_fields[index].text = obj.title" :searchData="field.search_data" v-model="book_fields[index].text" :title="field.title"/>
-        <InputText v-else v-model="book_fields[index].text" :title="field.title"/>
+      <div
+        v-for="(field, index) in book_fields"
+        :key="field.title"
+        class="relative"
+      >
+        <SearchInput
+          v-if="field.searchable"
+          @dropdownItemSelected="(obj) => (book_fields[index].text = obj.title)"
+          :searchData="field.search_data"
+          v-model="book_fields[index].text"
+          :title="field.title"
+        />
+        <InputText
+          v-else
+          v-model="book_fields[index].text"
+          :title="field.title"
+        />
       </div>
       <div class="flex gap-x-6">
         <div v-for="(field, index) in small_fields_left" :key="field.title">
-          <InputText v-model="small_fields_left[index].text" :searchable="field.searchable" :title="field.title"/>
+          <InputText
+            v-model="small_fields_left[index].text"
+            :searchable="field.searchable"
+            :title="field.title"
+          />
         </div>
       </div>
       <div class="flex gap-x-6">
         <div v-for="(field, index) in small_fields_right" :key="field.title">
-          <InputText v-model="small_fields_right[index].text" :searchable="field.searchable" :title="field.title"/>
+          <InputText
+            v-model="small_fields_right[index].text"
+            :searchable="field.searchable"
+            :title="field.title"
+          />
         </div>
       </div>
     </div>
     <div class="flex justify-center space-x-12 col-span-2 mt-5">
-      <PageButton @click="cleanTextInputs" title="Cancel" background="cancel-button-red"/>
-      <PageButton title="Save"/>
+      <PageButton
+        @click="cleanTextInputs"
+        title="Cancel"
+        background="cancel-button-red"
+      />
+      <PageButton title="Save" />
     </div>
   </PageContainer>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import PageButton from '@/components/PageButton'
-import InputText from '@/components/InputText' 
-import PageContainer from '@/components/PageContainer' 
-import SearchInput from '@/components/SearchInput'
-import { bookStore } from '@/stores/store'
-import { prettyCapitalize, PageLayoutData } from '@/utils/helper'
-import { groupByKey, SearchItemClass } from '@/utils/search'
+import { ref } from "vue";
+import PageButton from "@/components/PageButton";
+import InputText from "@/components/InputText";
+import PageContainer from "@/components/PageContainer";
+import SearchInput from "@/components/SearchInput";
+import { bookStore } from "@/stores/store";
+import { prettyCapitalize, PageLayoutData } from "@/utils/helper";
+import { groupByKey, SearchItemClass } from "@/utils/search";
 
-const bookstore = bookStore()
+const bookstore = bookStore();
 
 const book_fields = ref([
   new PageLayoutData("Title", false),
@@ -41,71 +67,84 @@ const book_fields = ref([
   new PageLayoutData("Book Number", false, false),
   new PageLayoutData("Genre", false, true),
   new PageLayoutData("DDC", false, false),
-  new PageLayoutData("Language", false)
-])
+  new PageLayoutData("Language", false),
+]);
 const small_fields_left = ref([
   new PageLayoutData("Edition", false, false),
-  new PageLayoutData("Pages", false)
-])
+  new PageLayoutData("Pages", false),
+]);
 
 const small_fields_right = ref([
   new PageLayoutData("Volume", false, false),
-  new PageLayoutData("Year", false)
-])
+  new PageLayoutData("Year", false),
+]);
 
 function storeGetAuthorData() {
   // Remove duplicate titles
-  const book_results = [...bookstore.books.map((v) => new SearchItemClass(prettyCapitalize(v.author === '' ? 'N/A' : v.author), 'user', {}))]
+  const book_results = [
+    ...bookstore.books.map(
+      (v) =>
+        new SearchItemClass(
+          prettyCapitalize(v.author === "" ? "N/A" : v.author),
+          "user",
+          {}
+        )
+    ),
+  ];
 
   // Group objects by author
-  const grouped_result = groupByKey('title', book_results, false)
+  const grouped_result = groupByKey("title", book_results, false);
 
-  const final_result = []
+  const final_result = [];
   for (const arr of grouped_result.values()) {
-    if (arr.length >= 1)
-      arr[0].optional['books written'] = arr.length
-    final_result.push(arr[0])
+    if (arr.length >= 1) arr[0].optional["books written"] = arr.length;
+    final_result.push(arr[0]);
   }
-  return [...final_result]
+  return [...final_result];
 }
 
 function storeGetGenreData() {
   // Remove duplicate titles
-  const book_results = [...bookstore.books.map((v) => new SearchItemClass(prettyCapitalize(v.subject === '' ? 'N/A' : v.subject), 'book', {}))]
+  const book_results = [
+    ...bookstore.books.map(
+      (v) =>
+        new SearchItemClass(
+          prettyCapitalize(v.subject === "" ? "N/A" : v.subject),
+          "book",
+          {}
+        )
+    ),
+  ];
   // Group objects by author
-  const grouped_result = groupByKey('title', book_results, false)
-  const final_result = []
+  const grouped_result = groupByKey("title", book_results, false);
+  const final_result = [];
   for (const arr of grouped_result.values()) {
-    final_result.push(arr[0])
+    final_result.push(arr[0]);
   }
-  return [...final_result]
+  return [...final_result];
 }
 
 function setStoreData() {
-  const author_result = storeGetAuthorData()
-  const genre_result = storeGetGenreData()
+  const author_result = storeGetAuthorData();
+  const genre_result = storeGetGenreData();
   book_fields.value = book_fields.value.map((v) => {
-    if (v.title === "Author")
-      return v.setSearchData(author_result)
-    else if (v.title === "Genre")
-      return v.setSearchData(genre_result)
-    else
-      return v
-  })
+    if (v.title === "Author") return v.setSearchData(author_result);
+    else if (v.title === "Genre") return v.setSearchData(genre_result);
+    else return v;
+  });
 }
 
-bookstore.$onAction(({name, after}) => {
+bookstore.$onAction(({ name, after }) => {
   if (name === "setDataFetched") {
     after(() => {
-      setStoreData()
-    })
+      setStoreData();
+    });
   }
-}, true)
+}, true);
 
 function cleanTextInputs() {
-  book_fields.value = book_fields.value.map((v) => v.clearText())
-  small_fields_left.value = small_fields_left.value.map(v => v.clearText())
-  small_fields_right.value = small_fields_right.value.map(v => v.clearText())
+  book_fields.value = book_fields.value.map((v) => v.clearText());
+  small_fields_left.value = small_fields_left.value.map((v) => v.clearText());
+  small_fields_right.value = small_fields_right.value.map((v) => v.clearText());
 }
-
 </script>

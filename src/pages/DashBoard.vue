@@ -1,8 +1,7 @@
 <template>
-  <PageContainer title="Dashboard">
-  </PageContainer>
+  <PageContainer title="Dashboard"> </PageContainer>
 </template>
 
 <script setup>
-import PageContainer from '@/components/PageContainer'
+import PageContainer from "@/components/PageContainer";
 </script>

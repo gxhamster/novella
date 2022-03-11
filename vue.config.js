@@ -7,27 +7,27 @@ module.exports = {
         win: {
           target: ["nsis", "msi"],
           icon: "build/icons/icon.png",
-        //   sign: "./electron/winsign.js",
+          //   sign: "./electron/winsign.js",
           publisherName: "Tritech",
         },
       },
-      preload: 'src/preload.js',
+      preload: "src/preload.js",
     },
   },
   configureWebpack: {
     optimization: {
       splitChunks: {
-        chunks: 'all'
+        chunks: "all",
       },
-      runtimeChunk: 'single'
+      runtimeChunk: "single",
     },
     module: {
       rules: [
         {
           test: /\.(woff|woff2|eot|ttf|otf|png|svg)$/i,
-          type: 'asset/resource'
-        }
-      ]
-    }
-  }
+          type: "asset/resource",
+        },
+      ],
+    },
+  },
 };
