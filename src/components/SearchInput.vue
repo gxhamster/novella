@@ -1,12 +1,12 @@
 <template>
 <div class="relative">
   <InputText :title="title" :searchable="true" :modelValue="modelValue" @update:modelValue="doSearch" @inputFocus="isFocused = true" @inputBlur="isFocused = false" @searchClicked="setActive(true)" />
-  <SearchDropdown v-show="isActive || isFocused"  @itemClicked="sendItemData" :data="filteredResults" @mouseenter="isActive = true" @mouseleave="isActive = false"/>
+  <SearchDropdown v-show="isActive || isFocused" :searchText="modelValue" @itemClicked="sendItemData" @addItemClicked="isActive = false" :data="filteredResults" @mouseenter="isActive = true" @mouseleave="isActive = false"/>
 </div>
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
+import { ref, defineProps, defineEmits, onUpdated } from 'vue'
 import InputText from './InputText'
 import SearchDropdown from './SearchDropdown'
 import { filterPromise } from '@/utils/search'
@@ -22,7 +22,7 @@ const props = defineProps({
 })
 const isActive = ref(false)
 const isFocused = ref(false)
-const filteredResults = ref([])
+const filteredResults = ref(props.searchData)
 
 function setFilteredData(result) {
   filteredResults.value = result
@@ -52,4 +52,11 @@ function setActive(btn = false) {
     isFocused.value = true
   }
 }
+
+onUpdated(() => {
+  if (props.modelValue === '') {
+    setFilteredData(props.searchData)
+  }
+})
+
 </script>

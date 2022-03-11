@@ -2,7 +2,7 @@
   <div class="relative desktop:w-96 laptop:w-80">
     <magnify-icon :class="isActive ? 'animate-pulse' : ''" class="text-primary absolute desktop:top-3 desktop:right-6 laptop:top-2 laptop:right-6" icon="fa-regular fa-magnifying-glass" />
     <input @input="filterResults" :value="searchText" @focus="setActive" @blur="isFocused = false" class="bg-secondary custom-shadow text-gray-500 rounded-full appearance-none text-right outline-none w-full pr-16 desktop:py-3 laptop:py-2" placeholder="Search..." >
-    <SearchDropdown :data="filteredResults" v-show="isActive || isFocused" @mouseenter="isActive = true" @mouseleave="isActive = false"/>
+    <SearchDropdown :showAddBtn="false" :data="filteredResults" v-show="isActive || isFocused" @mouseenter="isActive = true" @mouseleave="isActive = false"/>
   </div>
 </template>
 
