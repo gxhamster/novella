@@ -49,15 +49,17 @@
     <div class="flex flex-col gap-10 pt-20">
       <div class="rounded-lgg px-10 flex items-center gap-5 flex-col h-1/5">
         <div v-for="btn in main_view_buttons" :key="btn.name">
-          <MainViewButton class="text-1xl" :title="btn.name">
-            <template v-slot="{ isActive }">
-              <component
-                :is="btn.icon"
-                class="cursor-pointer rounded-full p-1 transition duration-150"
-                :class="isActive ? styled_button : 'text-primary'"
-              />
-            </template>
-          </MainViewButton>
+          <router-link :to="btn.route">
+            <MainViewButton class="text-1xl" :title="btn.name">
+              <template v-slot="{ isActive }">
+                <component
+                  :is="btn.icon"
+                  class="cursor-pointer rounded-full p-1 transition duration-150"
+                  :class="isActive ? styled_button : 'text-primary'"
+                />
+              </template>
+            </MainViewButton>
+          </router-link>
         </div>
       </div>
       <div
@@ -96,14 +98,15 @@ const duestore = dueStore();
 const bookstore = bookStore();
 const userstore = userStore();
 const main_view_buttons = [
-  { name: "Settings", icon: CogIcon },
-  { name: "Feedback", icon: InformationIcon },
-  { name: "About us", icon: CommentQuoteOutlineIcon },
+  { name: "Settings", icon: CogIcon, route: "/settings" },
+  { name: "Feedback", icon: InformationIcon, route: "/feedback" },
+  { name: "About us", icon: CommentQuoteOutlineIcon, route: "/about" },
 ];
 const hide_counter_routes = [
   { route: "/issue_book", on_max: false },
   { route: "/", on_max: false },
   { route: "/add_book", on_max: true },
+  { route: "/settings", on_max: true },
 ];
 const bookCounter = ref([true, false, false, false]);
 const maximized = ref(false);

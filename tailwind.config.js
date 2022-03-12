@@ -13,6 +13,7 @@ module.exports = {
         secondary: "#E1E4E5",
         border: "#C1CFD6",
         steel: "#BDD0D7",
+        settingsgray: "#CFD2D3",
       },
       width: {
         128: "26rem",

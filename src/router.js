@@ -5,6 +5,9 @@ import AddNewBook from "./pages/AddNewBook.vue";
 import RecieveBook from "./pages/RecieveBook.vue";
 import HistoryPage from "./pages/HistoryPage.vue";
 import DashBoard from "./pages/DashBoard.vue";
+import SettingsPage from "./pages/SettingsPage.vue";
+import AboutPage from "./pages/AboutPage.vue";
+import FeedbackPage from "./pages/FeedbackPage.vue";
 
 const routes = [
   {
@@ -41,6 +44,21 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: DashBoard,
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: SettingsPage,
+  },
+  {
+    path: "/about",
+    name: "About us",
+    component: AboutPage,
+  },
+  {
+    path: "/feedback",
+    name: "Feedback",
+    component: FeedbackPage,
   },
 ];
 const router = createRouter({
