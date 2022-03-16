@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  font-family: 'Ubuntu', 'Arial';
+  font-family: "Ubuntu", "Arial";
 }
 
 /* Disable outline */
@@ -19,7 +19,8 @@
     }
 
     /* Book Counter slide animation */
-    .slidein-enter-from, .slidein-leave-to {
+    .slidein-enter-from,
+    .slidein-leave-to {
       width: 100%;
       opacity: 0;
     }
@@ -50,7 +51,6 @@
         height: 6rem;
       }
     }
-
   }
 
   @screen desktop {
@@ -59,8 +59,8 @@
       height: calc(100% - 80px);
     }
 
-
-    .slidein-enter-from, .slidein-leave-to {
+    .slidein-enter-from,
+    .slidein-leave-to {
       width: 100%;
       opacity: 0;
     }
@@ -93,13 +93,12 @@
     }
   }
 
-
   .thin-scrollbar {
-    @apply scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-scroll overflow-x-hidden scrollbar-thumb-rounded-full scrollbar-track-rounded-full
+    @apply scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-scroll overflow-x-hidden scrollbar-thumb-rounded-full scrollbar-track-rounded-full;
   }
 
   .duebooks-title {
-    @apply desktop:w-160 laptop:w-100px overflow-hidden whitespace-nowrap truncate
+    @apply desktop:w-160 laptop:w-100px overflow-hidden whitespace-nowrap truncate;
   }
 
   .duebooks-title-sm {
@@ -111,16 +110,15 @@
   .main-container-scroll {
     height: calc(100% - 10px);
   }
-
 }
 
 @layer utilities {
   .cancel-button-red {
-    background: #C58585;
+    background: #c58585;
   }
 
   .custom-shadow {
-    @apply shadow-sm hover:shadow-md transition duration-150
+    @apply shadow-sm hover:shadow-md transition duration-150;
   }
 
   @screen laptop {
@@ -140,5 +138,4 @@
       width: 1920px;
     }
   }
-
 }

@@ -58,7 +58,7 @@ const button_names = ref([
   "Add New Book",
   "Add New Student",
   "History",
-  "Dashboard",
+  "Directory",
 ]);
 const route_names = ref(
   routes.filter((item) => item.path !== "/").map((item) => item.path)

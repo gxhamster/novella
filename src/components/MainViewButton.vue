@@ -1,20 +1,19 @@
 <template>
   <div
-    v-on:mouseover="isActive = true"
-    v-on:mouseleave="isActive = false"
-    class="flex space-x-4 w-40 items-center"
+    class="flex transition py-1 desktop:py-2 px-4 justify-center hover:bg-steel rounded-lg"
   >
-    <slot :isActive="isActive"></slot>
-    <button class="text-primary h-full desktop:text-1.5xl laptop:text-1xl">
-      {{ props.title }}
-    </button>
+    <div class="flex items-center w-48 space-x-6">
+      <slot></slot>
+      <button class="text-primary h-full desktop:text-1.5xl laptop:text-1xl">
+        {{ props.title }}
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps } from "vue";
+import { defineProps } from "vue";
 
-const isActive = ref(false);
 const props = defineProps({
   title: String,
 });

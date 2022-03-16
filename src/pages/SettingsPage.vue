@@ -12,7 +12,7 @@
           <ToggleButton />
         </SettingsGroupRow>
       </SettingsGroup>
-      <SettingsGroup title="Account">
+      <SettingsGroup title="Password and Security">
         <SettingsGroupRow title="this is the first setting">
           <ToggleButton />
         </SettingsGroupRow>
@@ -23,7 +23,7 @@
           <ToggleButton />
         </SettingsGroupRow>
       </SettingsGroup>
-      <SettingsGroup title="Audio">
+      <SettingsGroup title="Appearance">
         <SettingsGroupRow title="this is the first setting">
           <ToggleButton />
         </SettingsGroupRow>

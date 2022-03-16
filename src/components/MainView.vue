@@ -47,17 +47,14 @@
       </Transition>
     </div>
     <div class="flex flex-col gap-10 pt-20">
-      <div class="rounded-lgg px-10 flex items-center gap-5 flex-col h-1/5">
+      <div class="rounded-lgg flex gap-3 flex-col h-1/5">
         <div v-for="btn in main_view_buttons" :key="btn.name">
           <router-link :to="btn.route">
             <MainViewButton class="text-1xl" :title="btn.name">
-              <template v-slot="{ isActive }">
-                <component
-                  :is="btn.icon"
-                  class="cursor-pointer rounded-full p-1 transition duration-150"
-                  :class="isActive ? styled_button : 'text-primary'"
-                />
-              </template>
+              <component
+                :is="btn.icon"
+                class="cursor-pointer rounded-full p-1 text-primary"
+              />
             </MainViewButton>
           </router-link>
         </div>
@@ -167,6 +164,4 @@ watch(maximized, (n) => {
     }
   }
 });
-
-const styled_button = ref("text-primary animate-pulse");
 </script>

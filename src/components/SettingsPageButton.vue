@@ -1,7 +1,7 @@
 <template>
   <button
     @click="emit('clicked')"
-    class="hover:opacity-90 transition duration-150 px-5 desktop:py-1 laptop:py-1 h-10text-white rounded-full"
+    class="hover:opacity-90 transition duration-150 px-5 desktop:py-1 laptop:py-1 text-white rounded-full"
     :class="`${props.background} ${props.text_color}`"
   >
     {{ props.title }}
