@@ -1,10 +1,25 @@
 <template>
   <div>
-    <div class="flex space-x-1 mb-1" :class="!show ? 'mb-3' : ''">
-      <span class="text-1xl font-bold"> {{ props.title }} </span>
-      <div @click="show = !show" class="cursor-pointer">
-        <ChevronDownIcon v-show="show" />
-        <ChevronUpIcon v-show="!show" />
+    <div
+      class="flex space-x-2 items-center mb-1 rounded-lg mt-1"
+      :class="!show ? 'mb-3' : ''"
+    >
+      <div
+        class="bg-steel rounded-lg text-center p-2 text-gray-700 truncate font-bold item-icon"
+      >
+        {{ children.length }}
+      </div>
+      <div class="flex justify-between flex-grow">
+        <span class="text-1xl text-gray-600 font-bold">
+          {{ props.title }}
+        </span>
+        <div
+          @click="show = !show"
+          class="cursor-pointer text-gray-600 hover:text-black transition-colors"
+        >
+          <ChevronDownIcon v-if="show" />
+          <ChevronUpIcon v-else />
+        </div>
       </div>
     </div>
     <div v-show="show">
@@ -41,41 +56,26 @@ const props = defineProps({
 </script>
 
 <style scoped>
-#expand-container {
-  overflow: hidden;
+.item-icon {
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1/1;
 }
-
-.expand-contract {
-  height: 0;
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
 }
-@keyframes expand {
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
   0% {
-    height: 0;
-    opacity: 0%;
+    transform: scale(0);
   }
-  20% {
-    height: 20%;
-    opacity: 20%;
-  }
-  40% {
-    height: 40%;
-    opacity: 40%;
-  }
-  60% {
-    height: 60%;
-    opacity: 60%;
-  }
-  80% {
-    height: 80%;
-    opacity: 80%;
+  50% {
+    transform: scale(1.25);
   }
   100% {
-    height: 100%;
-    opacity: 100%;
+    transform: scale(1);
   }
-}
-
-.expanded {
-  animation: expand 2s infinite;
 }
 </style>
