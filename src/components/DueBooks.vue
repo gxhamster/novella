@@ -15,36 +15,27 @@
 
 <script setup>
 import { ref, onMounted, computed, onUnmounted } from "vue";
+import { getFirestore } from "firebase/firestore";
 import DueBookGroup from "./DueBookGroup.vue";
 import LoadingIcon from "./LoadingIcon.vue";
 import { dueStore } from "@/stores/store.js";
-import { setFetchData } from "@/utils/fetch";
+import { firebaseSetupSync } from "@/utils/firebase";
 
 const duestore = dueStore();
+const db = getFirestore();
 const loading_ui = ref(true);
 const failed_ui = ref(false);
 
 async function getData() {
-  const { loading, failed } = await setFetchData(
-    "http://localhost:3000/due_books",
-    "due_books",
-    duestore,
-    "setDues"
-  );
-  loading_ui.value = loading;
-  failed_ui.value = failed;
+  firebaseSetupSync(db, "dues", duestore, "setDues");
+  loading_ui.value = false;
 }
-
-// If cannot retrieve data
-const fetchInterval = setInterval(getData, 60000);
 
 onMounted(() => {
   getData();
 });
 
-onUnmounted(() => {
-  clearInterval(fetchInterval);
-});
+onUnmounted(() => {});
 
 function calculateDate(day) {
   if (day == 0) {

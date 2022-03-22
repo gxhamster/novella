@@ -1,3 +1,4 @@
+/* eslint-disable */
 const dues = [
   {
     title: "Harry Potter and the Half Blood Prince",
@@ -144,5 +145,4 @@ const dues = [
     days: 100,
   },
 ];
-
-export default dues;
+module.exports = dues;

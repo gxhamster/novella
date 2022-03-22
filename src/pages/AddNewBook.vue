@@ -12,11 +12,13 @@
           :searchData="field.search_data"
           v-model="book_fields[index].text"
           :title="field.title"
+          :validate="book_fields[index].validator"
         />
         <InputText
           v-else
           v-model="book_fields[index].text"
           :title="field.title"
+          :validate="book_fields[index].validator"
         />
       </div>
       <div class="flex gap-x-6">
@@ -50,7 +52,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import PageButton from "@/components/PageButton";
 import InputText from "@/components/InputText";
 import PageContainer from "@/components/PageContainer";
@@ -58,12 +60,27 @@ import SearchInput from "@/components/SearchInput";
 import { bookStore } from "@/stores/store";
 import { prettyCapitalize, PageLayoutData } from "@/utils/helper";
 import { groupByKey, SearchItemClass } from "@/utils/search";
+import { validate } from "@/utils/validation";
 
 const bookstore = bookStore();
 
 const book_fields = ref([
-  new PageLayoutData("Title", false),
-  new PageLayoutData("Author", false, true),
+  new PageLayoutData("Title", false, false, (text) =>
+    validate(text).between({
+      inclusive: true,
+      min: 5,
+      max: 20,
+      message: "Title should be between 5 and 20",
+    })
+  ),
+  new PageLayoutData("Author", false, true, (text) =>
+    validate(text).between({
+      inclusive: true,
+      min: 5,
+      max: 30,
+      message: "Author should be between 5 and 30",
+    })
+  ),
   new PageLayoutData("Book Number", false, false),
   new PageLayoutData("Genre", false, true),
   new PageLayoutData("DDC", false, false),
@@ -141,6 +158,10 @@ bookstore.$onAction(({ name, after }) => {
     });
   }
 }, true);
+
+onMounted(() => {
+  setStoreData();
+});
 
 function cleanTextInputs() {
   book_fields.value = book_fields.value.map((v) => v.clearText());

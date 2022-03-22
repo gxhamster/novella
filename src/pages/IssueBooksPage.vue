@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 import InputText from "@/components/InputText";
 import PageButton from "@/components/PageButton";
@@ -92,11 +92,12 @@ const userstore = userStore();
 const bookstore = bookStore();
 
 const date_fields = ref([
-  new PageLayoutData("Issue Date", true, false, null, new Date()),
+  new PageLayoutData("Issue Date", true, false, null, null, new Date()),
   new PageLayoutData(
     "Due Date",
     true,
     false,
+    null,
     null,
     fiveDaysAfterDate(new Date())
   ),
@@ -131,7 +132,7 @@ function userStoreGetData() {
     ...userstore.users.map(
       (v) =>
         new SearchItemClass(prettyCapitalize(v.name), "user", {
-          index: v.index === "" ? "N/A" : prettyCapitalize(v.index),
+          index: v.index === "" ? "N/A" : v.index,
           grade: v.grade,
         })
     ),
@@ -172,6 +173,17 @@ userstore.$onAction(({ name, after }) => {
       );
     });
   }
+});
+
+onMounted(() => {
+  const user_result = userStoreGetData();
+  student_fields.value = student_fields.value.map((v) =>
+    v.setSearchData(user_result)
+  );
+  const book_result = bookStoreGetData();
+  book_fields.value = book_fields.value.map((v) =>
+    v.setSearchData(book_result)
+  );
 });
 
 // Due Date automatically becomes 5 days after

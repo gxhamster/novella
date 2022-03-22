@@ -4,19 +4,18 @@
       :title="title"
       :searchable="true"
       :modelValue="modelValue"
+      :validate="validate"
       @update:modelValue="doSearch"
       @inputFocus="isFocused = true"
       @inputBlur="isFocused = false"
-      @searchClicked="setActive(true)"
+      @searchClicked="isActive = !isActive"
     />
     <SearchDropdown
-      v-show="isActive || isFocused"
+      v-show="isActive"
       :searchText="modelValue"
       :data="filteredResults"
       @itemClicked="sendItemData"
       @addItemClicked="isActive = false"
-      @mouseenter="isActive = true"
-      @mouseleave="isActive = false"
     />
   </div>
 </template>
@@ -29,8 +28,9 @@ import { filterPromise } from "@/utils/search";
 
 const emit = defineEmits(["update:modelValue", "dropdownItemSelected"]);
 const props = defineProps({
-  modelValue: String,
+  modelValue: [String, Number],
   title: String,
+  validate: Function,
   searchData: {
     type: Array,
     required: true,
@@ -59,16 +59,6 @@ function sendItemData(obj) {
   // Close dropdown after selecting an item
   isActive.value = false;
   emit("dropdownItemSelected", obj);
-}
-
-function setActive(btn = false) {
-  if (btn) {
-    isActive.value = false;
-    isFocused.value = false;
-  } else {
-    isActive.value = true;
-    isFocused.value = true;
-  }
 }
 
 onUpdated(() => {

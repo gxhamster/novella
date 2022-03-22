@@ -9,49 +9,54 @@
 </template>
 
 <script setup>
+/* eslint-disable */
 import { onMounted, onUnmounted } from "vue";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import {
+  getFirestore,
+  connectFirestoreEmulator,
+  enableIndexedDbPersistence,
+} from "firebase/firestore";
+
 import SideBar from "./components/SideBar.vue";
 import MainView from "./components/MainView";
 import { userStore, bookStore } from "@/stores/store";
-import { setFetchData } from "@/utils/fetch";
+import { firebaseSetupSync } from "@/utils/firebase";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBnDTnTUrz7c9enxvoTFm3Jr6sH0y_6hWU",
+  authDomain: "novella-fe845.firebaseapp.com",
+  projectId: "novella-fe845",
+  storageBucket: "novella-fe845.appspot.com",
+  messagingSenderId: "1049015315005",
+  appId: "1:1049015315005:web:0662ef503b5e8ea8dd5854",
+  measurementId: "G-M59MWQ314M",
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+const db = getFirestore();
+connectFirestoreEmulator(db, "localhost", 8081);
+
+enableIndexedDbPersistence(db).catch((err) => {
+  if (err.code == "failed-precondition") {
+    console.error("Cannot enable offline mode");
+  } else if (err.code == "unimplemented") {
+    console.error("Browser does not support offline mode");
+  }
+});
 
 const userstore = userStore();
 const bookstore = bookStore();
-const refresh_interval = 60000;
-
-const fetchInterval = setInterval(() => {
-  setFetchData(
-    "http://localhost:3000/get_users",
-    "users",
-    userstore,
-    "setUsers"
-  );
-  setFetchData(
-    "http://localhost:3000/get_books",
-    "books",
-    bookstore,
-    "setBooks"
-  );
-}, refresh_interval);
 
 onMounted(async () => {
-  setFetchData(
-    "http://localhost:3000/get_users",
-    "users",
-    userstore,
-    "setUsers"
-  );
-  setFetchData(
-    "http://localhost:3000/get_books",
-    "books",
-    bookstore,
-    "setBooks"
-  );
+  firebaseSetupSync(db, "books", bookstore, "setBooks");
+  firebaseSetupSync(db, "students", userstore, "setUsers");
 });
 
-onUnmounted(() => {
-  clearInterval(fetchInterval);
-});
+onUnmounted(() => {});
 </script>
 
 <style scoped>

@@ -1,0 +1,15 @@
+Web / API server started at localhost:4000
+/home/gxhamster/projects/emsdk/node/14.18.2_64bit/bin/node[29998]: ../src/node.cc:747:void node::ResetStdio(): Assertion `!(err != 0) || (err == -1 && (*__errno_location ()) == 1)' failed.
+ 1: 0xa389b0 node::Abort() [/home/gxhamster/projects/emsdk/node/14.18.2_64bit/bin/node]
+ 2: 0xa38a2e  [/home/gxhamster/projects/emsdk/node/14.18.2_64bit/bin/node]
+ 3: 0x9fd974 node::ResetStdio() [/home/gxhamster/projects/emsdk/node/14.18.2_64bit/bin/node]
+ 4: 0x9fda30 node::SignalExit(int, siginfo_t*, void*) [/home/gxhamster/projects/emsdk/node/14.18.2_64bit/bin/node]
+ 5: 0x7f92c3e91750  [/lib64/libc.so.6]
+ 6: 0x7f92c3f60c2e epoll_wait [/lib64/libc.so.6]
+ 7: 0x13d06bf  [/home/gxhamster/projects/emsdk/node/14.18.2_64bit/bin/node]
+ 8: 0x13be9e8 uv_run [/home/gxhamster/projects/emsdk/node/14.18.2_64bit/bin/node]
+ 9: 0xa79502 node::NodeMainInstance::Run() [/home/gxhamster/projects/emsdk/node/14.18.2_64bit/bin/node]
+10: 0xa01755 node::Start(int, char**) [/home/gxhamster/projects/emsdk/node/14.18.2_64bit/bin/node]
+11: 0x7f92c3e7c560  [/lib64/libc.so.6]
+12: 0x7f92c3e7c60c __libc_start_main [/lib64/libc.so.6]
+13: 0x98a4cc  [/home/gxhamster/projects/emsdk/node/14.18.2_64bit/bin/node]

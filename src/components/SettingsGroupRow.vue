@@ -3,7 +3,7 @@
     <span class="text-lg">{{ title }}</span>
     <slot></slot>
     <div class="w-full absolute bottom-0 px-2">
-      <div class="custom-border bg-gray-400 w-full"></div>
+      <div class="custom-border bg-gray-400 opacity-20 w-full"></div>
     </div>
   </div>
 </template>
