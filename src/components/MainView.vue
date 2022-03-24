@@ -47,18 +47,7 @@
       </Transition>
     </div>
     <div class="flex flex-col gap-10 pt-20">
-      <div class="rounded-lgg flex gap-3 flex-col h-1/5">
-        <div v-for="btn in main_view_buttons" :key="btn.name">
-          <router-link :to="btn.route">
-            <MainViewButton class="text-1xl" :title="btn.name">
-              <component
-                :is="btn.icon"
-                class="cursor-pointer rounded-full p-1 text-primary"
-              />
-            </MainViewButton>
-          </router-link>
-        </div>
-      </div>
+      <MainViewButtonGroup />
       <div
         class="bg-secondary desktop:w-80 laptop:w-60 p-4 rounded-lgg h-full custom-shadow overflow-hidden"
       >
@@ -73,15 +62,12 @@
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
-import MainViewButton from "./MainViewButton";
+import MainViewButtonGroup from "./MainViewButtonGroup";
 import SearchBar from "./SearchBar";
 import DueBooks from "./DueBooks";
 import WindowControls from "./WindowControls";
 import BookCounter from "./BookCounter";
 
-import CogIcon from "vue-material-design-icons/Cog.vue";
-import CommentQuoteOutlineIcon from "vue-material-design-icons/CommentQuoteOutline.vue";
-import InformationIcon from "vue-material-design-icons/Information.vue";
 import BookIcon from "vue-material-design-icons/Book.vue";
 import BookArrowRightIcon from "vue-material-design-icons/BookArrowRight.vue";
 import BookArrowLeftIcon from "vue-material-design-icons/BookArrowLeft.vue";
@@ -94,11 +80,6 @@ const router = useRouter();
 const duestore = dueStore();
 const bookstore = bookStore();
 const userstore = userStore();
-const main_view_buttons = [
-  { name: "Settings", icon: CogIcon, route: "/settings" },
-  { name: "Feedback", icon: InformationIcon, route: "/feedback" },
-  { name: "About us", icon: CommentQuoteOutlineIcon, route: "/about" },
-];
 const hide_counter_routes = [
   { route: "/issue_book", on_max: false },
   { route: "/", on_max: false },

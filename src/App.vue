@@ -56,7 +56,9 @@ onMounted(async () => {
   firebaseSetupSync(db, "students", userstore, "setUsers");
 });
 
-onUnmounted(() => {});
+onUnmounted(() => {
+  // Firebase realtime callbacks cleanup
+});
 </script>
 
 <style scoped>

@@ -1,9 +1,11 @@
 <template>
-  <PageContainer title="Issue Books to Students">
+  <PageContainer title="Issue books to students">
     <div class="flex gap-x-14 h-3/5">
       <div class="flex flex-col flex-grow">
-        <span class="desktop:text-2xl laptop:text-1.5xl">Student Details</span>
-        <div class="flex flex-col justify-between flex-grow mt-6">
+        <span class="desktop:text-2xl laptop:text-1.5xl text-gray-800"
+          >Student Details</span
+        >
+        <div class="flex flex-col justify-between gap-y-7 flex-grow mt-6">
           <div
             v-for="(field, index) in student_fields"
             :key="field.id"
@@ -29,8 +31,10 @@
         </div>
       </div>
       <div class="flex flex-col flex-grow">
-        <span class="desktop:text-2xl laptop:text-1.5xl">Book Details</span>
-        <div class="flex flex-col flex-grow justify-between mt-6">
+        <span class="desktop:text-2xl laptop:text-1.5xl text-gray-800"
+          >Book Details</span
+        >
+        <div class="flex flex-col flex-grow gap-y-7 justify-between mt-6">
           <div
             v-for="(field, index) in book_fields"
             :key="field.id"

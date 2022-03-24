@@ -5,7 +5,16 @@
         <InputText
           title="Subject"
           :width="96"
-          :validate="(text) => validate(text).between()"
+          v-model="subject"
+          :validate="
+            () =>
+              validate(subject).between({
+                inclusive: true,
+                min: 3,
+                max: 20,
+                message: 'Subject must be between 3 and 20',
+              })
+          "
         />
         <TextArea title="Message:" class="w-full h-full max-h-full" />
       </div>
@@ -22,9 +31,12 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import PageContainer from "@/components/PageContainer";
 import InputText from "@/components/InputText";
 import PageButton from "@/components/PageButton";
 import TextArea from "@/components/TextArea";
 import { validate } from "../utils/validation";
+
+const subject = ref("");
 </script>

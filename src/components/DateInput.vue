@@ -1,8 +1,10 @@
 <template>
   <div class="laptop:w-52 desktop:w-60">
-    <label class="block mb-2 laptop:text-sm desktop:text-md" for="text input">{{
-      props.title
-    }}</label>
+    <label
+      class="block mb-2 laptop:text-sm desktop:text-md text-gray-700"
+      for="text input"
+      >{{ props.title }}</label
+    >
     <div class="relative">
       <DatePicker v-model="date" color="blue">
         <template v-slot="{ inputValue, togglePopover }">

@@ -1,5 +1,5 @@
 <template>
-  <PageContainer title="Receive Book"> </PageContainer>
+  <PageContainer title="Receive book"> </PageContainer>
 </template>
 
 <script setup>

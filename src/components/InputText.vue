@@ -1,12 +1,17 @@
 <template>
   <div class="relative">
-    <label class="block mb-2 laptop:text-sm desktop:text-md" for="text input">{{
-      title
-    }}</label>
+    <label
+      class="block mb-2 laptop:text-sm desktop:text-md text-gray-700"
+      :for="title"
+      >{{ title }}</label
+    >
     <div class="flex space-x-2 items-center">
       <div class="relative" :class="width !== '' ? widthFormat : ''">
         <input
+          :id="title"
+          :name="title"
           :readonly="!canEdit"
+          :disabled="!canEdit"
           :value="modelValue"
           @input="inputEvent"
           @blur="emit('inputBlur')"
@@ -17,7 +22,7 @@
         />
         <AlertCircle
           v-show="showError"
-          class="absolute text-red-500 right-2 laptop:top-2 desktop:top-3"
+          class="absolute text-red-400 right-2 laptop:top-2 desktop:top-3"
           :size="20"
         />
       </div>
@@ -25,7 +30,7 @@
     </div>
     <span
       v-show="showError"
-      class="text-red-500 mt-1 text-sm flex space-x-1 px-2 absolute -bottom-6"
+      class="text-red-400 text-sm flex space-x-1 px-2 absolute -bottom-5"
     >
       <span>
         {{ errorMessage }}
@@ -63,12 +68,15 @@ const showError = ref(false);
 const errorMessage = ref("");
 const widthFormat = computed(() => `w-${props.width}`);
 const inputStyle = computed(() => {
-  let result = "";
+  let result = [];
   if (showError.value) {
-    result += "border-red-500 ";
+    result.push("border-red-400 ");
   } else {
-    result += "border-border ";
+    result.push(
+      "border-border hover:border-border-hover focus:border-border-focus "
+    );
   }
+  result.join(" ");
   result += props.width !== "" ? widthFormat.value : "";
   return result;
 });

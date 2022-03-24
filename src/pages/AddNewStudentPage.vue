@@ -1,5 +1,5 @@
 <template>
-  <PageContainer title="Add New Student">
+  <PageContainer title="Add new student">
     <div class="grid grid-cols-2 content-between h-full gap-x-14">
       <div
         v-for="(field, index) in student_fields"
@@ -11,6 +11,7 @@
           :title="field.title"
           class="w-full"
           :width="!field.full ? '48' : 'full'"
+          :validate="student_fields[index].validator"
         />
       </div>
       <div class="flex justify-center space-x-12 col-span-2 mt-4">
@@ -31,14 +32,44 @@ import InputText from "@/components/InputText";
 import PageButton from "@/components/PageButton";
 import PageContainer from "@/components/PageContainer";
 import { PageLayoutData } from "@/utils/helper";
+import { validate } from "../utils/validation";
 
 const student_fields = ref([
-  new PageLayoutData("Student Name", true),
-  new PageLayoutData("Student Island", true),
-  new PageLayoutData("Student Address", true),
-  new PageLayoutData("Student Phone", true),
-  new PageLayoutData("Student Grade", false),
-  new PageLayoutData("Student Index", false),
+  new PageLayoutData("Student Name", true, false, (text) =>
+    validate(text).between({
+      inclusive: true,
+      min: 5,
+      max: 30,
+      message: "Name should be between 5 and 30",
+    })
+  ),
+  new PageLayoutData("Student Island", true, false, (text) =>
+    validate(text).between({
+      inclusive: true,
+      min: 5,
+      max: 20,
+      message: "Island should be between 5 and 20",
+    })
+  ),
+  new PageLayoutData("Student Address", true, false, (text) =>
+    validate(text).between({
+      inclusive: true,
+      min: 5,
+      max: 20,
+      message: "Address should be between 1 and 20",
+    })
+  ),
+  new PageLayoutData("Student Phone", true, false, (text) =>
+    validate(text).isPhone({
+      message: "Phone should be a valid number",
+    })
+  ),
+  new PageLayoutData("Student Grade", false, false),
+  new PageLayoutData("Student Index", false, false, (text) =>
+    validate(text).isNumeric({
+      message: "Index should be a number",
+    })
+  ),
 ]);
 
 const clear_input_text = () => {

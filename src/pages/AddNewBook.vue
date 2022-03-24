@@ -1,5 +1,5 @@
 <template>
-  <PageContainer title="Add New Book">
+  <PageContainer title="Add new book">
     <div class="grid grid-cols-2 h-full gap-x-14">
       <div
         v-for="(field, index) in book_fields"
@@ -27,6 +27,7 @@
             v-model="small_fields_left[index].text"
             :searchable="field.searchable"
             :title="field.title"
+            :validate="small_fields_left[index].validator"
           />
         </div>
       </div>
@@ -36,6 +37,7 @@
             v-model="small_fields_right[index].text"
             :searchable="field.searchable"
             :title="field.title"
+            :validate="small_fields_right[index].validator"
           />
         </div>
       </div>
@@ -81,19 +83,47 @@ const book_fields = ref([
       message: "Author should be between 5 and 30",
     })
   ),
-  new PageLayoutData("Book Number", false, false),
-  new PageLayoutData("Genre", false, true),
-  new PageLayoutData("DDC", false, false),
-  new PageLayoutData("Language", false),
+  new PageLayoutData("Book Number", false, false, (text) =>
+    validate(text).isNumeric()
+  ),
+  new PageLayoutData("Genre", false, true, (text) =>
+    validate(text).between({
+      inclusive: true,
+      min: 5,
+      max: 30,
+      message: "Genre should be between 5 and 30",
+    })
+  ),
+  new PageLayoutData("DDC", false, false, (text) =>
+    validate(text).isAlpha({
+      message: "DDC should contain a-z 0-9 or .",
+    })
+  ),
+  new PageLayoutData("Language", false, false, (text) =>
+    validate(text).between({
+      inclusive: true,
+      min: 5,
+      max: 20,
+      message: "Language should be between 5 and 20",
+    })
+  ),
 ]);
 const small_fields_left = ref([
-  new PageLayoutData("Edition", false, false),
-  new PageLayoutData("Pages", false),
+  new PageLayoutData("Edition", false, false, (text) =>
+    validate(text).isNumeric()
+  ),
+  new PageLayoutData("Pages", false, false, (text) =>
+    validate(text).isNumeric()
+  ),
 ]);
 
 const small_fields_right = ref([
-  new PageLayoutData("Volume", false, false),
-  new PageLayoutData("Year", false),
+  new PageLayoutData("Volume", false, false, (text) =>
+    validate(text).isNumeric()
+  ),
+  new PageLayoutData("Year", false, false, (text) =>
+    validate(text).isNumeric()
+  ),
 ]);
 
 function storeGetAuthorData() {

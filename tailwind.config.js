@@ -12,6 +12,8 @@ module.exports = {
         background: "#F4F4F4",
         secondary: "#E1E4E5",
         border: "#C1CFD6",
+        "border-hover": "#b0bfc7",
+        "border-focus": "#99acb9",
         steel: "#BDD0D7",
         settingsgray: "#CFD2D3",
       },

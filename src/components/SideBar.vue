@@ -52,16 +52,28 @@ const icon_names = [
   HistoryIcon,
   DashboardIcon,
 ];
-const button_names = ref([
-  "Issue Book",
-  "Receive Book",
-  "Add New Book",
-  "Add New Student",
+const button_names = [
+  "Issue book",
+  "Receive book",
+  "Add new book",
+  "Add new student",
   "History",
   "Directory",
-]);
+];
+
+const sidebar_routes = [
+  "/issue_book",
+  "/recieve_book",
+  "/add_book",
+  "/add_student",
+  "/history",
+  "/dashboard",
+];
+
 const route_names = ref(
-  routes.filter((item) => item.path !== "/").map((item) => item.path)
+  routes
+    .filter((item) => item.path !== "/" && sidebar_routes.includes(item.path))
+    .map((item) => item.path)
 );
 
 window.onkeyup = (event) => {
@@ -74,6 +86,13 @@ window.onkeyup = (event) => {
     changeRoute();
   }
 };
+
+router.afterEach((to) => {
+  // If you change route to a route not in the sidebar unfocus the buttons
+  if (!route_names.value.includes(to.path)) {
+    current_active_btn_index.value = -1000;
+  }
+});
 
 function wrap(value, lower, upper) {
   if (value > upper) {
@@ -95,12 +114,7 @@ function btnClicked(index) {
 }
 
 function changeRoute() {
-  if (
-    router.currentRoute.value.path !==
-    route_names.value[current_active_btn_index.value]
-  ) {
-    router.replace(route_names.value[current_active_btn_index.value]);
-  }
+  router.replace(route_names.value[current_active_btn_index.value]);
 }
 
 function navigateSidebar(down = true) {
@@ -109,13 +123,13 @@ function navigateSidebar(down = true) {
       current_active_btn_index.value = wrap(
         current_active_btn_index.value + 1,
         0,
-        button_names.value.length - 1
+        button_names.length - 1
       );
     else {
       current_active_btn_index.value = wrap(
         current_active_btn_index.value - 1,
         0,
-        button_names.value.length - 1
+        button_names.length - 1
       );
     }
   }
