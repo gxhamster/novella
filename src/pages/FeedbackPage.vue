@@ -4,7 +4,7 @@
       <div class="flex flex-col gap-10 flex-grow">
         <InputText
           title="Subject"
-          :width="96"
+          :width="full"
           v-model="subject"
           :validate="
             () =>
