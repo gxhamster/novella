@@ -67,63 +67,70 @@ import { validate } from "@/utils/validation";
 const bookstore = bookStore();
 
 const book_fields = ref([
-  new PageLayoutData("Title", false, false, (text) =>
-    validate(text).between({
-      inclusive: true,
-      min: 5,
-      max: 20,
-      message: "Title should be between 5 and 20",
-    })
-  ),
-  new PageLayoutData("Author", false, true, (text) =>
-    validate(text).between({
-      inclusive: true,
-      min: 5,
-      max: 30,
-      message: "Author should be between 5 and 30",
-    })
-  ),
-  new PageLayoutData("Book Number", false, false, (text) =>
-    validate(text).isNumeric()
-  ),
-  new PageLayoutData("Genre", false, true, (text) =>
-    validate(text).between({
-      inclusive: true,
-      min: 5,
-      max: 30,
-      message: "Genre should be between 5 and 30",
-    })
-  ),
-  new PageLayoutData("DDC", false, false, (text) =>
-    validate(text).isAlpha({
-      message: "DDC should contain a-z 0-9 or .",
-    })
-  ),
-  new PageLayoutData("Language", false, false, (text) =>
-    validate(text).between({
-      inclusive: true,
-      min: 5,
-      max: 20,
-      message: "Language should be between 5 and 20",
-    })
-  ),
+  new PageLayoutData("Title", {
+    validator: (text) =>
+      validate(text).between({
+        inclusive: true,
+        min: 5,
+        max: 20,
+        message: "Title should be between 5 and 20",
+      }),
+  }),
+  new PageLayoutData("Author", {
+    searchable: true,
+    validator: (text) =>
+      validate(text).between({
+        inclusive: true,
+        min: 5,
+        max: 30,
+        message: "Author should be between 5 and 30",
+      }),
+  }),
+  new PageLayoutData("Book Number", {
+    validator: (text) => validate(text).isNumeric(),
+  }),
+  new PageLayoutData("Genre", {
+    searchable: true,
+    validator: (text) =>
+      validate(text).between({
+        inclusive: true,
+        min: 5,
+        max: 30,
+        message: "Genre should be between 5 and 30",
+      }),
+  }),
+  new PageLayoutData("DDC", {
+    validator: (text) =>
+      validate(text).isAlpha({
+        message: "DDC should contain a-z 0-9 or .",
+      }),
+  }),
+  new PageLayoutData("Language", {
+    validator: (text) =>
+      validate(text).between({
+        inclusive: true,
+        min: 5,
+        max: 20,
+        message: "Language should be between 5 and 20",
+      }),
+  }),
 ]);
 const small_fields_left = ref([
-  new PageLayoutData("Edition", false, false, (text) =>
-    validate(text).isNumeric()
-  ),
-  new PageLayoutData("Pages", false, false, (text) =>
-    validate(text).isNumeric()
-  ),
+  new PageLayoutData("Edition", {
+    validator: (text) => validate(text).isNumeric(),
+  }),
+  new PageLayoutData("Pages", {
+    validator: (text) => validate(text).isNumeric(),
+  }),
 ]);
 
 const small_fields_right = ref([
-  new PageLayoutData("Volume", false, false, (text) =>
-    validate(text).isNumeric()
-  ),
-  new PageLayoutData("Year", false, false, (text) =>
-    validate(text).isNumeric()
-  ),
+  new PageLayoutData("Volume", {
+    validator: (text) => validate(text).isNumeric(),
+  }),
+  new PageLayoutData("Year", {
+    validator: (text) => validate(text).isNumeric(),
+  }),
 ]);
 
 function storeGetAuthorData() {

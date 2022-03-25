@@ -12,29 +12,50 @@ export function fiveDaysAfterDate(date) {
   return new Date(new Date(date).getTime() + 5 * 24 * 60 * 60 * 1000);
 }
 
+function isEmpty(val) {
+  return val === undefined ? true : false;
+}
+
 // This class describes one input field in a page
 export class PageLayoutData {
+  #defaults = {
+    full: true,
+    searchable: false,
+    validator: null,
+    text: "",
+    date: null,
+    phone: false,
+  };
   constructor(
     title,
-    full = true,
-    searchable = false,
-    validator = null,
-    text = "",
-    date = null,
-    phone = false
+    options = {
+      full: true,
+      searchable: false,
+      validator: null,
+      text: "",
+      date: null,
+      phone: false,
+    }
   ) {
+    const new_options = {};
+    for (const key of Object.keys(this.#defaults)) {
+      if (isEmpty(options[key])) {
+        new_options[key] = this.#defaults[key];
+      } else {
+        new_options[key] = options[key];
+      }
+    }
+    options = new_options;
     this.title = title;
-    this.full = full;
-    this.searchable = searchable;
-    this.validator = validator;
-    this.text = text;
+    this.full = options.full;
+    this.searchable = options.searchable;
+    this.validator = options.validator;
+    this.text = options.text;
     this.search_data = [];
-    // Only for date inputs
-    this.date = date;
-    // Is phone input
-    this.phone = phone;
+    this.date = options.date;
+    this.phone = options.phone;
+    console.log(this);
   }
-
   clearText() {
     this.text = "";
     return this;

@@ -36,48 +36,47 @@ import { PageLayoutData } from "@/utils/helper";
 import { validate } from "../utils/validation";
 
 const student_fields = ref([
-  new PageLayoutData("Student Name", true, false, (text) =>
-    validate(text).between({
-      inclusive: true,
-      min: 5,
-      max: 30,
-      message: "Name should be between 5 and 30",
-    })
-  ),
-  new PageLayoutData("Student Island", true, false, (text) =>
-    validate(text).between({
-      inclusive: true,
-      min: 5,
-      max: 20,
-      message: "Island should be between 5 and 20",
-    })
-  ),
-  new PageLayoutData("Student Address", true, false, (text) =>
-    validate(text).between({
-      inclusive: true,
-      min: 5,
-      max: 20,
-      message: "Address should be between 1 and 20",
-    })
-  ),
-  new PageLayoutData(
-    "Student Phone",
-    true,
-    false,
-    (text) =>
+  new PageLayoutData("Student Name", {
+    validator: (text) =>
+      validate(text).between({
+        inclusive: true,
+        min: 5,
+        max: 30,
+        message: "Name should be between 5 and 30",
+      }),
+  }),
+  new PageLayoutData("Student Island", {
+    validator: (text) =>
+      validate(text).between({
+        inclusive: true,
+        min: 5,
+        max: 20,
+        message: "Island should be between 5 and 20",
+      }),
+  }),
+  new PageLayoutData("Student Address", {
+    validator: (text) =>
+      validate(text).between({
+        inclusive: true,
+        min: 5,
+        max: 20,
+        message: "Address should be between 1 and 20",
+      }),
+  }),
+  new PageLayoutData("Student Phone", {
+    validator: (text) =>
       validate(text).isPhone({
         message: "Phone should be a valid number",
       }),
-    "",
-    null,
-    true
-  ),
-  new PageLayoutData("Student Grade", false, false),
-  new PageLayoutData("Student Index", false, false, (text) =>
-    validate(text).isNumeric({
-      message: "Index should be a number",
-    })
-  ),
+    phone: true,
+  }),
+  new PageLayoutData("Student Grade"),
+  new PageLayoutData("Student Index", {
+    validator: (text) =>
+      validate(text).isNumeric({
+        message: "Index should be a number",
+      }),
+  }),
 ]);
 
 const clear_input_text = () => {

@@ -96,26 +96,30 @@ const userstore = userStore();
 const bookstore = bookStore();
 
 const date_fields = ref([
-  new PageLayoutData("Issue Date", true, false, null, null, new Date()),
-  new PageLayoutData(
-    "Due Date",
-    true,
-    false,
-    null,
-    null,
-    fiveDaysAfterDate(new Date())
-  ),
+  new PageLayoutData("Issue Date", {
+    date: new Date(),
+  }),
+  new PageLayoutData("Due Date", {
+    date: fiveDaysAfterDate(new Date()),
+  }),
 ]);
 
 const student_fields = ref([
-  new PageLayoutData("Student Index", true, true),
-  new PageLayoutData("Student Name", true),
-  new PageLayoutData("Student Grade", true),
+  new PageLayoutData("Student Index", {
+    full: true,
+    searchable: true,
+  }),
+  new PageLayoutData("Student Name", {
+    full: true,
+  }),
+  new PageLayoutData("Student Grade"),
 ]);
 const book_fields = ref([
-  new PageLayoutData("Book ID", true, true),
-  new PageLayoutData("Book Name", true),
-  new PageLayoutData("Author", true),
+  new PageLayoutData("Book ID", {
+    searchable: true,
+  }),
+  new PageLayoutData("Book Name"),
+  new PageLayoutData("Author"),
 ]);
 
 function autocompleteStudentData(obj) {
