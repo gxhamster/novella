@@ -1,5 +1,5 @@
 <template>
-  <div class="laptop:w-52 desktop:w-60">
+  <div class="laptop:w-40 desktop:w-40">
     <label
       class="block mb-2 laptop:text-sm desktop:text-md text-gray-700"
       for="text input"
@@ -11,7 +11,7 @@
           <input
             readonly
             :value="inputValue"
-            class="rounded-lgg bg-secondary text-gray-400 w-full border-steel border-2 desktop:py-2 desktop:px-4 laptop:py-1 laptop:px-3"
+            class="rounded-lgg bg-secondary w-full text-gray-900 border-steel border-2 desktop:py-2 desktop:px-4 laptop:py-1 laptop:px-3"
           />
           <div
             @click="togglePopover"
