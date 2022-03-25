@@ -5,7 +5,7 @@
       <div v-for="day in dates" :key="day">
         <DueBookGroup
           :title="calculateDate(day)"
-          :initialShow="day == 0 ? true : false"
+          :initialShow="day == dates[0] ? true : false"
           :children="due_groups.get(day)"
         />
       </div>
@@ -62,7 +62,7 @@ const dates = computed(() => {
       d.push(due.days);
     }
   }
-  d.sort((a, b) => a - b);
+  d.sort((a, b) => b - a);
 
   return d;
 });
