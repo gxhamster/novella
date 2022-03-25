@@ -20,7 +20,8 @@ export class PageLayoutData {
     searchable = false,
     validator = null,
     text = "",
-    date = null
+    date = null,
+    phone = false
   ) {
     this.title = title;
     this.full = full;
@@ -30,6 +31,8 @@ export class PageLayoutData {
     this.search_data = [];
     // Only for date inputs
     this.date = date;
+    // Is phone input
+    this.phone = phone;
   }
 
   clearText() {

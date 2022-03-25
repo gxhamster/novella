@@ -31,7 +31,6 @@ router.afterEach((to) => {
 });
 
 function setFocus(index) {
-  console.log(index);
   current_active_btn_index.value = index;
   router.replace(main_view_buttons[current_active_btn_index.value].route);
 }

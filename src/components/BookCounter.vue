@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <BookCounterSmall v-else :icon="props.icon" />
+    <BookCounterSmall :title="title" v-else :icon="props.icon" />
   </div>
 </template>
 

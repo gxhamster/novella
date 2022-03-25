@@ -12,6 +12,7 @@
           class="w-full"
           :width="!field.full ? '48' : 'full'"
           :validate="student_fields[index].validator"
+          :isPhone="student_fields[index].phone"
         />
       </div>
       <div class="flex justify-center space-x-12 col-span-2 mt-4">
@@ -59,10 +60,17 @@ const student_fields = ref([
       message: "Address should be between 1 and 20",
     })
   ),
-  new PageLayoutData("Student Phone", true, false, (text) =>
-    validate(text).isPhone({
-      message: "Phone should be a valid number",
-    })
+  new PageLayoutData(
+    "Student Phone",
+    true,
+    false,
+    (text) =>
+      validate(text).isPhone({
+        message: "Phone should be a valid number",
+      }),
+    "",
+    null,
+    true
   ),
   new PageLayoutData("Student Grade", false, false),
   new PageLayoutData("Student Index", false, false, (text) =>

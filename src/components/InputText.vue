@@ -7,6 +7,12 @@
     >
     <div class="flex space-x-2 items-center">
       <div class="relative" :class="width !== '' ? widthFormat : ''">
+        <div
+          v-if="isPhone"
+          class="absolute rounded-lgg text-gray-500 phone-label"
+        >
+          960+
+        </div>
         <input
           :id="title"
           :name="title"
@@ -16,7 +22,7 @@
           @input="inputEvent"
           @blur="emit('inputBlur')"
           @focus="emit('inputFocus')"
-          class="transition duration-300 apperance-none border-2 rounded-full bg-secondary pr-8 desktop:py-2 desktop:pl-4 laptop:py-1 laptop:pl-3"
+          class="transition duration-300 apperance-none border-2 rounded-full bg-secondary pr-8 desktop:py-2 laptop:py-1"
           :class="inputStyle"
           alt="Text Input"
         />
@@ -53,6 +59,10 @@ const emit = defineEmits([
 ]);
 const props = defineProps({
   title: [String, Number],
+  isPhone: {
+    type: Boolean,
+    default: false,
+  },
   width: {
     default: "full",
   },
@@ -70,14 +80,19 @@ const widthFormat = computed(() => `w-${props.width}`);
 const inputStyle = computed(() => {
   let result = [];
   if (showError.value) {
-    result.push("border-red-400 ");
+    result.push("border-red-400");
   } else {
     result.push(
-      "border-border hover:border-border-hover focus:border-border-focus "
+      "border-border hover:border-border-hover focus:border-border-focus"
     );
   }
+  if (props.isPhone) {
+    result.push("desktop:pl-14 laptop:pl-14");
+  } else {
+    result.push("laptop:pl-3 desktop:pl-4");
+  }
+  result.push(props.width !== "" ? widthFormat.value : "");
   result.join(" ");
-  result += props.width !== "" ? widthFormat.value : "";
   return result;
 });
 function inputEvent(event) {
@@ -93,3 +108,12 @@ function inputEvent(event) {
   }
 }
 </script>
+
+<style scoped>
+.phone-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 1rem;
+}
+</style>
