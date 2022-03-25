@@ -11,7 +11,7 @@
           v-if="isPhone"
           class="absolute rounded-lgg text-gray-500 phone-label"
         >
-          960+
+          +960
         </div>
         <input
           :id="title"
