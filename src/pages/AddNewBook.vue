@@ -105,13 +105,13 @@ const book_fields = ref([
         message: "DDC should contain a-z 0-9 or .",
       }),
   }),
-  new PageLayoutData("Language", {
+  new PageLayoutData("Publisher", {
     validator: (text) =>
       validate(text).between({
         inclusive: true,
         min: 5,
         max: 20,
-        message: "Language should be between 5 and 20",
+        message: "Publisher should be between 5 and 20",
       }),
   }),
 ]);
@@ -125,7 +125,7 @@ const small_fields_left = ref([
 ]);
 
 const small_fields_right = ref([
-  new PageLayoutData("Volume", {
+  new PageLayoutData("Language", {
     validator: (text) => validate(text).isNumeric(),
   }),
   new PageLayoutData("Year", {

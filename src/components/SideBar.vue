@@ -57,7 +57,6 @@ const button_names = [
   "Receive book",
   "Add new book",
   "Add new student",
-  "History",
   "Directory",
 ];
 
@@ -66,7 +65,6 @@ const sidebar_routes = [
   "/recieve_book",
   "/add_book",
   "/add_student",
-  "/history",
   "/dashboard",
 ];
 

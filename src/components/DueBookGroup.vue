@@ -5,7 +5,7 @@
       :class="!show ? 'mb-3' : ''"
     >
       <div
-        class="bg-steel rounded-lg text-center p-2 text-gray-700 truncate font-bold item-icon"
+        class="bg-steel rounded-lg text-center p-1 text-gray-700 truncate font-bold item-icon"
       >
         {{ children.length }}
       </div>
@@ -57,8 +57,8 @@ const props = defineProps({
 
 <style scoped>
 .item-icon {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   aspect-ratio: 1/1;
 }
 .bounce-enter-active {

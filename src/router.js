@@ -3,7 +3,6 @@ import AddNewStudentPage from "./pages/AddNewStudentPage.vue";
 import IssueBooksPage from "./pages/IssueBooksPage.vue";
 import AddNewBook from "./pages/AddNewBook.vue";
 import RecieveBook from "./pages/RecieveBook.vue";
-import HistoryPage from "./pages/HistoryPage.vue";
 import DashBoard from "./pages/DashBoard.vue";
 import SettingsPage from "./pages/SettingsPage.vue";
 import AboutPage from "./pages/AboutPage.vue";
@@ -34,11 +33,6 @@ const routes = [
     path: "/add_student",
     name: "Add Student",
     component: AddNewStudentPage,
-  },
-  {
-    path: "/history",
-    name: "History",
-    component: HistoryPage,
   },
   {
     path: "/dashboard",

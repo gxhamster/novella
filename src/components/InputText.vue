@@ -59,6 +59,8 @@ const emit = defineEmits([
 ]);
 const props = defineProps({
   title: [String, Number],
+  modelValue: String,
+  searchable: Boolean,
   isPhone: {
     type: Boolean,
     default: false,
@@ -71,8 +73,6 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  modelValue: String,
-  searchable: Boolean,
 });
 const showError = ref(false);
 const errorMessage = ref("");
