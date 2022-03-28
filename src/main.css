@@ -27,11 +27,11 @@
 
     .slidein-enter-active {
       transition: all 0.3s ease-in-out;
-      animation: slidein-anim 0.3s linear;
+      animation: slidein-anim 0.3s ease;
     }
     .slidein-leave-active {
       transition: all 0.3s ease-in-out;
-      animation: slideout-anim 0.3s linear;
+      animation: slideout-anim 0.3s ease;
     }
 
     @keyframes slideout-anim {
@@ -67,11 +67,11 @@
 
     .slidein-enter-active {
       transition: all 0.3s ease-in-out;
-      animation: slidein-anim 0.3s linear;
+      animation: slidein-anim 0.3s ease;
     }
     .slidein-leave-active {
       transition: all 0.3s ease-in-out;
-      animation: slideout-anim 0.3s linear;
+      animation: slideout-anim 0.3s ease;
     }
 
     @keyframes slideout-anim {

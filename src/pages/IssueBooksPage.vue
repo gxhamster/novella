@@ -64,14 +64,7 @@
       <DateInput v-model="date_fields[0].date" :title="date_fields[0].title" />
       <DateInput v-model="date_fields[1].date" :title="date_fields[1].title" />
     </div>
-    <div class="flex justify-center space-x-12">
-      <PageButton
-        @click="cleanTextInputs"
-        title="Cancel"
-        background="cancel-button-red"
-      />
-      <PageButton @click="cleanTextInputs" title="Add" />
-    </div>
+    <SubmitButtonsGroup @cancel="cleanTextInputs" />
   </PageContainer>
 </template>
 
@@ -79,10 +72,10 @@
 import { ref, watch, onMounted } from "vue";
 
 import InputText from "@/components/InputText";
-import PageButton from "@/components/PageButton";
 import DateInput from "@/components/DateInput";
 import PageContainer from "@/components/PageContainer";
 import SearchInput from "@/components/SearchInput";
+import SubmitButtonsGroup from "@/components/SubmitButtonsGroup";
 import { userStore, bookStore } from "@/stores/store";
 import { SearchItemClass } from "@/utils/search";
 import {

@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import AddNewStudentPage from "./pages/AddNewStudentPage.vue";
 import IssueBooksPage from "./pages/IssueBooksPage.vue";
-import AddNewBook from "./pages/AddNewBook.vue";
+import AddNewBookPage from "./pages/AddNewBookPage.vue";
 import RecieveBook from "./pages/RecieveBook.vue";
 import DashBoard from "./pages/DashBoard.vue";
 import SettingsPage from "./pages/SettingsPage.vue";
@@ -27,7 +27,7 @@ const routes = [
   {
     path: "/add_book",
     name: "Add Book",
-    component: AddNewBook,
+    component: AddNewBookPage,
   },
   {
     path: "/add_student",

@@ -42,23 +42,16 @@
         </div>
       </div>
     </div>
-    <div class="flex justify-center space-x-12 col-span-2 mt-5">
-      <PageButton
-        @click="cleanTextInputs"
-        title="Cancel"
-        background="cancel-button-red"
-      />
-      <PageButton title="Save" />
-    </div>
+    <SubmitButtonsGroup @cancel="cleanTextInputs" />
   </PageContainer>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
-import PageButton from "@/components/PageButton";
 import InputText from "@/components/InputText";
 import PageContainer from "@/components/PageContainer";
 import SearchInput from "@/components/SearchInput";
+import SubmitButtonsGroup from "../components/SubmitButtonsGroup.vue";
 import { bookStore } from "@/stores/store";
 import { prettyCapitalize, PageLayoutData } from "@/utils/helper";
 import { groupByKey, SearchItemClass } from "@/utils/search";
