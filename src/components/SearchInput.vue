@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative box">
     <InputText
       :title="title"
       :searchable="true"
@@ -7,12 +7,11 @@
       :validate="validate"
       ref="elem"
       @update:modelValue="doSearch"
-      @inputFocus="isFocused = true"
-      @inputBlur="isFocused = false"
-      @searchClicked="toggleDropdown"
+      @searchClicked="() => true"
     />
     <SearchDropdown
-      v-show="dropdownShouldShow"
+      class="dropdown"
+      :class="{ hide: itemAdded }"
       :searchText="modelValue"
       :data="filteredResults"
       @itemClicked="sendItemData"
@@ -22,14 +21,7 @@
 </template>
 
 <script setup>
-import {
-  ref,
-  defineExpose,
-  defineProps,
-  defineEmits,
-  computed,
-  onUpdated,
-} from "vue";
+import { ref, defineExpose, defineProps, defineEmits, onUpdated } from "vue";
 import InputText from "./InputText";
 import SearchDropdown from "./SearchDropdown";
 import { filterPromise } from "@/utils/search";
@@ -46,16 +38,8 @@ const props = defineProps({
 });
 
 const elem = ref(null);
-const isFocused = ref(false);
-const dropdownShouldShow = computed(() => {
-  if (isFocused.value) return true;
-  else return false;
-});
+const itemAdded = ref(false);
 const filteredResults = ref(props.searchData);
-
-function toggleDropdown() {
-  dropdownShouldShow.value = !dropdownShouldShow.value;
-}
 
 function setFilteredData(result) {
   filteredResults.value = result;
@@ -74,7 +58,7 @@ function doSearch(searchText) {
 
 function sendItemData(obj) {
   // Close dropdown after selecting an item
-  dropdownShouldShow.value = false;
+  itemAdded.value = true;
   emit("dropdownItemSelected", obj);
 }
 
@@ -98,3 +82,21 @@ onUpdated(() => {
   }
 });
 </script>
+
+<style scoped>
+.dropdown {
+  display: none;
+}
+
+.dropdown:hover {
+  display: block;
+}
+
+.box:focus-within .dropdown {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+</style>

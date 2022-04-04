@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="emit('clicked', title)"
+    @click.prevent="emit('clicked', title)"
     class="bg-gray-200 custom-shadow rounded-lg flex content-center p-2 space-x-2"
   >
     <PlusCircleIcon class="text-primary" />

@@ -2,10 +2,10 @@
   <div class="rounded-lg mt-3 custom-scroll-container thin-scrollbar">
     <LoadingIcon :failed="failed_ui" v-show="loading_ui" />
     <div class="pr-5" v-if="!loading_ui">
-      <div v-for="day in dates" :key="day">
+      <div v-for="(day, index) in dates" :key="day">
         <DueBookGroup
           :title="calculateDate(day)"
-          :initialShow="day == dates[0] ? true : false"
+          :initialShow="index == 0 ? true : false"
           :children="due_groups.get(day)"
         />
       </div>
