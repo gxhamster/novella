@@ -1,70 +1,78 @@
 <template>
   <PageContainer title="Issue books to students">
-    <div class="flex gap-x-14 h-3/5">
-      <div class="flex flex-col flex-grow">
-        <span class="desktop:text-2xl laptop:text-1.5xl text-gray-800"
-          >Student Details</span
-        >
-        <div class="flex flex-col justify-between gap-y-7 flex-grow mt-6">
-          <div
-            v-for="(field, index) in student_fields"
-            :key="field.id"
-            class="flex space-x-4"
+    <FormControl class="flex flex-col justify-between h-full">
+      <div class="flex gap-x-14">
+        <div class="flex flex-col flex-grow">
+          <span class="desktop:text-2xl laptop:text-1.5xl text-gray-800"
+            >Student Details</span
           >
-            <SearchInput
-              v-if="field.searchable"
-              v-model="student_fields[index].text"
-              :searchData="field.search_data"
-              @dropdownItemSelected="autocompleteStudentData"
-              :title="field.title"
-              class="w-full"
-            />
-            <InputText
-              :canEdit="false"
-              v-else
-              v-model="student_fields[index].text"
-              class="w-full"
-              :title="field.title"
-              :width="field.title == 'Student Grade' ? '48' : 'full'"
-            />
+          <div class="flex flex-col justify-between gap-y-7 flex-grow mt-6">
+            <div
+              v-for="(field, index) in student_fields"
+              :key="field.id"
+              class="flex space-x-4"
+            >
+              <SearchInput
+                v-if="field.searchable"
+                v-model="student_fields[index].text"
+                :searchData="field.search_data"
+                @dropdownItemSelected="autocompleteStudentData"
+                :title="field.title"
+                class="w-full"
+              />
+              <InputText
+                :canEdit="false"
+                v-else
+                v-model="student_fields[index].text"
+                class="w-full"
+                :title="field.title"
+                :width="field.title == 'Student Grade' ? '48' : 'full'"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col flex-grow">
+          <span class="desktop:text-2xl laptop:text-1.5xl text-gray-800"
+            >Book Details</span
+          >
+          <div class="flex flex-col flex-grow gap-y-7 justify-between mt-6">
+            <div
+              v-for="(field, index) in book_fields"
+              :key="field.id"
+              class="flex space-x-4"
+            >
+              <SearchInput
+                v-if="field.searchable"
+                v-model="book_fields[index].text"
+                :searchData="field.search_data"
+                @dropdownItemSelected="autocompleteBookData"
+                :title="field.title"
+                class="w-full"
+              />
+              <InputText
+                :canEdit="false"
+                v-else
+                v-model="book_fields[index].text"
+                class="w-full"
+                :title="field.title"
+                width="full"
+              />
+            </div>
           </div>
         </div>
       </div>
-      <div class="flex flex-col flex-grow">
-        <span class="desktop:text-2xl laptop:text-1.5xl text-gray-800"
-          >Book Details</span
-        >
-        <div class="flex flex-col flex-grow gap-y-7 justify-between mt-6">
-          <div
-            v-for="(field, index) in book_fields"
-            :key="field.id"
-            class="flex space-x-4"
-          >
-            <SearchInput
-              v-if="field.searchable"
-              v-model="book_fields[index].text"
-              :searchData="field.search_data"
-              @dropdownItemSelected="autocompleteBookData"
-              :title="field.title"
-              class="w-full"
-            />
-            <InputText
-              :canEdit="false"
-              v-else
-              v-model="book_fields[index].text"
-              class="w-full"
-              :title="field.title"
-              width="full"
-            />
-          </div>
-        </div>
+      <div class="flex justify-center space-x-12">
+        <DateInput
+          v-model="date_fields[0].date"
+          :title="date_fields[0].title"
+        />
+        <DateInput
+          v-model="date_fields[1].date"
+          :title="date_fields[1].title"
+        />
       </div>
-    </div>
-    <div class="flex justify-center space-x-12">
-      <DateInput v-model="date_fields[0].date" :title="date_fields[0].title" />
-      <DateInput v-model="date_fields[1].date" :title="date_fields[1].title" />
-    </div>
-    <SubmitButtonsGroup @cancel="cleanTextInputs" />
+      <SubmitButtonsGroup @cancel="cleanTextInputs" />
+    </FormControl>
   </PageContainer>
 </template>
 
@@ -73,6 +81,7 @@ import { ref, watch, onMounted } from "vue";
 
 import InputText from "@/components/InputText";
 import DateInput from "@/components/DateInput";
+import FormControl from "@/components/FormControl";
 import PageContainer from "@/components/PageContainer";
 import SearchInput from "@/components/SearchInput";
 import SubmitButtonsGroup from "@/components/SubmitButtonsGroup";

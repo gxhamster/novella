@@ -5,7 +5,7 @@
       :for="title"
       >{{ title }}</label
     >
-    <div class="flex space-x-2 items-center">
+    <div class="flex space-x-2 items-start">
       <div class="relative" :class="width !== '' ? widthFormat : ''">
         <div
           v-if="isPhone"
@@ -14,7 +14,11 @@
           +960
         </div>
         <input
+          alt="Text Input"
+          class="transition duration-300 apperance-none border-2 rounded-full bg-secondary pr-8 desktop:py-2 laptop:py-1"
+          :class="inputStyle"
           :id="title"
+          ref="inputRef"
           :name="title"
           :readonly="!canEdit"
           :disabled="!canEdit"
@@ -22,21 +26,18 @@
           @input="inputEvent"
           @blur="emit('inputBlur')"
           @focus="emit('inputFocus')"
-          class="transition duration-300 apperance-none border-2 rounded-full bg-secondary pr-8 desktop:py-2 laptop:py-1"
-          :class="inputStyle"
-          alt="Text Input"
         />
         <AlertCircle
-          v-show="showError"
+          v-show="showError | validationError"
           class="absolute text-red-400 right-2 laptop:top-2 desktop:top-3"
           :size="20"
         />
       </div>
-      <SearchButton v-if="searchable" @click="emit('searchClicked')" />
+      <SearchButton v-if="searchable" @click.prevent="emit('searchClicked')" />
     </div>
     <span
-      v-show="showError"
-      class="text-red-400 text-sm flex space-x-1 px-2 absolute -bottom-5"
+      v-show="showError | validationError"
+      class="text-red-400 whitespace-nowrap text-sm flex space-x-1 px-2 absolute -bottom-5"
     >
       <span>
         {{ errorMessage }}
@@ -46,7 +47,14 @@
 </template>
 
 <script setup>
-import { computed, defineProps, defineEmits, ref } from "vue";
+import {
+  computed,
+  defineProps,
+  defineEmits,
+  ref,
+  watch,
+  defineExpose,
+} from "vue";
 import { filteredTextInput } from "@/utils/helper";
 import SearchButton from "@/components/SearchButton";
 import AlertCircle from "vue-material-design-icons/AlertCircle";
@@ -74,12 +82,13 @@ const props = defineProps({
     default: true,
   },
 });
+const validationError = ref(false);
 const showError = ref(false);
 const errorMessage = ref("");
 const widthFormat = computed(() => `w-${props.width}`);
 const inputStyle = computed(() => {
   let result = [];
-  if (showError.value) {
+  if (validationError.value || showError.value) {
     result.push("border-red-400");
   } else {
     result.push(
@@ -95,18 +104,49 @@ const inputStyle = computed(() => {
   result.join(" ");
   return result;
 });
-function inputEvent(event) {
-  emit("update:modelValue", filteredTextInput(event.target.value));
+
+function checkIfValid(value) {
   if (props.validate) {
-    const { result, message } = props.validate(event.target.value);
+    const { result, message } = props.validate(value);
     if (!result) {
-      showError.value = true;
+      validationError.value = true;
       errorMessage.value = message;
     } else {
-      showError.value = false;
+      validationError.value = false;
     }
   }
 }
+
+function inputEvent(event) {
+  emit("update:modelValue", filteredTextInput(event.target.value));
+  checkIfValid(event.target.value);
+}
+
+watch(
+  () => props.modelValue,
+  () => {
+    checkIfValid(props.modelValue);
+  }
+);
+
+function checkEmpty() {
+  if (props.modelValue === "") {
+    showError.value = true;
+    errorMessage.value = `${props.title} is required`;
+  } else {
+    showError.value = false;
+  }
+}
+
+// Used to hide error after required error is shown
+function hideError() {
+  showError.value = false;
+}
+
+defineExpose({
+  checkEmpty,
+  hideError,
+});
 </script>
 
 <style scoped>

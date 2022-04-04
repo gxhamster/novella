@@ -1,3 +1,5 @@
+import { ref } from "vue";
+
 export const prettyCapitalize = (str) => {
   if (typeof str !== "string") {
     return str;
@@ -12,12 +14,9 @@ export function fiveDaysAfterDate(date) {
   return new Date(new Date(date).getTime() + 5 * 24 * 60 * 60 * 1000);
 }
 
-function isEmpty(val) {
-  return val === undefined ? true : false;
-}
-
 // This class describes one input field in a page
 export class PageLayoutData {
+  // Default values for options
   #defaults = {
     full: true,
     searchable: false,
@@ -25,26 +24,12 @@ export class PageLayoutData {
     text: "",
     date: null,
     phone: false,
+    required: true,
+    elem: ref(null),
   };
-  constructor(
-    title,
-    options = {
-      full: true,
-      searchable: false,
-      validator: null,
-      text: "",
-      date: null,
-      phone: false,
-    }
-  ) {
-    const new_options = {};
-    for (const key of Object.keys(this.#defaults)) {
-      if (isEmpty(options[key])) {
-        new_options[key] = this.#defaults[key];
-      } else {
-        new_options[key] = options[key];
-      }
-    }
+  constructor(title, options) {
+    const new_options = { ...this.#defaults, ...options };
+
     options = new_options;
     this.title = title;
     this.full = options.full;
@@ -54,7 +39,8 @@ export class PageLayoutData {
     this.search_data = [];
     this.date = options.date;
     this.phone = options.phone;
-    console.log(this);
+    this.required = options.required;
+    this.elem = options.elem;
   }
   clearText() {
     this.text = "";
@@ -77,6 +63,7 @@ export class PageLayoutData {
   }
 }
 
+// Filtered words list
 const filteredWords = {
   shit: "s**t",
   fuck: "f**k",

@@ -1,6 +1,9 @@
 <template>
   <PageContainer title="Add new student">
-    <div class="grid grid-cols-2 content-between h-full gap-x-14">
+    <FormControl
+      class="grid grid-cols-2 content-between h-full gap-x-14"
+      :formData="[...student_fields]"
+    >
       <div
         v-for="(field, index) in student_fields"
         :key="field.id"
@@ -13,27 +16,22 @@
           :width="!field.full ? '48' : 'full'"
           :validate="student_fields[index].validator"
           :isPhone="student_fields[index].phone"
+          :ref="(el) => (student_fields[index].elem = el)"
         />
       </div>
-      <div class="flex justify-center space-x-12 col-span-2 mt-4">
-        <PageButton
-          @click="clear_input_text"
-          title="Cancel"
-          background="cancel-button-red"
-        />
-        <PageButton @click="clear_input_text" title="Save" />
-      </div>
-    </div>
+      <SubmitButtonsGroup class="col-span-2" />
+    </FormControl>
   </PageContainer>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import InputText from "@/components/InputText";
-import PageButton from "@/components/PageButton";
 import PageContainer from "@/components/PageContainer";
 import { PageLayoutData } from "@/utils/helper";
-import { validate } from "../utils/validation";
+import { validate } from "@/utils/validation";
+import FormControl from "@/components/FormControl.vue";
+import SubmitButtonsGroup from "../components/SubmitButtonsGroup.vue";
 
 const student_fields = ref([
   new PageLayoutData("Student Name", {
@@ -53,6 +51,7 @@ const student_fields = ref([
         max: 20,
         message: "Island should be between 5 and 20",
       }),
+    required: false,
   }),
   new PageLayoutData("Student Address", {
     validator: (text) =>
@@ -62,6 +61,7 @@ const student_fields = ref([
         max: 20,
         message: "Address should be between 1 and 20",
       }),
+    required: false,
   }),
   new PageLayoutData("Student Phone", {
     validator: (text) =>
@@ -78,8 +78,4 @@ const student_fields = ref([
       }),
   }),
 ]);
-
-const clear_input_text = () => {
-  student_fields.value = student_fields.value.map((v) => v.clearText());
-};
 </script>

@@ -1,6 +1,9 @@
 <template>
   <PageContainer title="Add new book">
-    <div class="grid grid-cols-2 h-full gap-x-14">
+    <FormControl
+      class="grid grid-cols-2 h-full gap-x-14"
+      :formData="[...book_fields, ...small_fields_left, ...small_fields_right]"
+    >
       <div
         v-for="(field, index) in book_fields"
         :key="field.title"
@@ -13,12 +16,14 @@
           v-model="book_fields[index].text"
           :title="field.title"
           :validate="book_fields[index].validator"
+          :ref="(el) => (book_fields[index].elem = el)"
         />
         <InputText
           v-else
           v-model="book_fields[index].text"
           :title="field.title"
           :validate="book_fields[index].validator"
+          :ref="(el) => (book_fields[index].elem = el)"
         />
       </div>
       <div class="flex gap-x-6">
@@ -28,27 +33,30 @@
             :searchable="field.searchable"
             :title="field.title"
             :validate="small_fields_left[index].validator"
+            :ref="(el) => (small_fields_left[index].elem = el)"
           />
         </div>
       </div>
-      <div class="flex gap-x-6">
+      <section class="flex gap-x-6">
         <div v-for="(field, index) in small_fields_right" :key="field.title">
           <InputText
             v-model="small_fields_right[index].text"
             :searchable="field.searchable"
             :title="field.title"
             :validate="small_fields_right[index].validator"
+            :ref="(el) => (small_fields_right[index].elem = el)"
           />
         </div>
-      </div>
-    </div>
-    <SubmitButtonsGroup @cancel="cleanTextInputs" />
+      </section>
+      <SubmitButtonsGroup class="col-span-2" />
+    </FormControl>
   </PageContainer>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import InputText from "@/components/InputText";
+import FormControl from "@/components/FormControl";
 import PageContainer from "@/components/PageContainer";
 import SearchInput from "@/components/SearchInput";
 import SubmitButtonsGroup from "../components/SubmitButtonsGroup.vue";
@@ -91,6 +99,7 @@ const book_fields = ref([
         max: 30,
         message: "Genre should be between 5 and 30",
       }),
+    required: false,
   }),
   new PageLayoutData("DDC", {
     validator: (text) =>
@@ -111,18 +120,22 @@ const book_fields = ref([
 const small_fields_left = ref([
   new PageLayoutData("Edition", {
     validator: (text) => validate(text).isNumeric(),
+    required: false,
   }),
   new PageLayoutData("Pages", {
     validator: (text) => validate(text).isNumeric(),
+    required: false,
   }),
 ]);
 
 const small_fields_right = ref([
   new PageLayoutData("Language", {
     validator: (text) => validate(text).isNumeric(),
+    required: false,
   }),
   new PageLayoutData("Year", {
     validator: (text) => validate(text).isNumeric(),
+    required: false,
   }),
 ]);
 
@@ -192,10 +205,4 @@ bookstore.$onAction(({ name, after }) => {
 onMounted(() => {
   setStoreData();
 });
-
-function cleanTextInputs() {
-  book_fields.value = book_fields.value.map((v) => v.clearText());
-  small_fields_left.value = small_fields_left.value.map((v) => v.clearText());
-  small_fields_right.value = small_fields_right.value.map((v) => v.clearText());
-}
 </script>
