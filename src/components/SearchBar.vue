@@ -1,24 +1,19 @@
 <template>
-  <div class="relative desktop:w-96 laptop:w-80">
-    <magnify-icon
-      :class="isActive ? 'animate-pulse' : ''"
+  <div class="box relative desktop:w-96 laptop:w-80">
+    <MagnifyIcon
       class="text-primary absolute desktop:top-3 desktop:right-6 laptop:top-2 laptop:right-6"
       icon="fa-regular fa-magnifying-glass"
     />
     <input
       @input="filterResults"
       :value="searchText"
-      @focus="setActive"
-      @blur="isFocused = false"
       class="bg-secondary custom-shadow text-gray-500 rounded-full appearance-none text-right outline-none w-full pr-16 desktop:py-3 laptop:py-2"
       placeholder="Search..."
     />
     <SearchDropdown
+      class="dropdown"
       :showAddBtn="false"
       :data="filteredResults"
-      v-show="isActive || isFocused"
-      @mouseenter="isActive = true"
-      @mouseleave="isActive = false"
     />
   </div>
 </template>
@@ -44,10 +39,8 @@ const result_obj = reactive({
 });
 
 function setResult() {
-  if (!isActive.value || !isFocused.value) {
-    results = [...result_obj.book_data, ...result_obj.user_data];
-    filteredResults.value = results;
-  }
+  results = [...result_obj.book_data, ...result_obj.user_data];
+  filteredResults.value = results;
 }
 
 watch(result_obj, (new_result_obj) => {
@@ -104,14 +97,6 @@ bookstore.$onAction(({ name, after }) => {
   }
 }, true);
 
-const isActive = ref(false);
-const isFocused = ref(false);
-
-const setActive = () => {
-  isFocused.value = true;
-  isActive.value = true;
-};
-
 function setFilterResults(result) {
   filteredResults.value = result;
 }
@@ -132,3 +117,26 @@ onUnmounted(() => {
   clearTimeout(timeout);
 });
 </script>
+
+<style scoped>
+.dropdown {
+  will-change: transform;
+  will-change: opacity;
+  transform: translateY(-15px);
+  transition: all 250ms ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropdown:hover {
+  transform: translateY(0px);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.box:focus-within .dropdown {
+  transform: translateY(0px);
+  pointer-events: auto;
+  opacity: 1;
+}
+</style>

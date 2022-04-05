@@ -87,8 +87,9 @@ const book_fields = ref([
         message: "Author should be between 5 and 30",
       }),
   }),
-  new PageLayoutData("Book Number", {
-    validator: (text) => validate(text).isNumeric(),
+  new PageLayoutData("Book ID", {
+    validator: (text) =>
+      validate(text).isNumeric({ message: "Book ID should be a number" }),
   }),
   new PageLayoutData("Genre", {
     searchable: true,

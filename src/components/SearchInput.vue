@@ -11,7 +11,6 @@
     />
     <SearchDropdown
       class="dropdown"
-      :class="{ hide: itemAdded }"
       :searchText="modelValue"
       :data="filteredResults"
       @itemClicked="sendItemData"
@@ -85,18 +84,23 @@ onUpdated(() => {
 
 <style scoped>
 .dropdown {
-  display: none;
+  will-change: transform;
+  will-change: opacity;
+  transform: translateY(-15px);
+  transition: all 250ms ease;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .dropdown:hover {
-  display: block;
+  transform: translateY(0px);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .box:focus-within .dropdown {
-  display: block;
-}
-
-.hide {
-  display: none;
+  transform: translateY(0px);
+  pointer-events: auto;
+  opacity: 1;
 }
 </style>

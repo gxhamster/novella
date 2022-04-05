@@ -35,7 +35,6 @@ import NovellaLogo from "./NovellaLogo";
 import AddNewBookIcon from "./icons/AddNewBookIcon";
 import AddNewStudentIcon from "./icons/AddNewStudentIcon";
 import DashboardIcon from "./icons/DashboardIcon";
-import HistoryIcon from "./icons/HistoryIcon";
 import IssueBookIcon from "./icons/IssueBookIcon";
 import ReturnBookIcon from "./icons/ReturnBookIcon";
 
@@ -49,7 +48,6 @@ const icon_names = [
   ReturnBookIcon,
   AddNewBookIcon,
   AddNewStudentIcon,
-  HistoryIcon,
   DashboardIcon,
 ];
 const button_names = [

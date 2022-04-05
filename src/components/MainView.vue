@@ -13,7 +13,7 @@
       <Transition name="slidein">
         <div
           v-show="!hide_counter"
-          class="desktop:h-32 laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6"
+          class="desktop:h-32 counter-will-change laptop:h-24 flex desktop:gap-x-6 laptop:gap-x-6"
         >
           <BookCounter
             :icon="BookArrowLeftIcon"
@@ -146,3 +146,10 @@ watch(maximized, (n) => {
   }
 });
 </script>
+
+<style scoped>
+.counter-will-change {
+  will-change: height;
+  will-change: opacity;
+}
+</style>
