@@ -32,8 +32,12 @@
           class="absolute text-red-400 right-2 laptop:top-2 desktop:top-3"
           :size="20"
         />
+        <MagnifyIcon
+          v-if="searchable && !showError && !validationError"
+          class="absolute right-3 laptop:top-2 desktop:top-3 text-primary"
+          :size="22"
+        />
       </div>
-      <SearchButton v-if="searchable" @click.prevent="emit('searchClicked')" />
     </div>
     <span
       v-show="showError | validationError"
@@ -56,8 +60,8 @@ import {
   defineExpose,
 } from "vue";
 import { filteredTextInput } from "@/utils/helper";
-import SearchButton from "@/components/SearchButton";
 import AlertCircle from "vue-material-design-icons/AlertCircle";
+import MagnifyIcon from "vue-material-design-icons/Magnify.vue";
 
 const emit = defineEmits([
   "update:modelValue",
@@ -100,6 +104,7 @@ const inputStyle = computed(() => {
   } else {
     result.push("laptop:pl-3 desktop:pl-4");
   }
+
   result.push(props.width !== "" ? widthFormat.value : "");
   result.join(" ");
   return result;
