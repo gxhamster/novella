@@ -11,6 +11,7 @@ const props = defineProps({
   formData: {
     type: Array,
     default: null,
+    required: true,
   },
 });
 
