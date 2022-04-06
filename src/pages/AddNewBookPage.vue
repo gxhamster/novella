@@ -72,9 +72,9 @@ const book_fields = ref([
     validator: (text) =>
       validate(text).between({
         inclusive: true,
-        min: 5,
+        min: 2,
         max: 20,
-        message: "Title should be between 5 and 20",
+        message: "Title should be between 2 and 20",
       }),
   }),
   new PageLayoutData("Author", {
@@ -131,7 +131,6 @@ const small_fields_left = ref([
 
 const small_fields_right = ref([
   new PageLayoutData("Language", {
-    validator: (text) => validate(text).isNumeric(),
     required: false,
   }),
   new PageLayoutData("Year", {
