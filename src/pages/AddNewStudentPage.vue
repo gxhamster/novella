@@ -1,7 +1,7 @@
 <template>
   <PageContainer title="Add new student">
     <FormControl
-      class="grid grid-cols-2 content-between h-full gap-x-14"
+      class="grid grid-cols-2 content-between flex-grow gap-x-14"
       :formData="[...student_fields]"
     >
       <div

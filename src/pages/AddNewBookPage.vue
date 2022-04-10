@@ -1,13 +1,13 @@
 <template>
   <PageContainer title="Add new book">
     <FormControl
-      class="grid grid-cols-2 h-full gap-x-14"
+      class="grid grid-cols-2 flex-grow gap-x-14 content-between"
       :formData="[...book_fields, ...small_fields_left, ...small_fields_right]"
     >
       <div
         v-for="(field, index) in book_fields"
         :key="field.title"
-        class="relative"
+        class="w-full h-full"
       >
         <SearchInput
           v-if="field.searchable"

@@ -13,9 +13,17 @@
 
 @layer components {
   @screen laptop {
+    .main-container-max {
+      height: calc(100% - 16px - 32px);
+    }
+
     .main-container {
       max-width: 1000px;
-      height: calc(100% - 40px);
+      height: calc(100% - 32px - 12px);
+    }
+
+    .main-container-scroll {
+      height: calc(100% - 32px - 12px);
     }
 
     /* Book Counter slide animation */
@@ -54,9 +62,15 @@
   }
 
   @screen desktop {
+    .main-container-max {
+      height: calc(100% - 40px -36px);
+    }
     .main-container {
       max-width: 1000px;
-      height: calc(100% - 80px);
+      height: calc(100% - 36px - 24px);
+    }
+    .main-container-scroll {
+      height: calc(100% - 36px - 24px);
     }
 
     .slidein-enter-from,
@@ -106,9 +120,6 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-  }
-  .main-container-scroll {
-    height: calc(100% - 10px);
   }
 }
 

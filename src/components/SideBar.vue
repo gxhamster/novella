@@ -63,7 +63,7 @@ const sidebar_routes = [
   "/recieve_book",
   "/add_book",
   "/add_student",
-  "/dashboard",
+  "/directory",
 ];
 
 const route_names = ref(

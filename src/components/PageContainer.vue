@@ -1,29 +1,34 @@
 <template>
   <div
-    class="desktop:p-20 laptop:py-10 laptop:px-14 bg-secondary rounded-lgg flex-grow overflow-hidden"
+    class="bg-secondary rounded-lgg flex-grow overflow-hidden"
+    :class="
+      max
+        ? 'desktop:p-10 laptop:pt-7 laptop:pb-4 laptop:px-7'
+        : 'desktop:p-20 laptop:py-8 laptop:px-14'
+    "
   >
-    <section class="container">
-      <span
-        class="block desktop:text-3xl laptop:text-2xl font-medium desktop:mb-6 laptop:mb-3"
-        >{{ props.title }}</span
-      >
-      <div class="main-container mx-auto flex flex-col justify-between">
-        <slot></slot>
-      </div>
-    </section>
+    <span
+      class="block desktop:text-3xl laptop:text-2xl font-medium desktop:mb-6 laptop:mb-3"
+      :class="{ 'px-12': max }"
+      >{{ props.title }}</span
+    >
+    <div
+      class="mx-auto flex flex-col justify-between"
+      :class="{ 'main-container': !max, 'main-container-max': max }"
+    >
+      <slot></slot>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { defineProps } from "vue";
 
-const props = defineProps({ title: String });
+const props = defineProps({
+  title: String,
+  max: {
+    type: Boolean,
+    default: false,
+  },
+});
 </script>
-
-<style scoped>
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  height: 100%;
-}
-</style>

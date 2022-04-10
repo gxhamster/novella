@@ -17,10 +17,3 @@ import { defineProps } from "vue";
 
 const props = defineProps({ title: String });
 </script>
-
-<style scoped>
-.container {
-  max-width: 1000px;
-  height: 100%;
-}
-</style>

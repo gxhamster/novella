@@ -3,7 +3,7 @@ import AddNewStudentPage from "./pages/AddNewStudentPage.vue";
 import IssueBooksPage from "./pages/IssueBooksPage.vue";
 import AddNewBookPage from "./pages/AddNewBookPage.vue";
 import RecieveBook from "./pages/RecieveBook.vue";
-import DashBoard from "./pages/DashBoard.vue";
+import DirectoryPage from "./pages/DirectoryPage.vue";
 import SettingsPage from "./pages/SettingsPage.vue";
 import AboutPage from "./pages/AboutPage.vue";
 import FeedbackPage from "./pages/FeedbackPage.vue";
@@ -35,9 +35,9 @@ const routes = [
     component: AddNewStudentPage,
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: DashBoard,
+    path: "/directory",
+    name: "Directory",
+    component: DirectoryPage,
   },
   {
     path: "/settings",
