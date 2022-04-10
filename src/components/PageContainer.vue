@@ -8,10 +8,11 @@
     "
   >
     <span
-      class="block desktop:text-3xl laptop:text-2xl font-medium desktop:mb-6 laptop:mb-3"
+      class="desktop:text-3xl laptop:text-2xl font-medium desktop:mb-6 laptop:mb-3 flex justify-between"
       :class="{ 'px-12': max }"
-      >{{ props.title }}</span
-    >
+      >{{ props.title }}
+      <slot name="titleContent"></slot>
+    </span>
     <div
       class="mx-auto flex flex-col justify-between"
       :class="{ 'main-container': !max, 'main-container-max': max }"

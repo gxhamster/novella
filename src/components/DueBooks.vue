@@ -5,7 +5,7 @@
       <div v-for="(day, index) in dates" :key="day">
         <DueBookGroup
           :title="calculateDate(day)"
-          :initialShow="index == 0 ? true : false"
+          :initialShow="due_groups.get(day).length === 1 || index === 0"
           :children="due_groups.get(day)"
         />
       </div>
