@@ -1,12 +1,13 @@
 <template>
   <PageContainer :max="true" :title="pageTitle">
     <template #titleContent>
-      <span class="flex gap-2">
+      <span class="flex gap-2 relative">
         <DirectoryPageBtn
           v-for="btn in btnState"
           :key="btn.name"
           :isSmall="!btn.state"
           :title="btn.name"
+          :direction="btn.transformDirection"
           @clicked="toggleBtnState(btn)"
         >
           <template #icon><component :is="btn.icon" /></template>
@@ -22,7 +23,7 @@
 </template>
 
 <script setup>
-import { reactive, shallowRef, ref, onMounted } from "vue";
+import { reactive, shallowRef, ref } from "vue";
 import PageContainer from "@/components/PageContainer";
 import DataTable from "../components/DataTable.vue";
 import { bookStore, userStore } from "@/stores/store";
@@ -35,17 +36,9 @@ const userstore = userStore();
 const pageTitle = ref("Book directory");
 const dataTableCollection = reactive({
   books: {
-    headings: ["Title", "Author", "No.", "Genre", "DDC", "Language", "Edition"],
+    headings: ["Title", "Author", "No.", "Genre", "DDC", "Language"],
     data: bookstore.books,
-    props: [
-      "title",
-      "author",
-      "bnumber",
-      "subject",
-      "ddc",
-      "language",
-      "edition",
-    ],
+    props: ["title", "author", "bnumber", "subject", "ddc", "language"],
   },
   users: {
     headings: ["Name", "Index", "Class", "Address", "Island/City", "Mobile"],
@@ -61,6 +54,7 @@ const btnState = shallowRef([
     state: false,
     icon: AccountGroupIcon,
     collectionName: "users",
+    transformDirection: "left",
   },
   {
     name: "Book",
@@ -68,6 +62,7 @@ const btnState = shallowRef([
     state: true,
     icon: BookIcon,
     collectionName: "books",
+    transformDirection: "right",
   },
 ]);
 
@@ -79,10 +74,24 @@ function toggleBtnState(btn) {
   dataTableState.value = dataTableCollection[btn.collectionName];
 }
 
+function setNewData() {
+  dataTableCollection.books.data = bookstore.books;
+  dataTableCollection.users.data = userstore.users;
+}
+
 bookstore.$onAction(({ name, after }) => {
   if (name === "setDataFetched") {
-    after(() => {});
+    after(() => {
+      setNewData();
+    });
   }
 }, true);
-onMounted(() => {});
+
+userstore.$onAction(({ name, after }) => {
+  if (name === "setDataFetched") {
+    after(() => {
+      setNewData();
+    });
+  }
+}, true);
 </script>
