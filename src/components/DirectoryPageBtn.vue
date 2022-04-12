@@ -1,21 +1,22 @@
 <template>
-  <Transition :name="transitionName" mode="out-in">
-    <DirectoryPageBtnSmall v-if="isSmall" @clicked="$emit('clicked')"
-      ><slot name="icon"></slot
-    ></DirectoryPageBtnSmall>
-    <button
-      v-else
-      class="cursor-default rounded-full relative bg-primary text-sm text-center items-center text-white px-7 w-32 py-2 flex justify-between gap-2"
-    >
-      <slot name="icon"></slot>
+  <button
+    :class="btnStyles"
+    class="rounded-full relative bg-primary text-sm text-center items-center text-white flex justify-start"
+    @click="
+      () => {
+        if (isSmall) $emit('clicked');
+      }
+    "
+  >
+    <slot name="icon"></slot>
+    <p class="btn-text" v-show="!isSmall">
       {{ title }}
-    </button>
-  </Transition>
+    </p>
+  </button>
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref, computed } from "vue";
-import DirectoryPageBtnSmall from "./DirectoryPageBtnSmall.vue";
+import { defineProps, defineEmits, computed } from "vue";
 
 defineEmits(["clicked"]);
 const props = defineProps({
@@ -35,36 +36,43 @@ const props = defineProps({
     default: "Clicked",
   },
 });
-const direction = ref(props.direction);
-const transitionName = computed(() => {
-  return props.isSmall ? "scale-large" : "scale";
+
+const btnStyles = computed(() => {
+  return props.isSmall
+    ? "p-2 small-transform w-10"
+    : "px-7 large-transform py-2 w-32 cursor-default gap-2";
 });
 </script>
 
 <style scoped>
-.scale-enter-active,
-.scale-leave-active {
-  transform: scaleX(100%);
-  will-change: transform;
-  transition: transform 0.25s ease;
-  transform-origin: v-bind(direction);
+button {
+  --transition-duration: 0.3s;
+  transition: all var(--transition-duration) ease;
+  transform-origin: right;
+}
+.large-transform {
+  transform: scaleX(128px);
 }
 
-.scale-enter-from,
-.scale-leave-to {
-  transform: scaleX(120%);
+.small-transform {
+  transform: scaleX(40px);
 }
 
-.scale-large-enter-active,
-.scale-large-leave-active {
-  transform: scaleX(100%);
-  will-change: transform;
-  transition: transform 0.25s ease;
-  transform-origin: v-bind(direction);
+.btn-text {
+  animation-name: fade-text;
+  animation-duration: calc(
+    var(--transition-duration) + var(--transition-duration) / 2
+  );
+  position: absolute;
+  right: 20px;
 }
 
-.scale-large-enter-from,
-.scale-large-leave-to {
-  transform: scaleX(20%);
+@keyframes fade-text {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
