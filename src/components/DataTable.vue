@@ -202,7 +202,7 @@ tbody {
 }
 
 tbody tr {
-  padding: 0.5em 0em;
+  padding: 0.5em 1em;
 }
 
 .highlight-clr {
