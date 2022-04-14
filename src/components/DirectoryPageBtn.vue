@@ -38,9 +38,7 @@ const props = defineProps({
 });
 
 const btnStyles = computed(() => {
-  return props.isSmall
-    ? "p-2 small-transform w-10"
-    : "px-7 large-transform py-2 w-32 cursor-default gap-2";
+  return props.isSmall ? "p-2 w-10" : "px-7 py-2 w-32 cursor-default gap-2";
 });
 </script>
 
@@ -49,13 +47,6 @@ button {
   --transition-duration: 0.3s;
   transition: all var(--transition-duration) ease;
   transform-origin: right;
-}
-.large-transform {
-  transform: scaleX(128px);
-}
-
-.small-transform {
-  transform: scaleX(40px);
 }
 
 .btn-text {

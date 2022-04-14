@@ -10,7 +10,9 @@
           :direction="btn.transformDirection"
           @clicked="toggleBtnState(btn)"
         >
-          <template #icon><component :is="btn.icon" /></template>
+          <template #icon>
+            <component :is="btn.icon" />
+          </template>
         </DirectoryPageBtn>
       </span>
     </template>
@@ -18,6 +20,7 @@
       :data="dataTableState.data"
       :dataProps="dataTableState.props"
       :headings="dataTableState.headings"
+      :filter="dataTableState.filter"
     />
   </PageContainer>
 </template>
@@ -37,11 +40,20 @@ const pageTitle = ref("Book directory");
 const dataTableCollection = reactive({
   books: {
     headings: ["Title", "Author", "No.", "Genre", "DDC", "Language"],
+    filter: [
+      { heading: "Title", prop: "title" },
+      { heading: "Author", prop: "author" },
+      { heading: "No.", prop: "bnumber" },
+    ],
     data: bookstore.books,
     props: ["title", "author", "bnumber", "subject", "ddc", "language"],
   },
   users: {
     headings: ["Name", "Index", "Class", "Address", "Island/City", "Mobile"],
+    filter: [
+      { heading: "Name", prop: "name" },
+      { heading: "Index", prop: "index" },
+    ],
     data: userstore.users,
     props: ["name", "index", "grade", "address", "island", "number"],
   },

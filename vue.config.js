@@ -21,6 +21,7 @@ module.exports = {
       },
       runtimeChunk: "single",
     },
+    devtool: "source-map",
     module: {
       rules: [
         {

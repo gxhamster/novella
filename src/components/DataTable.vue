@@ -6,22 +6,38 @@
           <th
             v-for="heading in headings"
             :key="heading"
-            class="laptop:text-xs text-gray-800"
+            class="laptop:text-xs desktop:text-sm text-gray-800 flex items-center justify-center gap-1"
           >
             {{ heading }}
+            <span @click="toggleSwitch(heading)">
+              <ChevronDownIcon
+                :size="15"
+                v-show="
+                  shouldHeadingFilter(heading) &&
+                  filterBtnState.get(heading).state
+                "
+              />
+              <ChevronUpIcon
+                :size="15"
+                v-show="
+                  shouldHeadingFilter(heading) &&
+                  !filterBtnState.get(heading).state
+                "
+              />
+            </span>
           </th>
         </tr>
       </thead>
       <tbody class="overflow-y-scroll thin-scrollbar">
         <tr
-          v-for="(dataitem, index) in data"
+          v-for="(dataitem, index) in filteredData"
           :key="dataitem"
           :class="{ 'highlight-clr': index % 2 == 0 }"
         >
           <td
             v-for="field in dataProps"
             :key="field"
-            class="laptop:text-xs text-gray-700"
+            class="laptop:text-xs desktop:text-sm text-gray-700"
           >
             {{ dataitem[field] || "N/A" }}
           </td>
@@ -32,12 +48,20 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { ref, defineProps, watch, watchEffect } from "vue";
+import ChevronDownIcon from "vue-material-design-icons/ChevronDown.vue";
+import ChevronUpIcon from "vue-material-design-icons/ChevronUp.vue";
 
-defineProps({
+const props = defineProps({
   headings: {
     type: Array,
     required: true,
+  },
+  filter: {
+    type: Array,
+    default() {
+      return [];
+    },
   },
   dataProps: {
     type: Array,
@@ -48,6 +72,91 @@ defineProps({
     required: true,
   },
 });
+
+// true is acending, false is descending
+const filterBtnState = ref(new Map());
+const filteredData = ref([]);
+
+watch(
+  () => props.data,
+  () => {
+    filteredData.value = props.data;
+  }
+);
+
+function filterData(prop, options = { ascending: true, descending: false }) {
+  let result = [];
+  const data = props.data;
+
+  if (options.ascending) {
+    result = data.sort((a, b) => ascending(a, b, prop));
+  } else if (options.descending) {
+    result = data.sort((a, b) => descending(a, b, prop));
+  }
+
+  filteredData.value = result;
+}
+
+function toggleSwitch(heading) {
+  const newValue = {
+    ...filterBtnState.value.get(heading),
+    state: !filterBtnState.value.get(heading).state,
+  };
+  filterBtnState.value.set(heading, newValue);
+
+  // Filter data in the column of heading
+  const isAscending = filterBtnState.value.get(heading).state;
+  const prop = filterBtnState.value.get(heading).prop;
+  filterData(prop, { ascending: isAscending, descending: !isAscending });
+}
+
+function shouldHeadingFilter(heading) {
+  const d = props.filter;
+  return d.filter((v) => v.heading === heading).length > 0;
+}
+
+function ascending(obj1, obj2, prop) {
+  let data1, data2;
+  if (typeof obj1[prop] === "string" && typeof obj2[prop] === "string") {
+    data1 = obj1[prop].toLowerCase().trim();
+    data2 = obj2[prop].toLowerCase().trim();
+  } else {
+    data1 = obj1[prop];
+    data2 = obj2[prop];
+  }
+
+  if (data1 < data2) return -1;
+  if (data1 > data2) return 1;
+  return 0;
+}
+
+function descending(obj1, obj2, prop) {
+  let data1, data2;
+  if (typeof obj1[prop] === "string" && typeof obj2[prop] === "string") {
+    data1 = obj1[prop].toLowerCase().trim();
+    data2 = obj2[prop].toLowerCase().trim();
+  } else {
+    data1 = obj1[prop];
+    data2 = obj2[prop];
+  }
+
+  if (data1 > data2) return -1;
+  if (data1 < data2) return 1;
+  return 0;
+}
+
+function updateBtnState() {
+  const m = new Map();
+  for (const a of props.filter) {
+    m.set(a.heading, {
+      state: false,
+      prop: a.prop,
+    });
+  }
+  filterBtnState.value = m;
+}
+
+watchEffect(updateBtnState);
 </script>
 
 <style scoped>
@@ -64,7 +173,6 @@ table {
   overflow: hidden;
   background-color: var(--table-background-clr);
 }
-
 thead th {
   position: sticky;
   top: 0;
