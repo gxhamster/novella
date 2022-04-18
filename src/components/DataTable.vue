@@ -6,25 +6,41 @@
           <th
             v-for="heading in headings"
             :key="heading"
-            class="laptop:text-xs desktop:text-sm text-gray-800 flex items-center justify-center gap-1"
+            class="laptop:text-xs desktop:text-sm flex items-center justify-center gap-1"
           >
-            {{ heading }}
-            <span @click="toggleSwitch(heading)">
+            <label
+              :for="
+                shouldHeadingFilter(heading) &&
+                filterBtnState.get(heading).hidden
+                  ? `unhide-btn-${heading}`
+                  : `toggle-switch-${heading}`
+              "
+              class="transition-all duration-150 text-gray-600"
+              :class="{
+                'cursor-pointer': shouldHeadingFilter(heading),
+
+                'hover:text-gray-900': shouldHeadingFilter(heading),
+              }"
+              >{{ heading }}</label
+            >
+            <button @click="unhideBtn(heading)" :id="`unhide-btn-${heading}`" />
+            <button
+              :id="`toggle-switch-${heading}`"
+              v-if="
+                shouldHeadingFilter(heading) &&
+                !filterBtnState.get(heading).hidden
+              "
+              @click="toggleSwitch(heading)"
+            >
               <ChevronDownIcon
                 :size="15"
-                v-show="
-                  shouldHeadingFilter(heading) &&
-                  filterBtnState.get(heading).state
-                "
+                v-show="filterBtnState.get(heading).state"
               />
               <ChevronUpIcon
                 :size="15"
-                v-show="
-                  shouldHeadingFilter(heading) &&
-                  !filterBtnState.get(heading).state
-                "
+                v-show="!filterBtnState.get(heading).state"
               />
-            </span>
+            </button>
           </th>
         </tr>
       </thead>
@@ -48,7 +64,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, watch, watchEffect } from "vue";
+import { ref, defineProps, watch, watchEffect, onMounted } from "vue";
 import ChevronDownIcon from "vue-material-design-icons/ChevronDown.vue";
 import ChevronUpIcon from "vue-material-design-icons/ChevronUp.vue";
 
@@ -84,17 +100,22 @@ watch(
   }
 );
 
-function filterData(prop, options = { ascending: true, descending: false }) {
-  let result = [];
-  const data = props.data;
-
-  if (options.ascending) {
-    result = data.sort((a, b) => ascending(a, b, prop));
-  } else if (options.descending) {
-    result = data.sort((a, b) => descending(a, b, prop));
+function unhideBtn(heading) {
+  console.log(heading);
+  const oldValue = filterBtnState.value.get(heading);
+  const newValue = {
+    ...oldValue,
+    hidden: oldValue.hidden ? false : false,
+  };
+  for (const [key, value] of filterBtnState.value) {
+    if (key !== heading) {
+      filterBtnState.value.set(key, {
+        ...value,
+        hidden: true,
+      });
+    }
   }
-
-  filteredData.value = result;
+  filterBtnState.value.set(heading, newValue);
 }
 
 function toggleSwitch(heading) {
@@ -115,34 +136,48 @@ function shouldHeadingFilter(heading) {
   return d.filter((v) => v.heading === heading).length > 0;
 }
 
-function ascending(obj1, obj2, prop) {
-  let data1, data2;
-  if (typeof obj1[prop] === "string" && typeof obj2[prop] === "string") {
-    data1 = obj1[prop].toLowerCase().trim();
-    data2 = obj2[prop].toLowerCase().trim();
-  } else {
-    data1 = obj1[prop];
-    data2 = obj2[prop];
-  }
+function filterData(prop, options = { ascending: true, descending: false }) {
+  let result = [];
+  const data = props.data;
 
-  if (data1 < data2) return -1;
-  if (data1 > data2) return 1;
-  return 0;
+  console.time();
+  if (options.ascending) {
+    result = insertionSort(data, data.length, prop);
+  } else if (options.descending) {
+    result = insertionSortReverse(data, data.length, prop);
+  }
+  console.timeEnd();
+  filteredData.value = result;
 }
 
-function descending(obj1, obj2, prop) {
-  let data1, data2;
-  if (typeof obj1[prop] === "string" && typeof obj2[prop] === "string") {
-    data1 = obj1[prop].toLowerCase().trim();
-    data2 = obj2[prop].toLowerCase().trim();
-  } else {
-    data1 = obj1[prop];
-    data2 = obj2[prop];
-  }
+function insertionSortReverse(arr, n, prop) {
+  let i, key, j;
+  for (i = 1; i < n; i++) {
+    key = arr[i];
+    j = i - 1;
 
-  if (data1 > data2) return -1;
-  if (data1 < data2) return 1;
-  return 0;
+    while (j >= 0 && arr[j][prop] < key[prop]) {
+      arr[j + 1] = arr[j];
+      j = j - 1;
+    }
+    arr[j + 1] = key;
+  }
+  return arr;
+}
+
+function insertionSort(arr, n, prop) {
+  let i, key, j;
+  for (i = 1; i < n; i++) {
+    key = arr[i];
+    j = i - 1;
+
+    while (j >= 0 && arr[j][prop] > key[prop]) {
+      arr[j + 1] = arr[j];
+      j = j - 1;
+    }
+    arr[j + 1] = key;
+  }
+  return arr;
 }
 
 function updateBtnState() {
@@ -150,6 +185,7 @@ function updateBtnState() {
   for (const a of props.filter) {
     m.set(a.heading, {
       state: false,
+      hidden: true,
       prop: a.prop,
     });
   }
@@ -157,6 +193,7 @@ function updateBtnState() {
 }
 
 watchEffect(updateBtnState);
+onMounted(() => (filteredData.value = props.data));
 </script>
 
 <style scoped>
