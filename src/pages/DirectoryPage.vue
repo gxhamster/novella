@@ -49,10 +49,11 @@ const dataTableCollection = reactive({
     props: ["title", "author", "bnumber", "subject", "ddc", "language"],
   },
   users: {
-    headings: ["Name", "Index", "Class", "Address", "Island/City", "Mobile"],
+    headings: ["Name", "Index", "Grade", "Address", "Island/City", "Mobile"],
     filter: [
       { heading: "Name", prop: "name" },
       { heading: "Index", prop: "index" },
+      { heading: "Grade", prop: "grade" },
     ],
     data: userstore.users,
     props: ["name", "index", "grade", "address", "island", "number"],

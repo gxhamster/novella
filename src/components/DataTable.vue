@@ -116,6 +116,9 @@ function unhideBtn(heading) {
     }
   }
   filterBtnState.value.set(heading, newValue);
+  const isAscending = filterBtnState.value.get(heading).state;
+  const prop = filterBtnState.value.get(heading).prop;
+  filterData(prop, { ascending: isAscending, descending: !isAscending });
 }
 
 function toggleSwitch(heading) {
