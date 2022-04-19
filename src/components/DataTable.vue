@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, watch, watchEffect, onMounted } from "vue";
+import { ref, defineProps, watch, watchEffect, onMounted, toRaw } from "vue";
 import ChevronDownIcon from "vue-material-design-icons/ChevronDown.vue";
 import ChevronUpIcon from "vue-material-design-icons/ChevronUp.vue";
 
@@ -101,7 +101,6 @@ watch(
 );
 
 function unhideBtn(heading) {
-  console.log(heading);
   const oldValue = filterBtnState.value.get(heading);
   const newValue = {
     ...oldValue,
@@ -141,7 +140,7 @@ function shouldHeadingFilter(heading) {
 
 function filterData(prop, options = { ascending: true, descending: false }) {
   let result = [];
-  const data = props.data;
+  const data = toRaw(props.data);
 
   console.time();
   if (options.ascending) {

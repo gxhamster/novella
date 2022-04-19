@@ -13,6 +13,7 @@
     <SearchDropdown
       class="dropdown"
       :showAddBtn="false"
+      @itemClicked="dropdownItemClicked"
       :data="filteredResults"
     />
   </div>
@@ -49,6 +50,10 @@ watch(result_obj, (new_result_obj) => {
     setResult();
   }
 });
+
+function dropdownItemClicked(obj) {
+  console.log(obj);
+}
 
 store.$onAction(({ name, after }) => {
   // When data has been fetched add those to searcable results
