@@ -53,17 +53,25 @@ function calculateDate(day) {
   }
 }
 
+function convertSecondsToDays(seconds) {
+  const date = new Date(seconds * 1000);
+  const days = Math.floor((new Date() - date) / (24 * 60 * 60 * 1000));
+  return days;
+}
+
 const dates = computed(() => {
   const result = new Map();
   const d = [];
+
   for (const due of duestore.dues) {
-    if (!result.get(due.days)) {
-      result.set(due.days, []);
-      d.push(due.days);
+    const days = convertSecondsToDays(due.issuedDate.seconds);
+    if (!result.get(days)) {
+      result.set(days, []);
+      d.push(days);
     }
   }
   d.sort((a, b) => b - a);
-
+  console.log(d);
   return d;
 });
 

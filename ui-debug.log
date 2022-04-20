@@ -1,1 +1,17 @@
 Web / API server started at localhost:4000
+/usr/bin/node[344628]: ../src/node.cc:765:void node::ResetStdio(): Assertion `!(err != 0) || (err == -1 && (*__errno_location ()) == 1)' failed.
+ 1: 0x7f8399905d9c node::Abort() [/lib64/libnode.so.93]
+ 2: 0x7f83999060d2 node::Assert(node::AssertionInfo const&) [/lib64/libnode.so.93]
+ 3: 0x7f83998c155e node::ResetStdio() [/lib64/libnode.so.93]
+ 4: 0x7f83998c1646 node::SignalExit(int, siginfo_t*, void*) [/lib64/libnode.so.93]
+ 5: 0x7f8398a3a750  [/lib64/libc.so.6]
+ 6: 0x7f8398b09c3e epoll_wait [/lib64/libc.so.6]
+ 7: 0x7f83989d1c3f  [/lib64/libuv.so.1]
+ 8: 0x7f83989bb640 uv_run [/lib64/libuv.so.1]
+ 9: 0x7f839982af77 node::SpinEventLoop(node::Environment*) [/lib64/libnode.so.93]
+10: 0x7f8399957451 node::NodeMainInstance::Run(int*, node::Environment*) [/lib64/libnode.so.93]
+11: 0x7f83999579d6 node::NodeMainInstance::Run(node::EnvSerializeInfo const*) [/lib64/libnode.so.93]
+12: 0x7f83998c57e1 node::Start(int, char**) [/lib64/libnode.so.93]
+13: 0x7f8398a25560  [/lib64/libc.so.6]
+14: 0x7f8398a2560c __libc_start_main [/lib64/libc.so.6]
+15: 0x55da05b940f5 _start [/usr/bin/node]

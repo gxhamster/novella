@@ -41,7 +41,11 @@ async function uploadDueData(db) {
   const batch = firestore.writeBatch(db);
   dues.map((value, index) => {
     const dueRef = firestore.doc(db, "dues", index.toString());
-    batch.set(dueRef, value);
+    const daysInMil = value.days * 24 * 60 * 60 * 1000;
+    const offset = new Date() - daysInMil;
+    const date = new Date(offset);
+    value.issuedDate = date;
+    const due = (value.issuedDate = batch.set(dueRef, value));
   });
   await batch.commit();
 }

@@ -69,6 +69,11 @@ function emitClick() {
   animation-name: width-animation;
 }
 
+.animate-w {
+  animation-duration: 0.4s;
+  animation-name: width-animation;
+}
+
 @keyframes width-animation {
   from {
     width: 10%;
