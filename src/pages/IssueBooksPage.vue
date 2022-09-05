@@ -203,7 +203,7 @@ async function addIssuedBookToFirebase(formData) {
     }
   });
   const db = getFirestore();
-  const key = `${dueBookObj.index}-${dueBookObj.issue_date}`.trim();
+  const key = `${dueBookObj.index}-${dueBookObj.book_id}`.trim();
   const due_ref = doc(db, "dues", key);
   await setDoc(due_ref, dueBookObj);
 }
