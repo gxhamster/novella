@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { ref, provide, defineProps } from "vue";
+import { ref, provide, defineProps, defineEmits } from "vue";
 
 const props = defineProps({
   formData: {
@@ -15,15 +15,29 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["firebaseSend"]);
+
 const formElem = ref(null);
+const allFieldsValid = ref(true);
 
 function submitForm() {
-  // const formData = new FormData(formElem.value);
-  // for (var pair of formData.entries()) {
-  //   console.log(pair[0] + ": " + pair[1]);
-  // }
   for (const data of props.formData) {
     if (data.required) data.elem.checkEmpty();
+  }
+  let errorCount = 0;
+  for (const data of props.formData) {
+    if (data.elem.showError) {
+      errorCount++;
+    }
+  }
+  if (errorCount !== 0) {
+    allFieldsValid.value = false;
+  } else {
+    allFieldsValid.value = true;
+  }
+
+  if (allFieldsValid.value) {
+    emit("firebaseSend", props.formData);
   }
 }
 

@@ -115,9 +115,11 @@ function checkIfValid(value) {
     const { result, message } = props.validate(value);
     if (!result) {
       validationError.value = true;
+      showError.value = false;
       errorMessage.value = message;
     } else {
       validationError.value = false;
+      showError.value = false;
     }
   }
 }
@@ -151,6 +153,8 @@ function hideError() {
 defineExpose({
   checkEmpty,
   hideError,
+  showError,
+  validationError,
 });
 </script>
 

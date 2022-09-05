@@ -3,6 +3,7 @@
     <FormControl
       class="grid grid-cols-2 content-between flex-grow gap-x-14"
       :formData="[...student_fields]"
+      @firebaseSend="sendToFirebase"
     >
       <div
         v-for="(field, index) in student_fields"
@@ -26,6 +27,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 import InputText from "@/components/InputText";
 import PageContainer from "@/components/PageContainer";
 import { PageLayoutData } from "@/utils/helper";
@@ -35,6 +37,7 @@ import SubmitButtonsGroup from "../components/SubmitButtonsGroup.vue";
 
 const student_fields = ref([
   new PageLayoutData("Student Name", {
+    firebase_field: "name",
     validator: (text) =>
       validate(text).between({
         inclusive: true,
@@ -51,6 +54,7 @@ const student_fields = ref([
         max: 20,
         message: "Island should be between 5 and 20",
       }),
+    firebase_field: "island",
     required: false,
   }),
   new PageLayoutData("Student Address", {
@@ -61,21 +65,37 @@ const student_fields = ref([
         max: 20,
         message: "Address should be between 1 and 20",
       }),
+    firebase_field: "address",
     required: false,
   }),
   new PageLayoutData("Student Phone", {
+    firebase_field: "number",
     validator: (text) =>
       validate(text).isPhone({
         message: "Phone should be a valid number",
       }),
     phone: true,
   }),
-  new PageLayoutData("Student Grade"),
+  new PageLayoutData("Student Grade", {
+    firebase_field: "grade",
+  }),
   new PageLayoutData("Student Index", {
+    firebase_field: "index",
     validator: (text) =>
       validate(text).isNumeric({
         message: "Index should be a number",
       }),
   }),
 ]);
+
+function sendToFirebase(formData) {
+  // Send to firebase
+  console.log("Sending to firebase -", formData);
+  const db = getFirestore();
+  const temp = formData.map((field) => [field.firebase_field, field.text]);
+  const firebaseDocObj = Object.fromEntries(temp);
+  console.log(firebaseDocObj);
+  const studentDocRef = doc(db, "students", firebaseDocObj.index);
+  setDoc(studentDocRef, firebaseDocObj);
+}
 </script>

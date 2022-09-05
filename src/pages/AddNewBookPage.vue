@@ -3,6 +3,7 @@
     <FormControl
       class="grid grid-cols-2 flex-grow gap-x-14 content-between"
       :formData="[...book_fields, ...small_fields_left, ...small_fields_right]"
+      @firebaseSend="sendToFirebase"
     >
       <div
         v-for="(field, index) in book_fields"
@@ -55,6 +56,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 import InputText from "@/components/InputText";
 import FormControl from "@/components/FormControl";
 import PageContainer from "@/components/PageContainer";
@@ -69,15 +71,17 @@ const bookstore = bookStore();
 
 const book_fields = ref([
   new PageLayoutData("Title", {
+    firebase_field: "title",
     validator: (text) =>
       validate(text).between({
         inclusive: true,
         min: 2,
-        max: 20,
-        message: "Title should be between 2 and 20",
+        max: 40,
+        message: "Title should be between 2 and 40",
       }),
   }),
   new PageLayoutData("Author", {
+    firebase_field: "author",
     searchable: true,
     validator: (text) =>
       validate(text).between({
@@ -88,10 +92,12 @@ const book_fields = ref([
       }),
   }),
   new PageLayoutData("Book ID", {
+    firebase_field: "bnumber",
     validator: (text) =>
       validate(text).isNumeric({ message: "Book ID should be a number" }),
   }),
   new PageLayoutData("Genre", {
+    firebase_field: "subject",
     searchable: true,
     validator: (text) =>
       validate(text).between({
@@ -103,12 +109,14 @@ const book_fields = ref([
     required: false,
   }),
   new PageLayoutData("DDC", {
+    firebase_field: "ddc",
     validator: (text) =>
       validate(text).isAlpha({
         message: "DDC should contain a-z 0-9 or .",
       }),
   }),
   new PageLayoutData("Publisher", {
+    firebase_field: "publisher",
     validator: (text) =>
       validate(text).between({
         inclusive: true,
@@ -120,10 +128,12 @@ const book_fields = ref([
 ]);
 const small_fields_left = ref([
   new PageLayoutData("Edition", {
+    firebase_field: "edition",
     validator: (text) => validate(text).isNumeric(),
     required: false,
   }),
   new PageLayoutData("Pages", {
+    firebase_field: "pages",
     validator: (text) => validate(text).isNumeric(),
     required: false,
   }),
@@ -131,9 +141,11 @@ const small_fields_left = ref([
 
 const small_fields_right = ref([
   new PageLayoutData("Language", {
+    firebase_field: "language",
     required: false,
   }),
   new PageLayoutData("Year", {
+    firebase_field: "year",
     validator: (text) => validate(text).isNumeric(),
     required: false,
   }),
@@ -205,4 +217,18 @@ bookstore.$onAction(({ name, after }) => {
 onMounted(() => {
   setStoreData();
 });
+
+function sendToFirebase(formData) {
+  // Send to firebase
+  console.log("Sending to firebase -", formData);
+  const db = getFirestore();
+  const temp = formData.map((field) => {
+    if (field.firebase_field != undefined)
+      return [field.firebase_field, field.text];
+  });
+  const firebaseDocObj = Object.fromEntries(temp);
+  console.log(firebaseDocObj);
+  const studentDocRef = doc(db, "books", firebaseDocObj.bnumber);
+  setDoc(studentDocRef, firebaseDocObj);
+}
 </script>

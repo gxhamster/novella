@@ -52,6 +52,6 @@ async function uploadDueData(db) {
 
 uploadBookData(db);
 uploadStudentData(db);
-uploadDueData(db);
+// uploadDueData(db);
 
 console.log("-- done --");

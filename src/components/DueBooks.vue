@@ -64,7 +64,7 @@ const dates = computed(() => {
   const d = [];
 
   for (const due of duestore.dues) {
-    const days = convertSecondsToDays(due.issuedDate.seconds);
+    const days = convertSecondsToDays(due.due_date.seconds);
     if (!result.get(days)) {
       result.set(days, []);
       d.push(days);
@@ -77,12 +77,13 @@ const dates = computed(() => {
 
 const due_groups = computed(() => {
   const result = new Map();
-
   for (const due of duestore.dues) {
-    if (!result.get(due.days)) {
-      result.set(due.days, []);
+    const days = convertSecondsToDays(due.due_date.seconds);
+    due.days = days;
+    if (!result.get(days)) {
+      result.set(days, []);
     }
-    result.set(due.days, [...result.get(due.days), due]);
+    result.set(days, [...result.get(days), due]);
   }
 
   return result;

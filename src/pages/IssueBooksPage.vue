@@ -1,7 +1,8 @@
 <template>
   <PageContainer title="Issue books to students">
     <FormControl
-      :formData="[...student_fields, ...book_fields]"
+      @firebaseSend="addIssuedBookToFirebase"
+      :formData="[...student_fields, ...book_fields, ...date_fields]"
       class="flex flex-col justify-between h-full"
     >
       <div class="flex gap-x-14">
@@ -72,10 +73,12 @@
         <DateInput
           v-model="date_fields[0].date"
           :title="date_fields[0].title"
+          :ref="(el) => (date_fields[0].elem = el)"
         />
         <DateInput
           v-model="date_fields[1].date"
           :title="date_fields[1].title"
+          :ref="(el) => (date_fields[1].elem = el)"
         />
       </div>
       <SubmitButtonsGroup />
@@ -100,14 +103,18 @@ import {
   fiveDaysAfterDate,
 } from "@/utils/helper";
 
+import { getFirestore, setDoc, doc } from "firebase/firestore";
+
 const userstore = userStore();
 const bookstore = bookStore();
 
 const date_fields = ref([
   new PageLayoutData("Issue Date", {
+    firebase_field: "issue_date",
     date: new Date(),
   }),
   new PageLayoutData("Due Date", {
+    firebase_field: "due_date",
     date: fiveDaysAfterDate(new Date()),
   }),
 ]);
@@ -115,24 +122,30 @@ const date_fields = ref([
 const student_fields = ref([
   new PageLayoutData("Student Index", {
     full: true,
+    firebase_field: "index",
     searchable: true,
   }),
   new PageLayoutData("Student Name", {
     required: false,
+    firebase_field: "name",
     full: true,
   }),
   new PageLayoutData("Student Grade", {
+    firebase_field: "grade",
     required: false,
   }),
 ]);
 const book_fields = ref([
   new PageLayoutData("Book ID", {
+    firebase_field: "book_id",
     searchable: true,
   }),
   new PageLayoutData("Book Name", {
+    firebase_field: "book_name",
     required: false,
   }),
   new PageLayoutData("Author", {
+    firebase_field: "author",
     required: false,
   }),
 ]);
@@ -178,6 +191,23 @@ function bookStoreGetData() {
 
   return [...book_results];
 }
+
+async function addIssuedBookToFirebase(formData) {
+  const dueBookObj = {};
+  formData.map((field) => {
+    console.log(field.date);
+    if (field.date === null) {
+      dueBookObj[field.firebase_field] = field.text;
+    } else {
+      dueBookObj[field.firebase_field] = field.date;
+    }
+  });
+  const db = getFirestore();
+  const key = `${dueBookObj.index}-${dueBookObj.issue_date}`.trim();
+  const due_ref = doc(db, "dues", key);
+  await setDoc(due_ref, dueBookObj);
+}
+
 bookstore.$onAction(({ name, after }) => {
   if (name === "setDataFetched") {
     after(() => {

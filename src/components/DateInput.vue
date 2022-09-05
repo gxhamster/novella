@@ -26,16 +26,32 @@
 </template>
 
 <script setup>
-import { watch, defineProps, ref, defineEmits, onUpdated } from "vue";
+import {
+  watch,
+  defineProps,
+  ref,
+  defineEmits,
+  onUpdated,
+  defineExpose,
+} from "vue";
 import CalendarMonthOutline from "vue-material-design-icons/CalendarMonthOutline.vue";
 import { DatePicker } from "v-calendar";
 
 const date = ref(props.modelValue);
+const showError = ref(false);
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
   title: String,
   modelValue: Date,
 });
+
+function checkEmpty() {
+  if (date.value !== "" || date.value !== undefined || date.value !== null) {
+    showError.value = false;
+  } else {
+    showError.value = true;
+  }
+}
 
 onUpdated(() => {
   date.value = props.modelValue;
@@ -43,6 +59,11 @@ onUpdated(() => {
 
 watch(date, (n) => {
   emit("update:modelValue", n);
+});
+
+defineExpose({
+  checkEmpty,
+  showError,
 });
 </script>
 

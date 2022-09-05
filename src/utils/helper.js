@@ -36,6 +36,7 @@ export class PageLayoutData {
     this.searchable = options.searchable;
     this.validator = options.validator;
     this.text = options.text;
+    this.firebase_field = options.firebase_field;
     this.search_data = [];
     this.date = options.date;
     this.phone = options.phone;
