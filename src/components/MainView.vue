@@ -83,7 +83,7 @@ const userstore = userStore();
 const hide_counter_routes = [
   { route: "/issue_book", on_max: false },
   { route: "/", on_max: false },
-  { route: "/add_book", on_max: true },
+  { route: "/add_book", on_max: false },
   { route: "/settings", on_max: true },
   { route: "/directory", on_max: true },
 ];

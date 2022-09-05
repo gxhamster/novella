@@ -78,6 +78,8 @@ const student_fields = ref([
   }),
   new PageLayoutData("Student Grade", {
     firebase_field: "grade",
+    validator: (text) =>
+      validate(text).isNumeric({ message: "Grade should be a number" }),
   }),
   new PageLayoutData("Student Index", {
     firebase_field: "index",

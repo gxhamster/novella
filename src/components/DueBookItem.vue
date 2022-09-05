@@ -13,7 +13,12 @@
       </div>
     </div>
     <div
-      :class="days < 6 && days >= 0 ? days_colors[days] : 'red'"
+      :class="{
+        'bg-secondary border-2 border-gray-400': days <= 0,
+        green: days >= 1 && days <= 3,
+        yellow: days >= 4 && days <= 6,
+        red: days >= 7,
+      }"
       class="flex tracking-tighter flex-col text-center w-14 h-14 aspect-square rounded-lg flex-shrink-0"
     >
       <span class="font-bold text-1.5xl">{{ days }}</span>
@@ -23,16 +28,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
-
-const days_colors = ref({
-  0: "bg-secondary border-2 border-gray-400",
-  1: "green",
-  2: "yellow",
-  3: "yellow",
-  4: "red",
-  5: "red",
-});
+import { defineProps } from "vue";
 
 defineProps({
   name: String,

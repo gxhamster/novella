@@ -75,6 +75,7 @@ const dates = computed(() => {
   return d;
 });
 
+// Grouped by days
 const due_groups = computed(() => {
   const result = new Map();
   for (const due of duestore.dues) {

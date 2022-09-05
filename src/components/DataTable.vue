@@ -18,7 +18,6 @@
               class="transition-all duration-150 text-gray-600"
               :class="{
                 'cursor-pointer': shouldHeadingFilter(heading),
-
                 'hover:text-gray-900': shouldHeadingFilter(heading),
               }"
               >{{ heading }}</label
