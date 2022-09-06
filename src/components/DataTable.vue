@@ -82,6 +82,9 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  dataPropsTypes: {
+    type: Array,
+  },
   data: {
     type: Array,
     required: true,

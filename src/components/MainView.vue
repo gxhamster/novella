@@ -84,8 +84,10 @@ const hide_counter_routes = [
   { route: "/issue_book", on_max: false },
   { route: "/", on_max: false },
   { route: "/add_book", on_max: false },
+  { route: "/add_student", on_max: false },
   { route: "/settings", on_max: true },
   { route: "/directory", on_max: true },
+  { route: "/recieve_book", on_max: false },
 ];
 const bookCounter = ref([true, false, false, false]);
 const maximized = ref(false);

@@ -1,5 +1,7 @@
 <template>
-  <PageContainer title="History"> </PageContainer>
+  <PageContainer title="History">
+    <DataTable />
+  </PageContainer>
 </template>
 
 <script setup>

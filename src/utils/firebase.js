@@ -23,7 +23,6 @@ export function firebaseSetupSync(
       if (data.length != 0) {
         pinia_store[pinia_store_set_func_name](data);
         pinia_store["setDataFetched"](true);
-        console.log(collection_path);
       } else {
         pinia_store["setDataFetched"](false);
       }

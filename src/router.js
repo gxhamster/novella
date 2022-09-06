@@ -7,6 +7,7 @@ import DirectoryPage from "./pages/DirectoryPage.vue";
 import SettingsPage from "./pages/SettingsPage.vue";
 import AboutPage from "./pages/AboutPage.vue";
 import FeedbackPage from "./pages/FeedbackPage.vue";
+import HistoryPage from "./pages/HistoryPage.vue";
 
 const routes = [
   {
@@ -38,6 +39,11 @@ const routes = [
     path: "/directory",
     name: "Directory",
     component: DirectoryPage,
+  },
+  {
+    path: "/history",
+    name: "History",
+    component: HistoryPage,
   },
   {
     path: "/settings",

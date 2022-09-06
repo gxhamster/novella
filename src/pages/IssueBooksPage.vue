@@ -103,7 +103,15 @@ import {
   fiveDaysAfterDate,
 } from "@/utils/helper";
 
-import { getFirestore, setDoc, doc } from "firebase/firestore";
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  query,
+  where,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 
 const userstore = userStore();
 const bookstore = bookStore();
@@ -195,7 +203,6 @@ function bookStoreGetData() {
 async function addIssuedBookToFirebase(formData) {
   const dueBookObj = {};
   formData.map((field) => {
-    console.log(field.date);
     if (field.date === null) {
       dueBookObj[field.firebase_field] = field.text;
     } else {
@@ -203,9 +210,19 @@ async function addIssuedBookToFirebase(formData) {
     }
   });
   const db = getFirestore();
-  const key = `${dueBookObj.index}-${dueBookObj.book_id}`.trim();
-  const due_ref = doc(db, "dues", key);
-  await setDoc(due_ref, dueBookObj);
+
+  // Check if book has been issued before
+  const dues_ref = collection(db, "dues");
+  const q = query(dues_ref, where("book_id", "==", dueBookObj.book_id));
+  const querySnapshot = await getDocs(q);
+  if (querySnapshot.size === 0) {
+    const key = `${dueBookObj.index}-${dueBookObj.book_id}`.trim();
+    const due_ref = doc(db, "dues", key);
+    await setDoc(due_ref, dueBookObj);
+  } else {
+    // TODO: Put some popup from app to show error
+    console.error("Cannot issue the same book !");
+  }
 }
 
 bookstore.$onAction(({ name, after }) => {

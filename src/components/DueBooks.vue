@@ -71,7 +71,6 @@ const dates = computed(() => {
     }
   }
   d.sort((a, b) => b - a);
-  console.log(d);
   return d;
 });
 

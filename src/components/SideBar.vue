@@ -49,6 +49,7 @@ const icon_names = [
   AddNewBookIcon,
   AddNewStudentIcon,
   DashboardIcon,
+  IssueBookIcon,
 ];
 const button_names = [
   "Issue book",
@@ -56,14 +57,17 @@ const button_names = [
   "Add new book",
   "Add new student",
   "Directory",
+  "History",
 ];
 
+// All routes realated to sidebar should be mentioned here
 const sidebar_routes = [
   "/issue_book",
   "/recieve_book",
   "/add_book",
   "/add_student",
   "/directory",
+  "/history",
 ];
 
 const route_names = ref(

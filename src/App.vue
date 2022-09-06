@@ -12,7 +12,6 @@
 /* eslint-disable */
 import { onMounted, onUnmounted } from "vue";
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import {
   getFirestore,
   connectFirestoreEmulator,
@@ -35,7 +34,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 const db = getFirestore();
 connectFirestoreEmulator(db, "localhost", 8081);
