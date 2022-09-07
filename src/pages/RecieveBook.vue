@@ -127,15 +127,15 @@ async function removeReceivedFromDues(bookObj) {
 }
 
 function autocompleteUserData(dropdownData) {
-  student_fields.value[0].text = dropdownData.title;
-  student_fields.value[1].text = dropdownData.optional.name;
+  student_fields.value[0].text = dropdownData.optional.index;
+  student_fields.value[1].text = dropdownData.title;
 }
 
 function userStoreGetData() {
   const result = userstore.users.map(
     (v) =>
-      new SearchItemClass(v.index, "user", {
-        name: prettyCapitalize(v.name),
+      new SearchItemClass(prettyCapitalize(v.name), "user", {
+        index: v.index,
         grade: v.grade,
       })
   );
