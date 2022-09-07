@@ -20,7 +20,7 @@
             :active="bookCounter[0]"
             title="Number of Due Books"
             @clicked="bookHandler([true, false, false, false])"
-            :count="duestore.dues.length"
+            :count="duebooksCount"
           />
           <BookCounter
             :icon="AccountGroupIcon"
@@ -34,7 +34,7 @@
             :active="bookCounter[2]"
             title="Number of Issued Books"
             @clicked="bookHandler([false, false, true, false])"
-            :count="duestore.dues.length"
+            :count="issuedBooksCount"
           />
           <BookCounter
             :icon="BookIcon"
@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 
 import MainViewButtonGroup from "./MainViewButtonGroup";
@@ -93,6 +93,13 @@ const bookCounter = ref([true, false, false, false]);
 const maximized = ref(false);
 const current_route = ref("");
 const hide_counter = ref(false);
+
+const duebooksCount = computed(
+  () => duestore.dues.filter((v) => v.days > 0).length
+);
+const issuedBooksCount = computed(
+  () => duestore.dues.filter((v) => v.days < 0).length
+);
 
 const bookHandler = (arr) => {
   bookCounter.value = arr.map((v) => v);
