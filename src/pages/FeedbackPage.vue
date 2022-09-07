@@ -34,8 +34,8 @@ const fields = ref(
       validate(text).between({
         inclusive: true,
         min: 3,
-        max: 20,
-        message: "Subject must be between 3 and 20",
+        max: 50,
+        message: "Subject must be between 3 and 50",
       }),
   })
 );
