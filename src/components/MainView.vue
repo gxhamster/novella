@@ -34,7 +34,7 @@
             :active="bookCounter[2]"
             title="Number of Issued Books"
             @clicked="bookHandler([false, false, true, false])"
-            :count="issuedBooksCount"
+            :count="duestore.dues.length"
           />
           <BookCounter
             :icon="BookIcon"
@@ -96,9 +96,6 @@ const hide_counter = ref(false);
 
 const duebooksCount = computed(
   () => duestore.dues.filter((v) => v.days > 0).length
-);
-const issuedBooksCount = computed(
-  () => duestore.dues.filter((v) => v.days < 0).length
 );
 
 const bookHandler = (arr) => {
