@@ -46,7 +46,7 @@
           'genre',
           'ddc',
           'language',
-          'issue_date',
+          'issue_date_formatted',
         ]"
       />
       <SubmitButtonsGroup />
@@ -78,7 +78,7 @@ const booksIssuedToUser = computed(() => {
       const d = date.getUTCDate();
       const m = date.getUTCMonth() + 1; // getUTCMonth() is zero based
       const y = date.getUTCFullYear();
-      v.issue_date = `${d}/${m}/${y}`;
+      v.issue_date_formatted = `${d}/${m}/${y}`;
       return v;
     });
 
