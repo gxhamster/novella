@@ -20,7 +20,7 @@ import {
 
 import SideBar from "./components/SideBar.vue";
 import MainView from "./components/MainView";
-import { userStore, bookStore } from "@/stores/store";
+import { userStore, bookStore, receiveStore } from "@/stores/store";
 import { firebaseSetupSync } from "@/utils/firebase";
 
 const firebaseConfig = {
@@ -38,20 +38,22 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 connectFirestoreEmulator(db, "localhost", 8081);
 
-enableIndexedDbPersistence(db).catch((err) => {
-  if (err.code == "failed-precondition") {
-    console.error("Cannot enable offline mode");
-  } else if (err.code == "unimplemented") {
-    console.error("Browser does not support offline mode");
-  }
-});
+// enableIndexedDbPersistence(db).catch((err) => {
+//   if (err.code == "failed-precondition") {
+//     console.error("Cannot enable offline mode");
+//   } else if (err.code == "unimplemented") {
+//     console.error("Browser does not support offline mode");
+//   }
+// });
 
 const userstore = userStore();
 const bookstore = bookStore();
+const receivestore = receiveStore();
 
 onMounted(async () => {
   firebaseSetupSync(db, "books", bookstore, "setBooks");
   firebaseSetupSync(db, "students", userstore, "setUsers");
+  firebaseSetupSync(db, "received", receivestore, "setReceived");
 });
 
 onUnmounted(() => {

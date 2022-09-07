@@ -17,6 +17,23 @@ export const dueStore = defineStore("duebooks", {
   },
 });
 
+export const receiveStore = defineStore("received", {
+  state: () => {
+    return {
+      received: new Array(),
+      data_fetched: false,
+    };
+  },
+  actions: {
+    setReceived(newBooks) {
+      this.recieved = newBooks;
+    },
+    setDataFetched(v) {
+      this.data_fetched = v;
+    },
+  },
+});
+
 export const userStore = defineStore("users", {
   state: () => {
     return {

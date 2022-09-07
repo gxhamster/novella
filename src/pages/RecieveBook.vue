@@ -1,6 +1,10 @@
 <template>
   <PageContainer title="Receive book">
-    <FormControl class="flex flex-col justify-between h-full">
+    <FormControl
+      @firebase-send="addToReceivedBooks"
+      class="flex flex-col justify-between h-full"
+      :form-data="[...student_fields]"
+    >
       <span class="desktop:text-2xl laptop:text-1.5xl text-gray-800"
         >Student Details</span
       >
@@ -17,6 +21,7 @@
             @dropdown-item-selected="autocompleteUserData"
             title="Student Index"
             class="w-full"
+            :ref="(el) => (student_fields[index].elem = el)"
           />
           <InputText
             v-else
@@ -24,11 +29,13 @@
             :title="field.title"
             :can-edit="false"
             class="w-full"
+            :ref="(el) => (student_fields[index].elem = el)"
           />
         </div>
       </div>
       <DataTable
         class="my-4"
+        @item-selected="setSelectedItem"
         :headings="[
           'Title',
           'Author',
@@ -49,7 +56,7 @@
           'issue_date_formatted',
         ]"
       />
-      <SubmitButtonsGroup />
+      <SubmitButtonsGroup :names="['Recieve', 'Cancel']" />
     </FormControl>
   </PageContainer>
 </template>
@@ -65,15 +72,17 @@ import DataTable from "../components/DataTable.vue";
 import { PageLayoutData, prettyCapitalize } from "../utils/helper";
 import { userStore, dueStore } from "@/stores/store";
 import { SearchItemClass } from "../utils/search";
+import { receiveStore } from "../stores/store";
+import { getFirestore, doc, setDoc, deleteDoc } from "@firebase/firestore";
 
 const userstore = userStore();
 const duestore = dueStore();
+const receivestore = receiveStore();
 const booksIssuedToUser = computed(() => {
   const index = student_fields.value[0].text;
   const filteredBooks = duestore.dues
     .filter((v) => v.index == index)
     .map((v) => {
-      console.log(new Date(v.issue_date.seconds * 1000));
       const date = new Date(v.issue_date.seconds * 1000);
       const d = date.getUTCDate();
       const m = date.getUTCMonth() + 1; // getUTCMonth() is zero based
@@ -85,6 +94,7 @@ const booksIssuedToUser = computed(() => {
   return filteredBooks;
 });
 
+const bookToReceive = ref(null);
 const student_fields = ref([
   new PageLayoutData("Student Index", {
     firebase_field: "index",
@@ -95,6 +105,26 @@ const student_fields = ref([
     firebase_field: "name",
   }),
 ]);
+
+function setSelectedItem(item) {
+  bookToReceive.value = item;
+}
+
+async function addToReceivedBooks() {
+  console.log(bookToReceive.value, receivestore.recieved);
+  const db = getFirestore();
+  const receiveObj = bookToReceive.value;
+  receiveObj.receive_date = new Date();
+  const receiveRef = doc(db, "received", receiveObj.book_id);
+  await setDoc(receiveRef, receiveObj);
+  removeReceivedFromDues(receiveObj);
+}
+
+async function removeReceivedFromDues(bookObj) {
+  const db = getFirestore();
+  const dueRef = doc(db, "dues", `${bookObj.index}-${bookObj.book_id}`);
+  deleteDoc(dueRef, "dues");
+}
 
 function autocompleteUserData(dropdownData) {
   student_fields.value[0].text = dropdownData.title;

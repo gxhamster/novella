@@ -1,71 +1,93 @@
 <template>
   <div class="h-full">
-    <table>
-      <thead>
-        <tr>
-          <th
-            v-for="heading in headings"
-            :key="heading"
-            class="laptop:text-xs desktop:text-sm flex items-center justify-center gap-1"
-          >
-            <label
-              :for="
-                shouldHeadingFilter(heading) &&
-                filterBtnState.get(heading).hidden
-                  ? `unhide-btn-${heading}`
-                  : `toggle-switch-${heading}`
-              "
-              class="transition-all duration-150 text-gray-600"
-              :class="{
-                'cursor-pointer': shouldHeadingFilter(heading),
-                'hover:text-gray-900': shouldHeadingFilter(heading),
-              }"
-              >{{ heading }}</label
+    <ArrowNavigation
+      @arrow-up-pressed="changeSelectedIndex(true)"
+      @arrow-down-pressed="changeSelectedIndex"
+    >
+      <table>
+        <thead>
+          <tr>
+            <th
+              v-for="heading in headings"
+              :key="heading"
+              class="laptop:text-xs desktop:text-sm flex items-center justify-center gap-1"
             >
-            <button @click="unhideBtn(heading)" :id="`unhide-btn-${heading}`" />
-            <button
-              :id="`toggle-switch-${heading}`"
-              v-if="
-                shouldHeadingFilter(heading) &&
-                !filterBtnState.get(heading).hidden
-              "
-              @click="toggleSwitch(heading)"
-            >
-              <ChevronDownIcon
-                :size="15"
-                v-show="filterBtnState.get(heading).state"
+              <label
+                :for="
+                  shouldHeadingFilter(heading) &&
+                  filterBtnState.get(heading).hidden
+                    ? `unhide-btn-${heading}`
+                    : `toggle-switch-${heading}`
+                "
+                class="transition-all duration-150 text-gray-600"
+                :class="{
+                  'cursor-pointer': shouldHeadingFilter(heading),
+                  'hover:text-gray-900': shouldHeadingFilter(heading),
+                }"
+                >{{ heading }}</label
+              >
+              <button
+                @click="unhideBtn(heading)"
+                :id="`unhide-btn-${heading}`"
               />
-              <ChevronUpIcon
-                :size="15"
-                v-show="!filterBtnState.get(heading).state"
-              />
-            </button>
-          </th>
-        </tr>
-      </thead>
-      <tbody class="overflow-y-scroll thin-scrollbar">
-        <tr
-          v-for="(dataitem, index) in filteredData"
-          :key="dataitem"
-          :class="{ 'highlight-clr': index % 2 == 0 }"
-        >
-          <td
-            v-for="field in dataProps"
-            :key="field"
-            class="laptop:text-xs desktop:text-sm text-gray-700"
+              <button
+                :id="`toggle-switch-${heading}`"
+                v-if="
+                  shouldHeadingFilter(heading) &&
+                  !filterBtnState.get(heading).hidden
+                "
+                @click="toggleSwitch(heading)"
+              >
+                <ChevronDownIcon
+                  :size="15"
+                  v-show="filterBtnState.get(heading).state"
+                />
+                <ChevronUpIcon
+                  :size="15"
+                  v-show="!filterBtnState.get(heading).state"
+                />
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="overflow-y-scroll thin-scrollbar">
+          <tr
+            v-for="(dataitem, index) in filteredData"
+            :key="dataitem"
+            @click="rowClicked(dataitem, index)"
+            class="cursor-pointer"
+            :class="{
+              'selected-clr': index === selectedRowIndex,
+              'highlight-clr': index !== selectedRowIndex && index % 2 == 0,
+            }"
           >
-            {{ dataitem[field] || "N/A" }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <td
+              v-for="field in dataProps"
+              :key="field"
+              class="laptop:text-xs desktop:text-sm text-gray-700"
+            >
+              {{ dataitem[field] || "N/A" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ArrowNavigation>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, watch, watchEffect, onMounted, toRaw } from "vue";
+import {
+  ref,
+  defineProps,
+  watch,
+  watchEffect,
+  onMounted,
+  toRaw,
+  defineEmits,
+} from "vue";
 import ChevronDownIcon from "vue-material-design-icons/ChevronDown.vue";
 import ChevronUpIcon from "vue-material-design-icons/ChevronUp.vue";
+import ArrowNavigation from "./ArrowNavigation.vue";
 
 const props = defineProps({
   headings: {
@@ -91,6 +113,23 @@ const props = defineProps({
   },
 });
 
+const emits = defineEmits(["itemSelected"]);
+const selectedRowIndex = ref(0);
+
+function rowClicked(item, index) {
+  console.log(item, index);
+  emits("itemSelected", item);
+  selectedRowIndex.value = index;
+}
+
+function changeSelectedIndex(decrement = false) {
+  if (decrement && selectedRowIndex.value > 0) {
+    selectedRowIndex.value--;
+  } else if (!decrement && selectedRowIndex.value < props.data.length - 1) {
+    selectedRowIndex.value++;
+  }
+}
+
 // true is acending, false is descending
 const filterBtnState = ref(new Map());
 const filteredData = ref([]);
@@ -99,6 +138,10 @@ watch(
   () => props.data,
   () => {
     filteredData.value = props.data;
+    // If no row selected send first row data back as it is selected by default
+    if (filteredData.value.length > 0) {
+      emits("itemSelected", filteredData.value[0]);
+    }
   }
 );
 
@@ -197,13 +240,16 @@ function updateBtnState() {
 }
 
 watchEffect(updateBtnState);
-onMounted(() => (filteredData.value = props.data));
+onMounted(() => {
+  filteredData.value = props.data;
+});
 </script>
 
 <style scoped>
 table {
   --table-background-clr: #dbdddd;
   --table-highlight-clr: #d0d1d1;
+  --table-selected-clr: #b0b0b0e6;
   --table-border-rad: 30px;
   --table-column-width: 250px;
   table-layout: fixed;
@@ -248,5 +294,10 @@ tbody tr {
 
 .highlight-clr {
   background-color: var(--table-highlight-clr);
+}
+.selected-clr {
+  background-color: var(--table-selected-clr);
+  transition: all 0.1s ease-in;
+  font-weight: 500;
 }
 </style>
