@@ -20,7 +20,7 @@ export interface SearchItemType {
 export function SearchItem(
   title: string,
   type: string,
-  optional: any = {}
+  optional: Record<string, string>
 ): SearchItemType {
   return {
     title,
@@ -48,7 +48,7 @@ export function filterPromise(searchText: string, data: SearchItemType[]) {
   });
 }
 
-// Groups a list of SearchItemClass objects with a key
+// Groups a list of SearchItemClass objects
 export function groupByTitle(data: SearchItemType[]) {
   const grouped_result = new Map();
   for (const obj of data) {

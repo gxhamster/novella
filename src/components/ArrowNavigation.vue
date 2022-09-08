@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { defineEmits, ref } from "vue";
 
 const emits = defineEmits([
@@ -20,7 +20,7 @@ const emits = defineEmits([
 
 const isAreaFocused = ref(false);
 
-function setFocus(focus = true) {
+function setFocus(focus: boolean = true) {
   if (focus) {
     isAreaFocused.value = true;
   } else {

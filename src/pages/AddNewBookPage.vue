@@ -42,8 +42,7 @@
         <div v-for="(field, index) in small_fields_right" :key="field.title">
           <InputText
             v-model="small_fields_right[index].text"
-            :searchable="field.Priority 1
-Priority 2searchable"
+            :searchable="field.searchable"
             :title="field.title"
             :validate="small_fields_right[index].validator"
             :ref="(el) => (small_fields_right[index].elem = el)"
@@ -65,7 +64,7 @@ import SearchInput from "@/components/SearchInput";
 import SubmitButtonsGroup from "../components/SubmitButtonsGroup.vue";
 import { bookStore } from "@/stores/store";
 import { prettyCapitalize, PageLayoutData } from "@/utils/helper";
-import { groupByTitle, SearchItemClass } from "@/utils/search";
+import { groupByTitle, SearchItem } from "@/utils/search";
 import { validate } from "@/utils/validation";
 
 const bookstore = bookStore();
@@ -157,13 +156,12 @@ const small_fields_right = ref([
 function storeGetAuthorData() {
   // Remove duplicate titles
   const book_results = [
-    ...bookstore.books.map(
-      (v) =>
-        new SearchItemClass(
-          prettyCapitalize(v.author === "" ? "N/A" : v.author),
-          "user",
-          {}
-        )
+    ...bookstore.books.map((v) =>
+      SearchItem(
+        prettyCapitalize(v.author === "" ? "N/A" : v.author),
+        "user",
+        {}
+      )
     ),
   ];
 
@@ -181,13 +179,12 @@ function storeGetAuthorData() {
 function storeGetGenreData() {
   // Remove duplicate titles
   const book_results = [
-    ...bookstore.books.map(
-      (v) =>
-        new SearchItemClass(
-          prettyCapitalize(v.subject === "" ? "N/A" : v.subject),
-          "book",
-          {}
-        )
+    ...bookstore.books.map((v) =>
+      SearchItem(
+        prettyCapitalize(v.subject === "" ? "N/A" : v.subject),
+        "book",
+        {}
+      )
     ),
   ];
   // Group objects by author

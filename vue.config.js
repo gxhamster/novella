@@ -11,7 +11,7 @@ module.exports = {
           publisherName: "Tritech",
         },
       },
-      preload: "src/preload.js",
+      preload: "src/preload.ts",
     },
   },
   configureWebpack: {

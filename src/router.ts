@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import AddNewStudentPage from "./pages/AddNewStudentPage.vue";
 import IssueBooksPage from "./pages/IssueBooksPage.vue";
 import AddNewBookPage from "./pages/AddNewBookPage.vue";
@@ -9,7 +9,7 @@ import AboutPage from "./pages/AboutPage.vue";
 import FeedbackPage from "./pages/FeedbackPage.vue";
 import HistoryPage from "./pages/HistoryPage.vue";
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home Page",
