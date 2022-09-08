@@ -42,7 +42,8 @@
         <div v-for="(field, index) in small_fields_right" :key="field.title">
           <InputText
             v-model="small_fields_right[index].text"
-            :searchable="field.searchable"
+            :searchable="field.Priority 1
+Priority 2searchable"
             :title="field.title"
             :validate="small_fields_right[index].validator"
             :ref="(el) => (small_fields_right[index].elem = el)"
@@ -64,7 +65,7 @@ import SearchInput from "@/components/SearchInput";
 import SubmitButtonsGroup from "../components/SubmitButtonsGroup.vue";
 import { bookStore } from "@/stores/store";
 import { prettyCapitalize, PageLayoutData } from "@/utils/helper";
-import { groupByKey, SearchItemClass } from "@/utils/search";
+import { groupByTitle, SearchItemClass } from "@/utils/search";
 import { validate } from "@/utils/validation";
 
 const bookstore = bookStore();
@@ -167,7 +168,7 @@ function storeGetAuthorData() {
   ];
 
   // Group objects by author
-  const grouped_result = groupByKey("title", book_results, false);
+  const grouped_result = groupByTitle(book_results);
 
   const final_result = [];
   for (const arr of grouped_result.values()) {
@@ -190,7 +191,7 @@ function storeGetGenreData() {
     ),
   ];
   // Group objects by author
-  const grouped_result = groupByKey("title", book_results, false);
+  const grouped_result = groupByTitle(book_results);
   const final_result = [];
   for (const arr of grouped_result.values()) {
     final_result.push(arr[0]);

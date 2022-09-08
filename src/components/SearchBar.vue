@@ -25,7 +25,7 @@ import MagnifyIcon from "vue-material-design-icons/Magnify.vue";
 import { userStore, bookStore } from "@/stores/store";
 import SearchDropdown from "./SearchDropdown";
 import { prettyCapitalize, filteredTextInput } from "@/utils/helper";
-import { SearchItemClass, filterPromise, groupByKey } from "@/utils/search";
+import { SearchItemClass, filterPromise, groupByTitle } from "@/utils/search";
 
 const store = userStore();
 const bookstore = bookStore();
@@ -90,7 +90,7 @@ bookstore.$onAction(({ name, after }) => {
       ];
 
       // Group objects by title
-      const grouped_result = groupByKey("title", book_results, false);
+      const grouped_result = groupByTitle(book_results);
 
       const final_result = [];
       for (const arr of grouped_result.values()) {

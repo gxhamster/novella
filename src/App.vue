@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 /* eslint-disable */
 import { onMounted, onUnmounted } from "vue";
 import { initializeApp } from "firebase/app";
@@ -19,7 +19,7 @@ import {
 } from "firebase/firestore";
 
 import SideBar from "./components/SideBar.vue";
-import MainView from "./components/MainView";
+import MainView from "./components/MainView.vue";
 import { userStore, bookStore, receiveStore } from "@/stores/store";
 import { firebaseSetupSync } from "@/utils/firebase";
 

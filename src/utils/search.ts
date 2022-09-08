@@ -1,15 +1,36 @@
 import { unref } from "vue";
 
 export class SearchItemClass {
-  constructor(title, type, optional = {}) {
+  title: string;
+  type: string;
+  optional: any;
+  constructor(title: string, type: string, optional: any = {}) {
     this.title = title;
     this.type = type;
     this.optional = optional;
   }
 }
 
+export interface SearchItemType {
+  title: string;
+  type: string;
+  optional: Record<string, string>;
+}
+
+export function SearchItem(
+  title: string,
+  type: string,
+  optional: any = {}
+): SearchItemType {
+  return {
+    title,
+    type,
+    optional,
+  };
+}
+
 // This function expects data to have object of SearchItemClass
-export function filterPromise(searchText, data) {
+export function filterPromise(searchText: string, data: SearchItemType[]) {
   const text = unref(searchText);
   return Promise.resolve().then(() => {
     const re = new RegExp(`${text.toLowerCase()}`, "g");
@@ -22,18 +43,16 @@ export function filterPromise(searchText, data) {
       }
       return false;
     });
-    if (result === "null" || result === "undefined") return null;
+    if (result === []) return null;
     return result;
   });
 }
 
 // Groups a list of SearchItemClass objects with a key
-export function groupByKey(key, data, is_key_optional) {
+export function groupByTitle(data: SearchItemType[]) {
   const grouped_result = new Map();
   for (const obj of data) {
-    let title;
-    if (is_key_optional) title = obj.optional[key].toLowerCase().trim();
-    else title = obj[key].toLowerCase().trim();
+    const title = obj.title.toLowerCase().trim();
 
     if (!grouped_result.get(title)) {
       grouped_result.set(title, []);

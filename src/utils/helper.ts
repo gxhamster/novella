@@ -1,6 +1,6 @@
 import { ref } from "vue";
 
-export const prettyCapitalize = (str) => {
+export const prettyCapitalize = (str: string): string => {
   if (typeof str !== "string") {
     return str;
   }
@@ -10,12 +10,38 @@ export const prettyCapitalize = (str) => {
     .join(" ");
 };
 
-export function fiveDaysAfterDate(date) {
+export function fiveDaysAfterDate(date: Date): Date {
   return new Date(new Date(date).getTime() + 5 * 24 * 60 * 60 * 1000);
+}
+
+export interface LayoutOptions {
+  title: string;
+  full: string;
+  searchable: boolean;
+  validator: any;
+  text: string;
+  firebase_field: string;
+  search_data: any[];
+  date: Date;
+  phone: string | number;
+  required: boolean;
+  elem: Element;
 }
 
 // This class describes one input field in a page
 export class PageLayoutData {
+  title: string;
+  full: string;
+  searchable: boolean;
+  validator: any;
+  text: string;
+  firebase_field: string;
+  search_data: any[];
+  date: Date | null;
+  phone: string | number;
+  required: boolean;
+  elem: Element;
+
   // Default values for options
   #defaults = {
     full: true,
@@ -27,7 +53,7 @@ export class PageLayoutData {
     required: true,
     elem: ref(null),
   };
-  constructor(title, options) {
+  constructor(title: string, options: LayoutOptions) {
     const new_options = { ...this.#defaults, ...options };
 
     options = new_options;
@@ -53,7 +79,7 @@ export class PageLayoutData {
     return this;
   }
 
-  setSearchData(n_data) {
+  setSearchData(n_data: any[]) {
     if (this.searchable) this.search_data = n_data;
     return this;
   }
@@ -65,7 +91,7 @@ export class PageLayoutData {
 }
 
 // Filtered words list
-const filteredWords = {
+const filteredWords: any = {
   shit: "s**t",
   fuck: "f**k",
   motherfuck: "motherf**k",
@@ -91,7 +117,7 @@ const filteredWords = {
   bakataa: "ba**taa",
 };
 
-export const filteredTextInput = (inputString) => {
+export const filteredTextInput = (inputString: string): string => {
   const newString = inputString;
   const re = new RegExp(Object.keys(filteredWords).join("|"), "gi");
   return newString.replace(re, (val) => {

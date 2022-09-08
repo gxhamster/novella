@@ -1,17 +1,18 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, Firestore, onSnapshot } from "firebase/firestore";
+import { Store } from "pinia";
 
 // This receives data from firebase and sets it to the related pinia store
 export function firebaseSetupSync(
-  db,
-  collection_path,
-  pinia_store,
-  pinia_store_set_func_name
+  db: Firestore,
+  collection_path: string,
+  pinia_store: any,
+  pinia_store_set_func_name: string
 ) {
   const path = collection(db, collection_path);
   const unsubscribe = onSnapshot(path, (querySnapshot) => {
     function getDataFromFirebase() {
       return Promise.resolve().then(() => {
-        let data = [];
+        const data: any[] = [];
         querySnapshot.forEach((doc) => {
           data.push(doc.data());
         });

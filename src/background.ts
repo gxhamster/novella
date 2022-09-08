@@ -30,7 +30,8 @@ async function createWindow() {
     icon: path.join(__dirname, "../build/icons/icon.png"),
     webPreferences: {
       // devTools: isDevelopment,
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      nodeIntegration:
+        process.env.ELECTRON_NODE_INTEGRATION !== "" ? true : false,
       preload: path.join(__dirname, "preload.js"),
     },
   });
@@ -81,8 +82,8 @@ app.on("ready", async () => {
     // Install Vue Devtools
     try {
       await installExtension(VUEJS3_DEVTOOLS);
-    } catch (e) {
-      console.error("Vue Devtools failed to install:", e.toString());
+    } catch (error: any) {
+      console.error("Vue Devtools failed to install:", error.toString());
     }
   }
   if (process.platform == "win32") {

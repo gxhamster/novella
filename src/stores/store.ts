@@ -1,18 +1,28 @@
 import { defineStore } from "pinia";
+import {
+  DueBook,
+  DueBookState,
+  ReceiveBook,
+  ReceiveBookState,
+  Book,
+  BooksState,
+  Student,
+  StudentsState,
+} from "./types";
 
 export const dueStore = defineStore("duebooks", {
   state: () => {
     return {
       dues: new Array(),
       data_fetched: false,
-    };
+    } as DueBookState;
   },
   actions: {
-    setDues(newDues) {
+    setDues(newDues: DueBook[]) {
       this.dues = newDues;
     },
-    setDataFetched(v) {
-      this.data_fetched = v;
+    setDataFetched(value: boolean) {
+      this.data_fetched = value;
     },
   },
 });
@@ -22,14 +32,14 @@ export const receiveStore = defineStore("received", {
     return {
       received: new Array(),
       data_fetched: false,
-    };
+    } as ReceiveBookState;
   },
   actions: {
-    setReceived(newBooks) {
-      this.recieved = newBooks;
+    setReceived(newBooks: ReceiveBook[]) {
+      this.received = newBooks;
     },
-    setDataFetched(v) {
-      this.data_fetched = v;
+    setDataFetched(value: boolean) {
+      this.data_fetched = value;
     },
   },
 });
@@ -39,14 +49,14 @@ export const userStore = defineStore("users", {
     return {
       users: new Array(),
       data_fetched: false,
-    };
+    } as StudentsState;
   },
   actions: {
-    setUsers(newUsers) {
+    setUsers(newUsers: Student[]) {
       this.users = newUsers;
     },
-    setDataFetched(v) {
-      this.data_fetched = v;
+    setDataFetched(value: boolean) {
+      this.data_fetched = value;
     },
   },
 });
@@ -56,14 +66,14 @@ export const bookStore = defineStore("books", {
     return {
       books: new Array(),
       data_fetched: false,
-    };
+    } as BooksState;
   },
   actions: {
-    setBooks(newBooks) {
+    setBooks(newBooks: Book[]) {
       this.books = newBooks;
     },
-    setDataFetched(v) {
-      this.data_fetched = v;
+    setDataFetched(value: boolean) {
+      this.data_fetched = value;
     },
   },
 });
