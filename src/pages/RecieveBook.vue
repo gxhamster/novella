@@ -139,10 +139,19 @@ function userStoreGetData() {
         grade: v.grade,
       })
   );
-  return result;
+  const usersIssued = new Map();
+  for (const user of result) {
+    for (const due of duestore.dues) {
+      if (user.optional.index == due.index)
+        usersIssued.set(user.optional.index, user);
+    }
+  }
+  const usersIssuedArr = Array.from(usersIssued.values());
+  return usersIssuedArr;
 }
 
-userstore.$onAction(({ name, after }) => {
+// When a new duebook is added search data should be updated
+duestore.$onAction(({ name, after }) => {
   if (name === "setDataFetched") {
     after(() => {
       const result = userStoreGetData();
