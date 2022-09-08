@@ -38,13 +38,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 connectFirestoreEmulator(db, "localhost", 8081);
 
-// enableIndexedDbPersistence(db).catch((err) => {
-//   if (err.code == "failed-precondition") {
-//     console.error("Cannot enable offline mode");
-//   } else if (err.code == "unimplemented") {
-//     console.error("Browser does not support offline mode");
-//   }
-// });
+enableIndexedDbPersistence(db).catch((err) => {
+  if (err.code == "failed-precondition") {
+    console.error("Cannot enable offline mode");
+  } else if (err.code == "unimplemented") {
+    console.error("Browser does not support offline mode");
+  }
+});
 
 const userstore = userStore();
 const bookstore = bookStore();
