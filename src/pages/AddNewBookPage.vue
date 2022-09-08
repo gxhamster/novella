@@ -94,7 +94,9 @@ const book_fields = ref([
   new PageLayoutData("Book ID", {
     firebase_field: "bnumber",
     validator: (text) =>
-      validate(text).isNumeric({ message: "Book ID should be a number" }),
+      validate(text).isAlpha({
+        message: "Book ID should contain alphanumericals",
+      }),
   }),
   new PageLayoutData("Genre", {
     firebase_field: "subject",

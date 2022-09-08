@@ -9,7 +9,7 @@
   >
     <span
       class="desktop:text-3xl laptop:text-2xl font-medium desktop:mb-6 laptop:mb-3 flex justify-between"
-      :class="{ 'px-12': max }"
+      :class="{ 'px-7': max }"
       >{{ props.title }}
       <slot name="titleContent"></slot>
     </span>

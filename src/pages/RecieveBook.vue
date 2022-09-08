@@ -1,14 +1,15 @@
 <template>
-  <PageContainer title="Receive book">
+  <PageContainer :max="true" title="Receive book">
     <FormControl
       @firebase-send="addToReceivedBooks"
       class="flex flex-col justify-between h-full"
       :form-data="[...student_fields]"
     >
-      <span class="desktop:text-2xl laptop:text-1.5xl text-gray-800"
+      <span
+        class="desktop:text-2xl laptop:text-1.5xl text-gray-800 laptop:px-7 desktop:px-14"
         >Student Details</span
       >
-      <div class="flex gap-x-7 flex-grow mt-6">
+      <div class="flex gap-x-7 flex-grow mt-6 laptop:px-7 desktop:px-14">
         <div
           v-for="(field, index) in student_fields"
           :key="field.id"
