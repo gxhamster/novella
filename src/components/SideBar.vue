@@ -20,6 +20,7 @@
       </div>
     </div>
     <div class="flex-grow flex-col flex justify-end">
+      <MainViewButtonGroup />
       <NovellaLogo />
     </div>
   </div>
@@ -37,6 +38,7 @@ import AddNewStudentIcon from "./icons/AddNewStudentIcon";
 import DashboardIcon from "./icons/DashboardIcon";
 import IssueBookIcon from "./icons/IssueBookIcon";
 import ReturnBookIcon from "./icons/ReturnBookIcon";
+import MainViewButtonGroup from "./MainViewButtonGroup.vue";
 
 import { routes } from "../router";
 
