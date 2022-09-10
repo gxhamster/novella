@@ -1,48 +1,27 @@
 <template>
   <div
-    class="custom-shadow overflow-hidden bg-secondary cursor-pointer flex justify-center flex-col items-center desktop:w-32 laptop:w-24 h-full rounded-lgg"
+    @click="$emit('clicked', counter)"
+    class="laptop:rounded-xl desktop:rounded-2xl cursor-pointer laptop:p-2 desktop:p-4 border-2 border-primary"
   >
-    <component :is="props.icon" class="text-primary" :size="48" />
-    <small class="w-20 text-gray-600 text-xs text-center">{{ title }}</small>
+    <component :is="counter.icon" class="text-primary bookcounter-icon" />
   </div>
 </template>
 
-<script setup>
-import { defineProps } from "vue";
+<script setup lang="ts">
+import { defineProps, defineEmits } from "vue";
 
-const props = defineProps({
-  icon: Object,
-  title: String,
-});
+interface Counter {
+  title: string;
+  icon: any;
+  value: number;
+}
+
+interface Props {
+  counter: Counter;
+}
+
+defineProps<Props>();
+defineEmits(["clicked"]);
 </script>
 
-<style scoped>
-div > small {
-  transform: translateY(200%);
-  transition: all 0.4s ease-in-out;
-}
-
-div > span {
-  transition: all 0.4s ease-in-out;
-  transform: translateY(40%);
-}
-
-div:hover > span {
-  transform: translateY(0%);
-}
-
-div:hover > small {
-  /* animation: slide-in 0.5s ease; */
-  /* display: inline-block; */
-  transform: translateY(0%);
-}
-
-@keyframes slide-in {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0%);
-  }
-}
-</style>
+<style></style>

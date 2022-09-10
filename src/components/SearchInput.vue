@@ -20,7 +20,14 @@
 </template>
 
 <script setup>
-import { ref, defineExpose, defineProps, defineEmits, onUpdated } from "vue";
+import {
+  ref,
+  defineExpose,
+  defineProps,
+  defineEmits,
+  onUpdated,
+  computed,
+} from "vue";
 import InputText from "./InputText";
 import SearchDropdown from "./SearchDropdown";
 import { filterPromise } from "@/utils/search";
@@ -39,6 +46,7 @@ const props = defineProps({
 const elem = ref(null);
 const itemAdded = ref(false);
 const filteredResults = ref(props.searchData);
+const showError = computed(() => elem.value.showError);
 
 function setFilteredData(result) {
   filteredResults.value = result;
@@ -73,6 +81,7 @@ function hideError() {
 defineExpose({
   checkEmpty,
   hideError,
+  showError,
 });
 
 onUpdated(() => {

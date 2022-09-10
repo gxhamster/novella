@@ -25,6 +25,7 @@ function submitForm() {
   }
   let errorCount = 0;
   for (const data of props.formData) {
+    console.log(data.title, data.elem.showError);
     if (data.elem.showError) {
       errorCount++;
     }

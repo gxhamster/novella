@@ -139,6 +139,25 @@
     .w-title-bar {
       width: 1366px;
     }
+    .material-design-icon.bookcounter-icon {
+      height: 2em;
+      width: 2em;
+    }
+
+    .material-design-icon.bookcounter-icon > .material-design-icon__svg {
+      height: 2em;
+      width: 2em;
+    }
+    
+    .material-design-icon.bookcounter-main-icon {
+      height: 4.8em;
+      width: 4.8em;
+    }
+
+    .material-design-icon.bookcounter-main-icon > .material-design-icon__svg {
+      height: 4.8em;
+      width: 4.8em;
+    }
   }
 
   @screen desktop {
@@ -147,6 +166,26 @@
     }
     .w-title-bar {
       width: 1920px;
+    }
+
+    .material-design-icon.bookcounter-icon {
+      height: 2.5em;
+      width: 2.5em;
+    }
+
+    .material-design-icon.bookcounter-icon > .material-design-icon__svg {
+      height: 2.5em;
+      width: 2.5em;
+    }
+
+    .material-design-icon.bookcounter-main-icon {
+      height: 8em;
+      width: 8em;
+    }
+
+    .material-design-icon.bookcounter-main-icon > .material-design-icon__svg {
+      height: 8em;
+      width: 8em;
     }
   }
 }

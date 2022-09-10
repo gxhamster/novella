@@ -1,85 +1,69 @@
 <template>
   <div
-    @click="emitClick"
-    class="relative"
-    :class="props.active ? 'flex-grow ' : ''"
+    class="bg-secondary desktop:w-80 laptop:w-60 p-4 laptop:pt-6 desktop:pt-8 rounded-lgg h-1/2 custom-shadow overflow-hidden flex flex-col justify-between"
   >
-    <div
-      v-if="props.active"
-      :class="props.active ? 'animate-w' : ''"
-      class="overflow-hidden bg-secondary custom-shadow h-full w-full rounded-lgg p-4 desktop:pr-10 laptop:pr-4 flex"
-    >
-      <div class="flex flex-grow desktop:gap-4 laptop:gap-2 items-center">
-        <div
-          @mouseover="icon_hovered = true"
-          @mouseleave="icon_hovered = false"
-          class="cursor-pointer bg-steel aspect-square border box-border laptop:p-3 desktop:p-6 flex justify-center items-center"
-        >
-          <component :is="props.icon" class="text-primary" :size="48" />
-        </div>
-        <div
-          class="flex flex-col flex-grow justify-between gap-y-2 flex-shrink-0"
-        >
-          <span class="font-medium laptop:text-1xl desktop:text-1.5xl">{{
-            props.title
-          }}</span>
-          <div class="flex flex-shrink-0 justify-between">
-            <span
-              class="inline-block font-bold desktop:text-5xl laptop:text-4xl mr-4"
-              >{{ props.count }}</span
-            >
-            <DetailsButton />
-          </div>
-        </div>
+    <BookCounterSelected :counter="counters[selectedCounterIdx]" />
+    <div class="flex justify-center gap-x-5">
+      <div v-for="counter in smallCounters" :key="counter.title">
+        <BookCounterSmall @clicked="counterClicked" :counter="counter" />
       </div>
     </div>
-    <BookCounterSmall :title="title" v-else :icon="props.icon" />
   </div>
 </template>
 
-<style>
-.border {
-  border-radius: 15px;
+<script setup lang="ts">
+import { ref, computed, markRaw, ComputedRef } from "vue";
+import BookIcon from "vue-material-design-icons/Book.vue";
+import BookArrowRightIcon from "vue-material-design-icons/BookArrowRight.vue";
+import BookArrowLeftIcon from "vue-material-design-icons/BookArrowLeft.vue";
+import AccountGroupIcon from "vue-material-design-icons/AccountGroup.vue";
+import BookCounterSelected from "./BookCounterSelected.vue";
+import BookCounterSmall from "./BookCounterSmall.vue";
+import { dueStore, userStore, bookStore } from "@/stores/store";
+
+interface Counter {
+  title: string;
+  icon: any;
+  value: ComputedRef;
 }
-</style>
 
-<script setup>
-import { defineProps, defineEmits, ref } from "vue";
-import DetailsButton from "./DetailsButton";
-import BookCounterSmall from "./BookCounterSmall";
+const duestore = dueStore();
+const userstore = userStore();
+const bookstore = bookStore();
+const selectedCounterIdx = ref(0);
 
-const icon_hovered = ref(false);
-const emit = defineEmits(["clicked"]);
-const props = defineProps({
-  title: String,
-  count: Number,
-  active: Boolean,
-  icon: Object,
-});
+const counters = ref<Counter[]>([
+  {
+    title: "Number Of Unreturned Books",
+    icon: markRaw(BookArrowLeftIcon),
+    value: computed(() => duestore.dues.length),
+  },
+  {
+    title: "Number of Due Books",
+    icon: markRaw(BookArrowRightIcon),
+    value: computed(() => duestore.dues.filter((v) => v.days >= 0).length),
+  },
+  {
+    title: "Number Of Books",
+    icon: markRaw(BookIcon),
+    value: computed(() => bookstore.books.length),
+  },
+  {
+    title: "Number Of Students",
+    icon: markRaw(AccountGroupIcon),
+    value: computed(() => userstore.users.length),
+  },
+]);
 
-function emitClick() {
-  if (props.active === false || (icon_hovered.value && props.active === true))
-    emit("clicked");
+const smallCounters = computed(() =>
+  counters.value.filter((_, index) => index !== selectedCounterIdx.value)
+);
+
+function counterClicked(counter: Counter) {
+  let idx = -1;
+  for (const [i, c] of counters.value.entries()) {
+    if (c.title === counter.title) idx = i;
+  }
+  selectedCounterIdx.value = idx;
 }
 </script>
-
-<style scoped>
-.animate-w {
-  animation-duration: 0.4s;
-  animation-name: width-animation;
-}
-
-.animate-w {
-  animation-duration: 0.4s;
-  animation-name: width-animation;
-}
-
-@keyframes width-animation {
-  from {
-    width: 10%;
-  }
-  to {
-    width: 100%;
-  }
-}
-</style>
