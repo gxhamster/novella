@@ -12,7 +12,7 @@
       <div class="flex gap-x-7 flex-grow mt-6 laptop:px-7 desktop:px-14">
         <div
           v-for="(field, index) in student_fields"
-          :key="field.id"
+          :key="index"
           class="flex-grow"
         >
           <SearchInput
@@ -62,9 +62,9 @@
   </PageContainer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
-import PageContainer from "@/components/PageContainer";
+import PageContainer from "@/components/PageContainer.vue";
 import InputText from "../components/InputText.vue";
 import SearchInput from "../components/SearchInput.vue";
 import FormControl from "../components/FormControl.vue";
@@ -79,23 +79,40 @@ import { getFirestore, doc, setDoc, deleteDoc } from "@firebase/firestore";
 const userstore = userStore();
 const duestore = dueStore();
 const receivestore = receiveStore();
+
+interface IssuedBookFormatted {
+  name: string;
+  index: number;
+  grade: string;
+  book_name: string;
+  book_id: string;
+  author: string;
+  days: number;
+  issue_date: { nanoseconds: number; seconds: number };
+  issue_date_formatted: string;
+  due_date: { nanoseconds: number; seconds: number };
+}
+
 const booksIssuedToUser = computed(() => {
   const index = student_fields.value[0].text;
   const filteredBooks = duestore.dues
-    .filter((v) => v.index == index)
+    .filter((v) => v.index == parseInt(index))
     .map((v) => {
       const date = new Date(v.issue_date.seconds * 1000);
       const d = date.getUTCDate();
       const m = date.getUTCMonth() + 1; // getUTCMonth() is zero based
       const y = date.getUTCFullYear();
-      v.issue_date_formatted = `${d}/${m}/${y}`;
-      return v;
+      const n: IssuedBookFormatted = {
+        ...v,
+        issue_date_formatted: `${d}/${m}/${y}`,
+      };
+      return n;
     });
 
   return filteredBooks;
 });
 
-const bookToReceive = ref(null);
+const bookToReceive = ref<IssuedBookFormatted>();
 const student_fields = ref([
   new PageLayoutData("Student Index", {
     firebase_field: "index",
@@ -107,27 +124,33 @@ const student_fields = ref([
   }),
 ]);
 
-function setSelectedItem(item) {
+function setSelectedItem(item: IssuedBookFormatted) {
   bookToReceive.value = item;
 }
 
 async function addToReceivedBooks() {
-  console.log(bookToReceive.value, receivestore.recieved);
+  console.log(bookToReceive.value, receivestore.received);
   const db = getFirestore();
-  const receiveObj = bookToReceive.value;
-  receiveObj.receive_date = new Date();
-  const receiveRef = doc(db, "received", receiveObj.book_id);
+  const receiveObj = {
+    ...bookToReceive.value,
+    receive_date: {
+      seconds: Date.now() / 1000,
+      nanoseconds: Date.now() * 1000000,
+    },
+  };
+  const key = `${receiveObj.book_id}-${receiveObj.receive_date.seconds}`;
+  const receiveRef = doc(db, "received", key);
   await setDoc(receiveRef, receiveObj);
   removeReceivedFromDues(receiveObj);
 }
 
-async function removeReceivedFromDues(bookObj) {
+async function removeReceivedFromDues(bookObj: any) {
   const db = getFirestore();
   const dueRef = doc(db, "dues", `${bookObj.index}-${bookObj.book_id}`);
-  deleteDoc(dueRef, "dues");
+  deleteDoc(dueRef);
 }
 
-function autocompleteUserData(dropdownData) {
+function autocompleteUserData(dropdownData: any) {
   student_fields.value[0].text = dropdownData.optional.index;
   student_fields.value[1].text = dropdownData.title;
 }

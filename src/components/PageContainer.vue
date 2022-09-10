@@ -22,14 +22,15 @@
   </div>
 </template>
 
-<script setup>
-import { defineProps } from "vue";
+<script setup lang="ts">
+import { defineProps, withDefaults } from "vue";
 
-const props = defineProps({
-  title: String,
-  max: {
-    type: Boolean,
-    default: false,
-  },
+interface Props {
+  title: string;
+  max?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  max: false,
 });
 </script>

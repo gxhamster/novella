@@ -218,7 +218,7 @@ onMounted(() => {
   setStoreData();
 });
 
-function sendToFirebase(formData) {
+async function sendToFirebase(formData) {
   // Send to firebase
   console.log("Sending to firebase -", formData);
   const db = getFirestore();
@@ -229,6 +229,6 @@ function sendToFirebase(formData) {
   const firebaseDocObj = Object.fromEntries(temp);
   console.log(firebaseDocObj);
   const studentDocRef = doc(db, "books", firebaseDocObj.bnumber);
-  setDoc(studentDocRef, firebaseDocObj);
+  await setDoc(studentDocRef, firebaseDocObj);
 }
 </script>

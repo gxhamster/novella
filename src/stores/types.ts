@@ -24,9 +24,8 @@ export interface ReceiveBook {
   author: string;
   days: number;
   issue_date: { nanoseconds: number; seconds: number };
-  issue_date_formatted: string;
   due_date: { nanoseconds: number; seconds: number };
-  receive_date: Date;
+  receive_date: { nanoseconds: number; seconds: number };
 }
 
 export interface ReceiveBookState {

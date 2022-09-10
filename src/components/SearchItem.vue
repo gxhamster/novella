@@ -1,7 +1,7 @@
 <template>
   <div
     @click="sendItemData"
-    class="flex bg-secondary rounded-md cursor-pointer hover:shadow-md transition-all p-2 flex"
+    class="flex bg-secondary rounded-md cursor-pointer hover:shadow-md transition-all p-2"
   >
     <component
       class="pr-4 text-gray-700 rounded-full"
@@ -25,7 +25,7 @@ import { defineProps, defineEmits } from "vue";
 import BookIcon from "vue-material-design-icons/Book.vue";
 import AccountIcon from "vue-material-design-icons/Account.vue";
 import { prettyCapitalize } from "@/utils/helper";
-import { SearchItemClass } from "@/utils/search";
+import { SearchItem } from "@/utils/search";
 
 const icons = {
   book: BookIcon,
@@ -48,9 +48,6 @@ const props = defineProps({
 });
 
 function sendItemData() {
-  emit(
-    "clicked",
-    new SearchItemClass(props.title, props.dataType, props.optionalData)
-  );
+  emit("clicked", SearchItem(props.title, props.dataType, props.optionalData));
 }
 </script>

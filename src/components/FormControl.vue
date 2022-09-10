@@ -4,16 +4,15 @@
   </form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, provide, defineProps, defineEmits } from "vue";
+import { PageLayoutData } from "@/utils/helper";
 
-const props = defineProps({
-  formData: {
-    type: Array,
-    default: null,
-    required: true,
-  },
-});
+interface Prop {
+  formData: PageLayoutData[];
+}
+
+const props = defineProps<Prop>();
 
 const emit = defineEmits(["firebaseSend"]);
 

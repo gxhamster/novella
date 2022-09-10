@@ -17,7 +17,7 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = firestore.getFirestore();
-// firestore.connectFirestoreEmulator(db, "localhost", 8081);
+firestore.connectFirestoreEmulator(db, "localhost", 8081);
 
 async function uploadStudentData(db) {
   const batch = firestore.writeBatch(db);

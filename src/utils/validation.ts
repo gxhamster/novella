@@ -5,7 +5,7 @@ interface ValidationOptions {
   message: string;
 }
 
-interface ValidaionResult {
+export interface ValidationResult {
   result: boolean;
   message: string | null;
 }
@@ -13,7 +13,7 @@ interface ValidaionResult {
 type NumericValidator = number;
 type StringValidator = string;
 
-class InputValidator {
+export class InputValidator {
   value: NumericValidator | StringValidator;
   constructor(value: string | number) {
     this.value = value;
@@ -26,7 +26,7 @@ class InputValidator {
       max: 1000,
       message: "Invalid input",
     }
-  ): ValidaionResult {
+  ): ValidationResult {
     if (
       typeof options.min !== "undefined" &&
       typeof options.max !== "undefined"
@@ -57,7 +57,7 @@ class InputValidator {
     throw Error("Min and max is not defined");
   }
 
-  isEmpty(): ValidaionResult {
+  isEmpty(): ValidationResult {
     return typeof this.value === "string" && this.value.length === 0
       ? { result: true, message: "Input is empty" }
       : { result: false, message: "Input is not empty" };
@@ -65,7 +65,7 @@ class InputValidator {
 
   isNumeric(
     options: ValidationOptions = { message: "Not a number" }
-  ): ValidaionResult {
+  ): ValidationResult {
     if (isNaN(this.value as number)) {
       return { result: false, message: options.message };
     }
@@ -76,7 +76,7 @@ class InputValidator {
     options: ValidationOptions = {
       message: "Should contain only A-z a-z 0-9 .",
     }
-  ): ValidaionResult {
+  ): ValidationResult {
     const re = /^[A-za-z0-9.]*$/;
     return typeof this.value === "string" && re.test(this.value)
       ? { result: true, message: null }
@@ -85,7 +85,7 @@ class InputValidator {
 
   isPhone(
     options: ValidationOptions = { message: "Not a valid phone number" }
-  ): ValidaionResult {
+  ): ValidationResult {
     const re = /^[0-9]*$/;
     return typeof this.value === "string" &&
       this.value.length === 7 &&

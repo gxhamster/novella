@@ -1,5 +1,4 @@
 import { collection, Firestore, onSnapshot } from "firebase/firestore";
-import { Store } from "pinia";
 
 // This receives data from firebase and sets it to the related pinia store
 export function firebaseSetupSync(

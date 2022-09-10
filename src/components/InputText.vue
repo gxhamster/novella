@@ -2,7 +2,7 @@
   <div class="relative">
     <label
       class="block mb-2 laptop:text-sm desktop:text-md text-gray-700"
-      :for="title"
+      :for="(title as string)"
       >{{ title }}</label
     >
     <div class="flex space-x-2 items-start">
@@ -17,9 +17,9 @@
           alt="Text Input"
           class="transition duration-300 apperance-none border-2 rounded-full bg-secondary pr-8 desktop:py-2 laptop:py-1"
           :class="inputStyle"
-          :id="title"
+          :id="(title as string)"
           ref="inputRef"
-          :name="title"
+          :name="(title as string)"
           :readonly="!canEdit"
           :disabled="!canEdit"
           :value="modelValue"
@@ -28,7 +28,7 @@
           @focus="emit('inputFocus')"
         />
         <AlertCircle
-          v-show="showError | validationError"
+          v-show="showError || validationError"
           class="absolute text-red-400 right-2 laptop:top-2 desktop:top-3"
           :size="20"
         />
@@ -40,7 +40,7 @@
       </div>
     </div>
     <span
-      v-show="showError | validationError"
+      v-show="showError || validationError"
       class="text-red-400 whitespace-nowrap text-sm flex space-x-1 px-2 absolute -bottom-5"
     >
       <span>
@@ -50,7 +50,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
   computed,
   defineProps,
@@ -58,6 +58,7 @@ import {
   ref,
   watch,
   defineExpose,
+  withDefaults,
 } from "vue";
 import { filteredTextInput } from "@/utils/helper";
 import AlertCircle from "vue-material-design-icons/AlertCircle";
@@ -69,26 +70,43 @@ const emit = defineEmits([
   "inputBlur",
   "inputFocus",
 ]);
-const props = defineProps({
-  title: [String, Number],
-  modelValue: String,
-  searchable: Boolean,
-  isPhone: {
-    type: Boolean,
-    default: false,
-  },
-  width: {
-    default: "full",
-  },
-  validate: Function,
-  canEdit: {
-    type: Boolean,
-    default: true,
-  },
+
+interface Props {
+  title: string | number;
+  modelValue: string;
+  searchable?: boolean;
+  isPhone?: boolean;
+  width?: string;
+  validate?: any;
+  canEdit?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  isPhone: false,
+  width: "full",
+  canEdit: true,
 });
+
+// const props = defineProps({
+//   title: [String, Number],
+//   modelValue: String,
+//   searchable: Boolean,
+//   isPhone: {
+//     type: Boolean,
+//     default: false,
+//   },
+//   width: {
+//     default: "full",
+//   },
+//   validate: Function,
+//   canEdit: {
+//     type: Boolean,
+//     default: true,
+//   },
+// });
 const validationError = ref(false);
 const showError = ref(false);
-const errorMessage = ref("");
+const errorMessage = ref<string | null>("");
 const widthFormat = computed(() => `w-${props.width}`);
 const inputStyle = computed(() => {
   let result = [];
@@ -110,7 +128,7 @@ const inputStyle = computed(() => {
   return result;
 });
 
-function checkIfValid(value) {
+function checkIfValid(value: string) {
   if (props.validate) {
     const { result, message } = props.validate(value);
     if (!result) {
@@ -124,7 +142,7 @@ function checkIfValid(value) {
   }
 }
 
-function inputEvent(event) {
+function inputEvent(event: Event) {
   emit("update:modelValue", filteredTextInput(event.target.value));
   checkIfValid(event.target.value);
 }

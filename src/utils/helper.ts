@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { ValidationResult } from "./validation";
 
 export const prettyCapitalize = (str: string): string => {
   if (typeof str !== "string") {
@@ -15,53 +16,53 @@ export function fiveDaysAfterDate(date: Date): Date {
 }
 
 export interface LayoutOptions {
-  title: string;
-  full: string;
-  searchable: boolean;
-  validator: any;
-  text: string;
-  firebase_field: string;
-  search_data: any[];
-  date: Date;
-  phone: string | number;
-  required: boolean;
-  elem: Element;
+  full?: string;
+  searchable?: boolean;
+  validator?: (value: string | number) => ValidationResult;
+  text?: string;
+  firebase_field?: string;
+  search_data?: any[];
+  date?: Date;
+  phone?: boolean;
+  required?: boolean;
+  elem?: any;
 }
 
 // This class describes one input field in a page
 export class PageLayoutData {
   title: string;
-  full: string;
-  searchable: boolean;
-  validator: any;
+  full?: string;
+  searchable?: boolean;
+  validator?: any;
   text: string;
-  firebase_field: string;
-  search_data: any[];
-  date: Date | null;
-  phone: string | number;
-  required: boolean;
-  elem: Element;
+  firebase_field?: string;
+  search_data?: any[];
+  date?: Date | null;
+  phone?: boolean;
+  required?: boolean;
+  elem?: any;
 
   // Default values for options
   #defaults = {
-    full: true,
+    full: "full",
     searchable: false,
     validator: null,
     text: "",
     date: null,
     phone: false,
+    firebase_field: "",
     required: true,
     elem: ref(null),
   };
   constructor(title: string, options: LayoutOptions) {
     const new_options = { ...this.#defaults, ...options };
 
-    options = new_options;
+    options = new_options as LayoutOptions;
     this.title = title;
-    this.full = options.full;
+    this.full = new_options.full;
     this.searchable = options.searchable;
     this.validator = options.validator;
-    this.text = options.text;
+    this.text = options.text as string;
     this.firebase_field = options.firebase_field;
     this.search_data = [];
     this.date = options.date;
