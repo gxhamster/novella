@@ -26,7 +26,7 @@
       <div v-for="child in children" :key="child.name">
         <DueBookItem
           :title="child.title"
-          :grade="child.grade"
+          :book-name="child.book_name"
           :name="child.name"
           :days="child.days"
         />

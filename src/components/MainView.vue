@@ -15,7 +15,9 @@
       <div
         class="bg-secondary desktop:w-80 laptop:w-60 p-4 rounded-lgg h-full custom-shadow overflow-hidden"
       >
-        <h1 class="text-2xl text-center font-bold">Due Books</h1>
+        <h1 class="laptop:text-2xl desktop:text-3xl text-center font-medium">
+          Due Books
+        </h1>
         <DueBooks />
       </div>
       <BookCounter />

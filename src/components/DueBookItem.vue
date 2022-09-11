@@ -1,14 +1,12 @@
 <template>
   <div class="flex gap-2 border-b-2 border-gray-300 py-2 justify-between">
     <div class="flex flex-col flex-grow-0">
-      <span class="duebooks-title text-1xl"> {{ name }}</span>
+      <span class="duebooks-title laptop:text-sm desktop:text-1xl font-medium">
+        {{ name }}</span
+      >
       <div class="flex gap-4 text-xs">
-        <div class="flex flex-col" id="grade">
-          <span class="block font-bold">Grade</span>
-          <span>{{ grade }}</span>
-        </div>
-        <div id="book_title">
-          <span>{{ title }}</span>
+        <div id="book_title" class="pt-1">
+          <span class="laptop:text-sm desktop:text-1xl">{{ bookName }}</span>
         </div>
       </div>
     </div>
@@ -32,7 +30,7 @@ import { defineProps } from "vue";
 
 defineProps({
   name: String,
-  grade: String,
+  bookName: String,
   title: String,
   days: Number,
 });

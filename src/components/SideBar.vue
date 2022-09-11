@@ -54,7 +54,7 @@ const icon_names = [
   IssueBookIcon,
 ];
 const button_names = [
-  "Issue book",
+  "Add issue ",
   "Receive book",
   "Add new book",
   "Add new student",

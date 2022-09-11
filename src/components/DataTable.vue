@@ -10,7 +10,7 @@
             <th
               v-for="heading in headings"
               :key="heading"
-              class="laptop:text-xs desktop:text-sm flex items-center justify-center gap-1"
+              class="laptop:text-xs desktop:text-sm flex items-center justify-center"
             >
               <label
                 :for="
