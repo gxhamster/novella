@@ -15,6 +15,7 @@
         </div>
         <input
           alt="Text Input"
+          :placeholder="placeholder"
           class="transition duration-300 apperance-none border-2 rounded-full bg-secondary pr-8 desktop:py-2 laptop:py-1"
           :class="inputStyle"
           :id="(title as string)"
@@ -71,6 +72,8 @@ const emit = defineEmits([
   "inputFocus",
 ]);
 
+type SizeVariants = "sm" | "md" | "lg";
+
 interface Props {
   title: string | number;
   modelValue: string;
@@ -79,31 +82,18 @@ interface Props {
   width?: string;
   validate?: any;
   canEdit?: boolean;
+  placeholder?: string;
+  size?: SizeVariants;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isPhone: false,
   width: "full",
   canEdit: true,
+  placeholder: "",
+  size: "md",
 });
 
-// const props = defineProps({
-//   title: [String, Number],
-//   modelValue: String,
-//   searchable: Boolean,
-//   isPhone: {
-//     type: Boolean,
-//     default: false,
-//   },
-//   width: {
-//     default: "full",
-//   },
-//   validate: Function,
-//   canEdit: {
-//     type: Boolean,
-//     default: true,
-//   },
-// });
 const validationError = ref(false);
 const showError = ref(false);
 const errorMessage = ref<string | null>("");

@@ -1,38 +1,30 @@
-import { collection, Firestore, onSnapshot } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  connectFirestoreEmulator,
+  enableIndexedDbPersistence,
+} from "firebase/firestore";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
 
-// This receives data from firebase and sets it to the related pinia store
-export function firebaseSetupSync(
-  db: Firestore,
-  collection_path: string,
-  pinia_store: any,
-  pinia_store_set_func_name: string
-) {
-  const path = collection(db, collection_path);
-  const unsubscribe = onSnapshot(path, (querySnapshot) => {
-    function getDataFromFirebase() {
-      return Promise.resolve().then(() => {
-        const data: any[] = [];
-        querySnapshot.forEach((doc) => {
-          data.push(doc.data());
-        });
-        return data;
-      });
-    }
-    let data = [];
-    getDataFromFirebase().then((arr) => {
-      data = arr;
-      if (data.length != 0) {
-        pinia_store[pinia_store_set_func_name](data);
-        pinia_store["setDataFetched"](true);
-      } else if (pinia_store.data_fetched && data.length === 0) {
-        // If all docs in collection deleted edge case
-        pinia_store[pinia_store_set_func_name](data);
-        pinia_store["setDataFetched"](true);
-      } else {
-        pinia_store["setDataFetched"](false);
-      }
-    });
-  });
+export const firebaseConfig = {
+  apiKey: "AIzaSyBnDTnTUrz7c9enxvoTFm3Jr6sH0y_6hWU",
+  authDomain: "novella-fe845.firebaseapp.com",
+  projectId: "novella-fe845",
+  storageBucket: "novella-fe845.appspot.com",
+  messagingSenderId: "1049015315005",
+  appId: "1:1049015315005:web:0662ef503b5e8ea8dd5854",
+  measurementId: "G-M59MWQ314M",
+};
+export const firestoreApp = initializeApp(firebaseConfig);
+export const firestoreDB = getFirestore(firestoreApp);
 
-  return unsubscribe;
-}
+connectFirestoreEmulator(firestoreDB, "localhost", 8081);
+connectAuthEmulator(getAuth(), "http://localhost:9099");
+
+enableIndexedDbPersistence(firestoreDB).catch((err) => {
+  if (err.code == "failed-precondition") {
+    console.error("Cannot enable offline mode");
+  } else if (err.code == "unimplemented") {
+    console.error("Browser does not support offline mode");
+  }
+});
