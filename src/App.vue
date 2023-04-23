@@ -1,25 +1,40 @@
 <template>
-  <div
-    v-if="loggedIn"
-    id="app"
-    class="bg-transparent fixed flex h-screen min-h-screen w-screen"
-  >
-    <SideBar class="" />
-    <MainView class="" />
-  </div>
-  <div v-else>
-    <NovellaLoginPage />
-  </div>
+  <router-view></router-view>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import SideBar from "./components/SideBar.vue";
-import MainView from "./components/MainView.vue";
-import NovellaLoginPage from "./pages/NovellaLoginPage.vue";
-import { user } from "@/composables/auth";
+// import { computed } from "vue";
+import { app } from "./utils/firebase";
+import { getAuth, connectAuthEmulator } from "@firebase/auth";
+import {
+  getFirestore,
+  connectFirestoreEmulator,
+  enableIndexedDbPersistence,
+} from "@firebase/firestore";
+import { router } from "./router";
 
-const loggedIn = computed(() => user.value !== null);
+const firestoreDB = getFirestore(app);
+router.beforeEach((to) => {
+  console.log(
+    "----- Router Navigation Guard ------",
+    to,
+    "User: ",
+    getAuth().currentUser
+  );
+  if (getAuth().currentUser === null && to.meta.requireAuth) {
+    return { name: "Login" };
+  }
+});
+connectFirestoreEmulator(firestoreDB, "localhost", 8081);
+connectAuthEmulator(getAuth(), "http://localhost:9099");
+
+enableIndexedDbPersistence(firestoreDB).catch((err) => {
+  if (err.code == "failed-precondition") {
+    console.error("Cannot enable offline mode");
+  } else if (err.code == "unimplemented") {
+    console.error("Browser does not support offline mode");
+  }
+});
 </script>
 
 <style scoped>

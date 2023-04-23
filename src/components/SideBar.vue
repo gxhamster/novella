@@ -64,12 +64,12 @@ const button_names = [
 
 // All routes realated to sidebar should be mentioned here
 const sidebar_routes = [
-  "/issue_book",
-  "/recieve_book",
-  "/add_book",
-  "/add_student",
-  "/directory",
-  "/history",
+  "/dashboard",
+  "/dashboard/recieve_book",
+  "/dashboard/add_book",
+  "/dashboard/add_student",
+  "/dashboard/directory",
+  "/dashboard/history",
 ];
 
 const route_names = ref(
@@ -116,7 +116,7 @@ function btnClicked(index) {
 }
 
 function changeRoute() {
-  router.replace(route_names.value[current_active_btn_index.value]);
+  router.replace(sidebar_routes[current_active_btn_index.value]);
 }
 
 function navigateSidebar(down = true) {

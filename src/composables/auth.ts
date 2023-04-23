@@ -4,11 +4,12 @@ import {
   getAuth,
   onAuthStateChanged,
 } from "firebase/auth";
+import { app } from "@/utils/firebase";
 import { ref } from "vue";
 
 // Global user object
-export const user = ref();
-export const auth = getAuth();
+export const auth = getAuth(app);
+export const user = ref(getAuth(app).currentUser);
 
 onAuthStateChanged(auth, (u) => {
   user.value = u;
