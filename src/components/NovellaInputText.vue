@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-1">
+  <div class="space-y-1 m-2 h-20 flex-shrink-0">
     <label :for="props.name">{{ props.label }}</label>
     <input
       @input="handleInput"
@@ -11,7 +11,10 @@
       class="border-2 rounded-full px-4 block w-full bg-secondary pr-8 desktop:py-2 laptop:py-1"
       :class="inputBorderColor"
     />
-    <span class="block text-red-400" v-if="!validationErrorStatus.result">
+    <span
+      class="m-0 block text-red-400 text-sm"
+      v-if="!validationErrorStatus.result"
+    >
       {{ validationErrorStatus.message }}
     </span>
   </div>
@@ -23,19 +26,16 @@ import {
   defineProps,
   defineEmits,
   inject,
-  onMounted,
   ref,
+  watchEffect,
   withDefaults,
-  Ref,
 } from "vue";
-import { FormData } from "./NovellaForm.vue";
+import { FormDataProvider } from "./NovellaForm.vue";
 import { ValidationResult } from "@/utils/validation";
 
 /*
   TODO:
-  - Handle validation
   - Handle prefix and suffix icons
-  - Different input types
 */
 interface NovellaInputTextProps {
   label: string;
@@ -53,22 +53,37 @@ const props = withDefaults(defineProps<NovellaInputTextProps>(), {
   modelValue: "",
 });
 const emit = defineEmits(["update:modelValue"]);
-const formData = inject<Ref<FormData>>("novella-form");
-const validationErrorStatus = ref<ValidationResult>({
-  result: true,
-  message: "",
+const { formData, setFormData } = inject<FormDataProvider>("novella-form", {
+  formData: ref({}),
+  setFormData: () => true,
 });
-// If seperate v-model not applied in input use form supplied values and update it
-const currentInputValue = computed(() => {
-  if (!props.modelValue && formData?.value[props.name])
-    return formData?.value[props.name].value;
-  else return props.modelValue;
+
+const currentInputValue = computed({
+  get() {
+    if (!props.modelValue && formData?.value[props.name])
+      return formData?.value[props.name].value;
+    else return props.modelValue;
+  },
+  set(newValue: string) {
+    if (formData.value[props.name]) {
+      setFormData(props.name, {
+        value: newValue,
+        validationStatus: validationErrorStatus.value.result,
+      });
+    } else {
+      // When not using values supplied by the form element
+      emit("update:modelValue", newValue);
+    }
+  },
 });
+
+const validationErrorStatus = ref<ValidationResult>(
+  props.validation(currentInputValue.value)
+);
 const inputBorderColor = computed(() => {
   const validStateClass =
     "border-border hover:border-border-hover focus:border-border-focus";
   const invalidStateClass = "border-red-400";
-
   return validationErrorStatus.value.result
     ? validStateClass
     : invalidStateClass;
@@ -76,30 +91,20 @@ const inputBorderColor = computed(() => {
 
 function handleInput(event: Event) {
   const target = event.target as HTMLInputElement;
-  // checkInputValidationStatus should be called before setting form data
-  checkInputValidationStatus(target.value);
-  if (formData?.value) {
-    formData.value[props.name] = {
-      value: target.value,
-      validationStatus: validationErrorStatus.value.result,
-    };
-  } else {
-    throw Error("(-) Form Data was not provided");
-  }
-  emit("update:modelValue", target.value);
+  currentInputValue.value = target.value;
 }
 
-function checkInputValidationStatus(value: string | number) {
+function setInputValidationStatus(value: string | number) {
   const { result, message } = props.validation(value);
   validationErrorStatus.value = { result, message };
+  return result;
 }
 
-onMounted(() => {
-  // If default input value not given set default value from form defaults
-  if (!props.modelValue && formData?.value[props.name]) {
-    const formDataValue = formData.value[props.name].value;
-    checkInputValidationStatus(formDataValue);
-    emit("update:modelValue", formDataValue);
-  }
+watchEffect(() => {
+  const result = setInputValidationStatus(currentInputValue.value);
+  setFormData(props.name, {
+    value: currentInputValue.value,
+    validationStatus: result,
+  });
 });
 </script>

@@ -115,6 +115,7 @@ export class Validator {
     const match = str.length > 0;
     this.result = this.result && match;
     if (!match) this.error = "Field is required";
+    console.log("Required: ", str, this.error);
 
     return this;
   }
@@ -127,6 +128,7 @@ export class Validator {
     return this;
   }
   between(min: number, max: number) {
+    const temp = this._value;
     if (typeof this._value == "string") {
       this._value = this._value.length;
     }
@@ -134,6 +136,7 @@ export class Validator {
     this.result = this.result && match;
 
     if (!match) this.error = `Field should be between ${min} and ${max}`;
+    this._value = temp;
     return this;
   }
   email() {

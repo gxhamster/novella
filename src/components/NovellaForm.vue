@@ -1,15 +1,24 @@
 <template>
-  <form @submit.prevent="checkBeforeSubmit(data)"><slot></slot></form>
+  <form @submit.prevent="checkBeforeSubmit(formData)">
+    <slot></slot>
+  </form>
 </template>
 
 <script setup lang="ts">
-import { provide, ref, defineProps, withDefaults } from "vue";
+import { provide, ref, defineProps, withDefaults, Ref } from "vue";
 
+interface FormDataField {
+  value: string;
+  validationStatus?: boolean;
+}
 export interface FormData {
-  [key: string]: {
-    value: string;
-    validationStatus?: boolean;
-  };
+  [key: string]: FormDataField;
+}
+
+export interface FormDataProvider {
+  formData: Ref<FormData>;
+  // eslint-disable-next-line
+  setFormData: (field: string, fieldData: FormDataField) => void;
 }
 
 interface NovellaFormProps {
@@ -27,17 +36,23 @@ const props = withDefaults(defineProps<NovellaFormProps>(), {
 const defaultValuesCopy: FormData = JSON.parse(
   JSON.stringify(props.defaultValues)
 );
-const data = ref<FormData>(defaultValuesCopy);
+const formData = ref<FormData>(defaultValuesCopy);
 
-function checkBeforeSubmit(data: FormData) {
-  for (const [, values] of Object.entries(data)) {
-    if (!values.validationStatus) {
-      console.error(`(-) Cannot submit ${values.value} is not valid`);
-      return;
-    }
-  }
-  props.handleSubmit(data);
+function setFormData(field: string, fieldData: FormDataField) {
+  formData.value[field] = fieldData;
 }
 
-provide("novella-form", data);
+function checkBeforeSubmit(data: FormData) {
+  const formErrors: Array<string> = [];
+  for (const [key, values] of Object.entries(data)) {
+    if (!values.validationStatus) {
+      const errorMessage = `Cannot submit, ${key} is not valid`;
+      formErrors.push(errorMessage);
+      console.error(`(-) ${errorMessage}`);
+    }
+  }
+  if (formErrors.length === 0) props.handleSubmit(data);
+}
+
+provide<FormDataProvider>("novella-form", { formData, setFormData });
 </script>

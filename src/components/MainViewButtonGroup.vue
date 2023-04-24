@@ -44,9 +44,13 @@ function setFocus(index) {
 }
 
 const main_view_buttons = [
-  { name: "Settings", icon: CogIcon, route: "/settings" },
-  { name: "Feedback", icon: InformationIcon, route: "/feedback" },
-  { name: "About us", icon: CommentQuoteOutlineIcon, route: "/about" },
+  { name: "Settings", icon: CogIcon, route: "/dashboard/settings" },
+  { name: "Feedback", icon: InformationIcon, route: "/dashboard/feedback" },
+  {
+    name: "About us",
+    icon: CommentQuoteOutlineIcon,
+    route: "/dashboard/about",
+  },
 ];
 </script>
 
