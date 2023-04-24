@@ -2,33 +2,24 @@
   <login-page-container title="Login" welcome-message="Welcome back">
     <novella-form
       :handle-submit="handleSubmit"
-      class="flex flex-col space-y-5 items-center"
+      class="flex flex-col space-y-5 items-center max-w-md"
     >
       <novella-input-text
+        class="w-full"
         placeholder="Please enter your email"
         label="Email"
         name="email"
-        :validation="
-          (text) =>
-            validate(text).between({
-              min: 5,
-              max: 15,
-              message: 'Email should be between 5 - 15',
-            })
-        "
+        :validation="(text) => new Validator(text).email().required().unwrap()"
       ></novella-input-text>
       <novella-input-text
-        placeholder="Please enter your email"
-        label="Email"
-        name="email1"
+        class="w-full"
+        placeholder="Please enter your password"
         :validation="
-          (text) =>
-            validate(text).between({
-              min: 5,
-              max: 15,
-              message: 'Email should be between 5 - 15',
-            })
+          (text) => new Validator(text).between(8, 50).required().unwrap()
         "
+        label="Password"
+        type="password"
+        name="password"
       ></novella-input-text>
       <novella-form-button label="Submit" />
     </novella-form>
@@ -41,9 +32,17 @@ import NovellaForm from "@/components/NovellaForm.vue";
 import NovellaFormButton from "@/components/NovellaFormButton.vue";
 import NovellaInputText from "@/components/NovellaInputText.vue";
 import { FormData } from "@/components/NovellaForm.vue";
-import { validate } from "@/utils/validation";
+import { Validator } from "@/utils/validation";
+import { useLogin } from "@/composables/auth";
+import { router } from "@/router";
+import { getAuth } from "firebase/auth";
 
-function handleSubmit(data: FormData) {
-  console.log("(+) You clicked the submit handler", data);
+async function handleSubmit(data: FormData) {
+  const { email, password, login } = useLogin();
+  email.value = data.email.value;
+  password.value = data.password.value;
+
+  await login();
+  if (getAuth().currentUser) router.push("/dashboard");
 }
 </script>

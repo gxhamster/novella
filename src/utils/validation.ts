@@ -98,3 +98,57 @@ export class InputValidator {
 export function validate(value: string | number) {
   return new InputValidator(value);
 }
+
+// New Validator 2.0
+// Why am i not using a library :(
+export class Validator {
+  _value: string | number;
+  result: boolean;
+  error: string;
+  constructor(text: string | number) {
+    this._value = text;
+    this.result = true;
+    this.error = "";
+  }
+  required() {
+    const str = this._value.toString();
+    const match = str.length > 0;
+    this.result = this.result && match;
+    if (!match) this.error = "Field is required";
+
+    return this;
+  }
+  isAlpha() {
+    const re = /^[A-za-z0-9.]*$/;
+    const match = re.test(this._value as string);
+    this.result = this.result && match;
+    if (!match) this.error = "Field should be alphanumerical";
+
+    return this;
+  }
+  between(min: number, max: number) {
+    if (typeof this._value == "string") {
+      this._value = this._value.length;
+    }
+    const match = this._value > min && this._value < max ? true : false;
+    this.result = this.result && match;
+
+    if (!match) this.error = `Field should be between ${min} and ${max}`;
+    return this;
+  }
+  email() {
+    const re = /^[A-za-z0-9.]+@[A-za-z0-9.]+$/;
+    const match = re.test(this._value as string);
+    this.result = this.result && match;
+    if (!match) this.error = "Field should be an email";
+
+    return this;
+  }
+
+  unwrap(): ValidationResult {
+    return {
+      result: this.result,
+      message: this.error,
+    };
+  }
+}

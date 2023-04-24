@@ -6,8 +6,8 @@
       :value="currentInputValue"
       :placeholder="props.placeholder"
       :name="props.name"
+      :type="props.type"
       :id="props.name"
-      type="text"
       class="border-2 rounded-full px-4 block w-full bg-secondary pr-8 desktop:py-2 laptop:py-1"
       :class="inputBorderColor"
     />
@@ -40,6 +40,7 @@ import { ValidationResult } from "@/utils/validation";
 interface NovellaInputTextProps {
   label: string;
   name: string;
+  type?: "text" | "password";
   // eslint-disable-next-line
   validation: (input: string | number) => ValidationResult;
   placeholder?: string;
@@ -47,6 +48,7 @@ interface NovellaInputTextProps {
 }
 
 const props = withDefaults(defineProps<NovellaInputTextProps>(), {
+  type: "text",
   validation: () => ({ result: true, message: "Invalid input" }),
   modelValue: "",
 });
@@ -89,7 +91,6 @@ function handleInput(event: Event) {
 
 function checkInputValidationStatus(value: string | number) {
   const { result, message } = props.validation(value);
-  console.log("Result: ", result, "Message: ", message);
   validationErrorStatus.value = { result, message };
 }
 
