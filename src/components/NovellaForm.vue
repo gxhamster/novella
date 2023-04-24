@@ -1,12 +1,15 @@
 <template>
-  <form @submit.prevent="props.handleSubmit(data)"><slot></slot></form>
+  <form @submit.prevent="checkBeforeSubmit(data)"><slot></slot></form>
 </template>
 
 <script setup lang="ts">
 import { provide, ref, defineProps, withDefaults } from "vue";
 
 export interface FormData {
-  [key: string]: string | undefined;
+  [key: string]: {
+    value: string;
+    validationStatus?: boolean;
+  };
 }
 
 interface NovellaFormProps {
@@ -25,6 +28,16 @@ const defaultValuesCopy: FormData = JSON.parse(
   JSON.stringify(props.defaultValues)
 );
 const data = ref<FormData>(defaultValuesCopy);
+
+function checkBeforeSubmit(data: FormData) {
+  for (const [, values] of Object.entries(data)) {
+    if (!values.validationStatus) {
+      console.error(`(-) Cannot submit ${values.value} is not valid`);
+      return;
+    }
+  }
+  props.handleSubmit(data);
+}
 
 provide("novella-form", data);
 </script>
