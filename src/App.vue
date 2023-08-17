@@ -3,36 +3,29 @@
 </template>
 
 <script setup lang="ts">
-// import { computed } from "vue";
-import { app } from "./utils/firebase";
-import { getAuth, connectAuthEmulator } from "@firebase/auth";
-import {
-  getFirestore,
-  connectFirestoreEmulator,
-  enableIndexedDbPersistence,
-} from "@firebase/firestore";
-import { router } from "./router";
+import { supabase } from "@/modules/auth/supabase";
+import { onMounted, ref } from "vue";
+import { router } from "@/router";
 
-const firestoreDB = getFirestore(app);
-router.beforeEach((to) => {
-  console.log(
-    "----- Router Navigation Guard ------",
-    to,
-    "User: ",
-    getAuth().currentUser
-  );
-  if (getAuth().currentUser === null && to.meta.requireAuth) {
-    return { name: "Login" };
-  }
+const session = ref();
+
+const setCurrentSessionState = async () => {
+  const { data } = await supabase.auth.getSession();
+  session.value = data.session;
+};
+
+onMounted(() => {
+  setCurrentSessionState();
+  supabase.auth.onAuthStateChange((_, _session) => {
+    session.value = _session;
+  });
 });
-connectFirestoreEmulator(firestoreDB, "localhost", 8081);
-connectAuthEmulator(getAuth(), "http://localhost:9099");
 
-enableIndexedDbPersistence(firestoreDB).catch((err) => {
-  if (err.code == "failed-precondition") {
-    console.error("Cannot enable offline mode");
-  } else if (err.code == "unimplemented") {
-    console.error("Browser does not support offline mode");
+// eslint-disable-next-line
+router.beforeEach(async (to, from) => {
+  await setCurrentSessionState();
+  if (!session.value && to.meta.requireAuth && to.name !== "Login") {
+    return { name: "Login" };
   }
 });
 </script>

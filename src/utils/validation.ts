@@ -115,7 +115,6 @@ export class Validator {
     const match = str.length > 0;
     this.result = this.result && match;
     if (!match) this.error = "Field is required";
-    console.log("Required: ", str, this.error);
 
     return this;
   }

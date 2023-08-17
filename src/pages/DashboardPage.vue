@@ -32,7 +32,7 @@ import SideBar from "@/components/SideBar.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import SearchBar from "@/components/SearchBar";
-import BookCounter from "@/components/BookCounter.vue";
+import BookCounter from "@/modules/bookcounter/components/BookCounter.vue";
 import DueBooks from "@/components/DueBooks";
 import WindowControls from "@/components/WindowControls";
 

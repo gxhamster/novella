@@ -22,8 +22,12 @@ firestore.connectFirestoreEmulator(db, "localhost", 8081);
 async function uploadStudentData(db) {
   const batch = firestore.writeBatch(db);
   student_data.map((value) => {
-    const studentRef = firestore.doc(db, "students", value.index);
-    batch.set(studentRef, value);
+    const n = {};
+    for (const [k, v] of Object.entries(value)) {
+      n[k] = v.trim();
+    }
+    const studentRef = firestore.doc(db, "students", n.index);
+    batch.set(studentRef, n);
   });
   await batch.commit();
 }

@@ -1,15 +1,15 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import AddNewStudentPage from "./pages/AddNewStudentPage.vue";
-import IssueBooksPage from "./pages/IssueBooksPage.vue";
-import AddNewBookPage from "./pages/AddNewBookPage.vue";
+import NovellaIssueBooksPage from "./pages/NovellaIssueBooksPage.vue";
+import AddNewBookPage from "./modules/addingbooks/views/AddNewBookPage.vue";
 import RecieveBook from "./pages/RecieveBook.vue";
 import DirectoryPage from "./pages/DirectoryPage.vue";
 import SettingsPage from "./pages/SettingsPage.vue";
 import AboutPage from "./pages/AboutPage.vue";
 import FeedbackPage from "./pages/FeedbackPage.vue";
 import HistoryPage from "./pages/HistoryPage.vue";
-import NovellaSignupPage from "./pages/NovellaSignupPage.vue";
-import NovellaLoginPage from "./pages/NovellaLoginPage.vue";
+import NovellaSignupPage from "@/modules/signup/views/NovellaSignupPage.vue";
+import NovellaLoginPage from "@/modules/login/views/NovellaLoginPage.vue";
 import DashboardPage from "./pages/DashboardPage.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -35,7 +35,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "",
         name: "Issue Books",
-        component: IssueBooksPage,
+        component: NovellaIssueBooksPage,
         meta: {
           requireAuth: true,
         },

@@ -1,6 +1,9 @@
 <template>
-  <div class="space-y-1 m-2 h-20 flex-shrink-0">
-    <label :for="props.name">{{ props.label }}</label>
+  <div class="space-y-1 m-2 h-20 relative">
+    <label :for="props.name" class="text-sm text-gray-600">{{
+      props.label
+    }}</label>
+    <slot name="prefix"></slot>
     <input
       @input="handleInput"
       :value="currentInputValue"
@@ -11,6 +14,7 @@
       class="border-2 rounded-full px-4 block w-full bg-secondary pr-8 desktop:py-2 laptop:py-1"
       :class="inputBorderColor"
     />
+    <slot name="suffix"></slot>
     <span
       class="m-0 block text-red-400 text-sm"
       v-if="!validationErrorStatus.result"
@@ -29,20 +33,17 @@ import {
   ref,
   watchEffect,
   withDefaults,
+  onMounted,
 } from "vue";
 import { FormDataProvider } from "./NovellaForm.vue";
 import { ValidationResult } from "@/utils/validation";
 
-/*
-  TODO:
-  - Handle prefix and suffix icons
-*/
-interface NovellaInputTextProps {
+export interface NovellaInputTextProps {
   label: string;
   name: string;
-  type?: "text" | "password";
+  type?: "text" | "password" | "date";
   // eslint-disable-next-line
-  validation: (input: string | number) => ValidationResult;
+  validation?: (input: string | number) => ValidationResult;
   placeholder?: string;
   modelValue?: string;
 }
@@ -70,10 +71,8 @@ const currentInputValue = computed({
         value: newValue,
         validationStatus: validationErrorStatus.value.result,
       });
-    } else {
-      // When not using values supplied by the form element
-      emit("update:modelValue", newValue);
     }
+    emit("update:modelValue", newValue);
   },
 });
 
@@ -81,12 +80,9 @@ const validationErrorStatus = ref<ValidationResult>(
   props.validation(currentInputValue.value)
 );
 const inputBorderColor = computed(() => {
-  const validStateClass =
-    "border-border hover:border-border-hover focus:border-border-focus";
-  const invalidStateClass = "border-red-400";
   return validationErrorStatus.value.result
-    ? validStateClass
-    : invalidStateClass;
+    ? "border-border hover:border-border-hover focus:border-border-focus"
+    : "border-red-400";
 });
 
 function handleInput(event: Event) {
@@ -107,4 +103,14 @@ watchEffect(() => {
     validationStatus: result,
   });
 });
+
+onMounted(() => emit("update:modelValue", currentInputValue.value));
 </script>
+
+<style>
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+</style>

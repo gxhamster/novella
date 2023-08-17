@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { defineProps } from "vue";
-import WindowControls from "./WindowControls.vue";
+import WindowControls from "@/components/WindowControls.vue";
 
 interface Props {
   welcomeMessage: string;

@@ -21,6 +21,11 @@
           type="password"
           name="password"
         ></novella-input-text>
+        <fieldset class="text-gray-500 text-sm w-full m-2">
+          <router-link to="/signup">
+            <div>Not a user. Register Here</div>
+          </router-link>
+        </fieldset>
         <novella-form-button class="my-4" label="Submit" />
       </div>
     </novella-form>
@@ -28,22 +33,28 @@
 </template>
 
 <script setup lang="ts">
-import LoginPageContainer from "@/components/LoginPageContainer.vue";
+import LoginPageContainer from "../components/LoginPageContainer.vue";
 import NovellaForm from "@/components/NovellaForm.vue";
 import NovellaFormButton from "@/components/NovellaFormButton.vue";
 import NovellaInputText from "@/components/NovellaInputText.vue";
 import { FormData } from "@/components/NovellaForm.vue";
 import { Validator } from "@/utils/validation";
-import { useLogin } from "@/composables/auth";
+import { RouterLink } from "vue-router";
+import { supabase } from "@/modules/auth/supabase";
 import { router } from "@/router";
-import { getAuth } from "firebase/auth";
 
-async function handleSubmit(data: FormData) {
-  const { email, password, login } = useLogin();
-  email.value = data.email.value;
-  password.value = data.password.value;
+async function handleSubmit(formData: FormData) {
+  const { email, password } = formData;
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value,
+  });
 
-  await login();
-  if (getAuth().currentUser) router.push("/dashboard");
+  if (error) {
+    console.error("Cannot login ", error);
+  } else {
+    console.log("Succesfully logged in ", data);
+    router.push("/");
+  }
 }
 </script>

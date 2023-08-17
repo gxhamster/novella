@@ -15,21 +15,15 @@
 
 <script setup>
 import { ref, onMounted, computed, onUnmounted } from "vue";
-import { getFirestore } from "firebase/firestore";
 import DueBookGroup from "./DueBookGroup.vue";
 import LoadingIcon from "./LoadingIcon.vue";
 import { dueStore } from "@/stores/store";
-import { firebaseSetupSync } from "@/utils/firebase";
 
 const duestore = dueStore();
-const db = getFirestore();
 const loading_ui = ref(true);
 const failed_ui = ref(false);
 
-async function getData() {
-  firebaseSetupSync(db, "dues", duestore, "setDues");
-  loading_ui.value = false;
-}
+async function getData() {}
 
 onMounted(() => {
   getData();

@@ -12,48 +12,57 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, markRaw, ComputedRef } from "vue";
+import { ref, computed, markRaw, Ref, onMounted } from "vue";
 import BookIcon from "vue-material-design-icons/Book.vue";
 import BookArrowRightIcon from "vue-material-design-icons/BookArrowRight.vue";
 import BookArrowLeftIcon from "vue-material-design-icons/BookArrowLeft.vue";
 import AccountGroupIcon from "vue-material-design-icons/AccountGroup.vue";
 import BookCounterSelected from "./BookCounterSelected.vue";
 import BookCounterSmall from "./BookCounterSmall.vue";
-import { dueStore, userStore, bookStore } from "@/stores/store";
+import {
+  getTotalBooks,
+  getTotalStudents,
+} from "@/modules/bookcounter/utils/fetchCounterData";
 
 interface Counter {
   title: string;
   icon: any;
-  value: ComputedRef;
+  value: Ref<number>;
 }
 
-const duestore = dueStore();
-const userstore = userStore();
-const bookstore = bookStore();
 const selectedCounterIdx = ref(0);
+const totalBooks = ref(0);
+const totalUnreturendBooks = ref(0);
+const totalDueBooks = ref(0);
+const totalStudents = ref(0);
 
 const counters = ref<Counter[]>([
   {
     title: "Number Of Unreturned Books",
     icon: markRaw(BookArrowLeftIcon),
-    value: computed(() => duestore.dues.length),
+    value: totalUnreturendBooks,
   },
   {
     title: "Number of Due Books",
     icon: markRaw(BookArrowRightIcon),
-    value: computed(() => duestore.dues.filter((v) => v.days >= 0).length),
+    value: totalDueBooks,
   },
   {
     title: "Number Of Books",
     icon: markRaw(BookIcon),
-    value: computed(() => bookstore.books.length),
+    value: totalBooks,
   },
   {
     title: "Number Of Students",
     icon: markRaw(AccountGroupIcon),
-    value: computed(() => userstore.users.length),
+    value: totalStudents,
   },
 ]);
+
+onMounted(async () => {
+  totalBooks.value = await getTotalBooks();
+  totalStudents.value = await getTotalStudents();
+});
 
 const smallCounters = computed(() =>
   counters.value.filter((_, index) => index !== selectedCounterIdx.value)

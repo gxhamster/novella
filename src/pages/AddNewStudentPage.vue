@@ -1,103 +1,77 @@
 <template>
-  <PageContainer title="Add new student">
-    <FormControl
+  <page-container title="Add new student">
+    <novella-form
       class="grid grid-cols-2 content-between flex-grow gap-x-14"
-      :formData="[...student_fields]"
-      @firebaseSend="sendToFirebase"
+      :handle-submit="sendToSupabase"
     >
-      <div
-        v-for="(field, index) in student_fields"
-        :key="field.id"
-        class="flex space-x-4"
-      >
-        <InputText
-          v-model="student_fields[index].text"
-          :title="field.title"
-          class="w-full"
-          :width="!field.full ? '48' : 'full'"
-          :validate="student_fields[index].validator"
-          :isPhone="student_fields[index].phone"
-          :ref="(el) => (student_fields[index].elem = el)"
-        />
-      </div>
-      <SubmitButtonsGroup class="col-span-2" />
-    </FormControl>
-  </PageContainer>
+      <novella-input-text
+        name="name"
+        title="Student Name"
+        label="Student Name"
+        :validation="(text) => new Validator(text).required().unwrap()"
+      />
+      <novella-input-text
+        name="index"
+        title="Student Index"
+        label="Student Index"
+        :validation="(text) => new Validator(text).required().unwrap()"
+      />
+      <novella-input-text
+        name="island"
+        title="Student Island"
+        label="Student Island"
+      />
+      <novella-input-text
+        name="address"
+        title="Student Address"
+        label="Student Address"
+      />
+      <novella-input-text
+        name="phone"
+        title="Student Phone"
+        label="Student Phone"
+      />
+      <novella-input-text
+        name="grade"
+        title="Student Grade"
+        label="Student Grade"
+      />
+      <section class="col-span-2 flex gap-x-5 justify-center">
+        <novella-form-button label="Submit" />
+        <novella-form-button-cancel label="Cancel" />
+      </section>
+    </novella-form>
+  </page-container>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { doc, setDoc, getFirestore } from "firebase/firestore";
-import InputText from "@/components/InputText";
+import NovellaInputText from "@/components/NovellaInputText.vue";
 import PageContainer from "@/components/PageContainer";
-import { PageLayoutData } from "@/utils/helper";
-import { validate } from "@/utils/validation";
-import FormControl from "@/components/FormControl.vue";
-import SubmitButtonsGroup from "../components/SubmitButtonsGroup.vue";
+import NovellaForm from "@/components/NovellaForm.vue";
+import NovellaFormButton from "@/components/NovellaFormButton.vue";
+import NovellaFormButtonCancel from "@/components/NovellaFormButtonCancel.vue";
+import { Validator } from "@/utils/validation";
+import { supabase } from "@/modules/auth/supabase";
 
-const student_fields = ref([
-  new PageLayoutData("Student Name", {
-    firebase_field: "name",
-    validator: (text) =>
-      validate(text).between({
-        inclusive: true,
-        min: 5,
-        max: 30,
-        message: "Name should be between 5 and 30",
-      }),
-  }),
-  new PageLayoutData("Student Island", {
-    validator: (text) =>
-      validate(text).between({
-        inclusive: true,
-        min: 5,
-        max: 20,
-        message: "Island should be between 5 and 20",
-      }),
-    firebase_field: "island",
-    required: false,
-  }),
-  new PageLayoutData("Student Address", {
-    validator: (text) =>
-      validate(text).between({
-        inclusive: true,
-        min: 5,
-        max: 20,
-        message: "Address should be between 1 and 20",
-      }),
-    firebase_field: "address",
-    required: false,
-  }),
-  new PageLayoutData("Student Phone", {
-    firebase_field: "number",
-    validator: (text) =>
-      validate(text).isPhone({
-        message: "Phone should be a valid number",
-      }),
-    phone: true,
-  }),
-  new PageLayoutData("Student Grade", {
-    firebase_field: "grade",
-    validator: (text) =>
-      validate(text).isNumeric({ message: "Grade should be a number" }),
-  }),
-  new PageLayoutData("Student Index", {
-    firebase_field: "index",
-    validator: (text) =>
-      validate(text).isNumeric({
-        message: "Index should be a number",
-      }),
-  }),
-]);
-
-function sendToFirebase(formData) {
-  // Send to firebase
-  console.log("Sending to firebase -", formData);
-  const db = getFirestore();
-  const temp = formData.map((field) => [field.firebase_field, field.text]);
-  const firebaseDocObj = Object.fromEntries(temp);
-  console.log(firebaseDocObj);
-  const studentDocRef = doc(db, "students", firebaseDocObj.index);
-  setDoc(studentDocRef, firebaseDocObj);
+async function sendToSupabase(formData) {
+  console.log("Sending: ", formData);
+  const { data, error } = await supabase
+    .from("students")
+    .insert([
+      {
+        name: formData.name.value,
+        index: formData.index.value,
+        address: formData.address.value,
+        island: formData.island.value,
+        phone: formData.phone.value,
+        grade: formData.grade.value,
+      },
+    ])
+    .select();
+  if (error) {
+    console.error("Cannot create new student", error);
+  } else {
+    console.log("Succesfully created new student", data);
+  }
 }
 </script>
