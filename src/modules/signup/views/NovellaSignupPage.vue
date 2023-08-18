@@ -7,7 +7,7 @@
     >
       <fieldset class="flex flex-col gap-5">
         <input-text
-          title="User ID"
+          title="Email"
           v-model="userData[0].text"
           :validate="userData[0].validator"
           placeholder="User ID"

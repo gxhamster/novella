@@ -23,7 +23,7 @@
         ></novella-input-text>
         <fieldset class="text-gray-500 text-sm w-full m-2">
           <router-link to="/signup">
-            <div>Not a user. Register Here</div>
+            <a class="hover:underline">Not a user. Register Here</a>
           </router-link>
         </fieldset>
         <novella-form-button class="my-4" label="Submit" />

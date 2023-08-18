@@ -18,6 +18,7 @@
           <component :size="10" :is="icon_names[index]" :key="name.id" />
         </SidebarButtons>
       </div>
+      <signout-button class="w-full" />
     </div>
     <div class="flex-grow flex-col flex justify-end">
       <MainViewButtonGroup />
@@ -39,6 +40,7 @@ import DashboardIcon from "./icons/DashboardIcon";
 import IssueBookIcon from "./icons/IssueBookIcon";
 import ReturnBookIcon from "./icons/ReturnBookIcon";
 import MainViewButtonGroup from "./MainViewButtonGroup.vue";
+import SignoutButton from "@/modules/signout/components/SignoutButton.vue";
 
 import { routes } from "../router";
 
