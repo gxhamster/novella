@@ -1,16 +1,17 @@
 <template>
   <div
-    class="w-64 border-2 border-gray-500 absolute left-0 z-10 mx-2 -my-2 shadow-lg p-3 pt-4 bg-gray-100 rounded-lgg"
+    class="w-64 dropdown-animation border-2 text-gray-700 absolute left-0 z-10 mx-2 -my-2 shadow-lg p-3 pt-4 bg-gray-100 rounded-lgg"
   >
     <div
-      class="flex space-x-2 my-2 bg-primary p-2 rounded-lg"
+      class="flex space-x-2 my-2 p-2 rounded-lg transition hover:bg-gray-200"
       v-for="data in searchData"
+      @click="$emit('dropdownItemClicked', data)"
       :key="data.id"
     >
       <slot name="icon"></slot>
       <div>
-        <span class="text-sm block text-white">{{ data.title }}</span>
-        <span class="text-xs block text-white">{{ data.subtitle }}</span>
+        <span class="text-sm block">{{ data.title }}</span>
+        <span class="text-xs block">{{ data.subtitle }}</span>
       </div>
     </div>
   </div>

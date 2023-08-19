@@ -3,7 +3,7 @@ import AddNewStudentPage from "./pages/AddNewStudentPage.vue";
 import NovellaIssueBooksPage from "./pages/NovellaIssueBooksPage.vue";
 import AddNewBookPage from "./modules/addingbooks/views/AddNewBookPage.vue";
 import RecieveBook from "./pages/RecieveBook.vue";
-import DirectoryPage from "./pages/DirectoryPage.vue";
+import DirectoryPage from "@/modules/directory/views/DirectoryPage.vue";
 import SettingsPage from "./pages/SettingsPage.vue";
 import AboutPage from "./pages/AboutPage.vue";
 import FeedbackPage from "./pages/FeedbackPage.vue";

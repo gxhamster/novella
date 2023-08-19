@@ -5,9 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import { provide, ref, defineProps, withDefaults, Ref } from "vue";
+import {
+  provide,
+  ref,
+  defineProps,
+  withDefaults,
+  Ref,
+  defineExpose,
+} from "vue";
 
-interface FormDataField {
+export interface FormDataField {
   value: string;
   validationStatus?: boolean;
 }
@@ -55,4 +62,7 @@ function checkBeforeSubmit(data: FormData) {
 }
 
 provide<FormDataProvider>("novella-form", { formData, setFormData });
+defineExpose({
+  setFormData,
+});
 </script>
